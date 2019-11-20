@@ -1,0 +1,3163 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Hbm.Api.Pmx</name>
+    </assembly>
+    <members>
+        <member name="T:Hbm.Api.Pmx.Channels.IPmxChannel">
+            <summary>
+            Interface for additional properties of PmxChannel
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.IPmxChannel.AmplifierType">
+            <summary>
+            Amplifier type to which the channel belongs
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Channels.PmxAnalogOutChannel">
+            <summary>
+            Pmx specific implementation of an analog out channel
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogOutChannel.AmplifierType">
+            <summary>
+            The type of the amplifier to which the channel belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogOutChannel.AmplifierTypeName">
+            <summary>
+            Amplifier type name
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogOutChannel.AmplifierSerialNumber">
+            <summary>
+            Amplifier serial number to which the channel belongs
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogOutChannel.Slot">
+            <summary>
+            The slot number of the device to which the channel belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogOutChannel.Position">
+            <summary>
+            The position within the slot to which the channel belongs.
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Channels.PmxAnalogOutChannel.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the channel among the device to which the channel belongs.
+            </summary>
+            <remarks>This information should be retrieved during scan or connect.</remarks>
+            <returns>Unique channel identification on the device</returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Channels.PmxDigitalChannel">
+            <summary>
+            Channel that holds a digital signal
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxDigitalChannel.AmplifierType">
+            <summary>
+            The type of the amplifier to which the channel belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxDigitalChannel.AmplifierTypeName">
+            <summary>
+            Amplifier type name
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxDigitalChannel.AmplifierSerialNumber">
+            <summary>
+            Amplifier serial number to which the channel belongs
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxDigitalChannel.Slot">
+            <summary>
+            The slot number of the device to which the channel belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxDigitalChannel.Position">
+            <summary>
+            The position within the slot to which the channel belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxDigitalChannel.Pin">
+            <summary>
+            Digital pin that is mapped to this channel
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Channels.PmxDigitalChannel.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the channel among the device to which the channel belongs.
+            </summary>
+            <remarks>This information should be retrieved during scan or connect.</remarks>
+            <returns>Unique channel identification on the device</returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Channels.PmxAnalogInChannel">
+            <summary>
+            A channel to which a sensor can be connected.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogInChannel.AmplifierType">
+            <summary>
+            The type of the amplifier to which the channel belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogInChannel.AmplifierTypeName">
+            <summary>
+            Amplifier type name
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogInChannel.AmplifierSerialNumber">
+            <summary>
+            Amplifier serial number to which the channel belongs
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogInChannel.Slot">
+            <summary>
+            The slot number of the device to which the channel belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogInChannel.Position">
+            <summary>
+            The position within the slot to which the channel belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxAnalogInChannel.TedsUsageMode">
+            <summary>
+            Gets or sets the TEDS usage mode.
+            </summary>
+            <remarks>
+            Does only support <see cref="F:Hbm.Api.Common.Enums.TedsUsageMode.Ignore"/> and <see cref="F:Hbm.Api.Common.Enums.TedsUsageMode.UseManually"/>
+            </remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Channels.PmxAnalogInChannel.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the channel among the device to which the channel belongs.
+            </summary>
+            <remarks>This information should be retrieved during scan or connect.</remarks>
+            <returns>Unique channel identification on the device</returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Channels.PmxVirtualChannel">
+            <summary>
+            A channel to which no sensor can be connected (e.g. a calculated channel).
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxVirtualChannel.AmplifierType">
+            <summary>
+            The type of the amplifier to which the channel belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxVirtualChannel.AmplifierTypeName">
+            <summary>
+            Amplifier type name
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxVirtualChannel.AmplifierSerialNumber">
+            <summary>
+            Amplifier serial number to which the channel belongs
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxVirtualChannel.Slot">
+            <summary>
+            The slot number of the device to which the channel belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Channels.PmxVirtualChannel.Position">
+            <summary>
+            The position within the slot to which the channel belongs.
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Channels.PmxVirtualChannel.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the channel among the device to which the channel belongs.
+            </summary>
+            <remarks>This information should be retrieved during scan or connect.</remarks>
+            <returns>Unique channel identification on the device</returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Connectors.IPmxConnector">
+            <summary>
+            Interface for additional properties of PmxConnector
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.IPmxConnector.AmplifierType">
+            <summary>
+            Amplifier type to which the connector belongs
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Connectors.PmxAnalogInConnector">
+            <summary>
+            Represents a connector, to which a sensor can be attached
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxAnalogInConnector.Slot">
+            <summary>
+            Slot to which the connector belongs
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxAnalogInConnector.Position">
+            <summary>
+            Position of the connector on the amplifier
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxAnalogInConnector.AmplifierType">
+            <summary>
+            Type of amplifier which is plugged into the slot
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxAnalogInConnector.AmplifierTypeName">
+            <summary>
+            Amplifier type name
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxAnalogInConnector.AmplifierSerialNumber">
+            <summary>
+            Amplifier serial number to which the channel belongs
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Connectors.PmxAnalogInConnector.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the connector among the device to which the connector belongs.
+            </summary>
+            <remarks>This information should be retrieved during scan or connect. The method implementation has to throw an cref="System.InvalidOperationException">, if no unique connector id is set.</remarks>
+            <returns>Unique connector identification on the device</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown, if it does not contain a value.</exception>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Connectors.PmxAnalogOutConnector">
+            <summary>
+            Pmx specific implementation of an analog out connector
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxAnalogOutConnector.Slot">
+            <summary>
+            Slot to which the connector belongs
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxAnalogOutConnector.Position">
+            <summary>
+            Position of the connector on the amplifier
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxAnalogOutConnector.AmplifierType">
+            <summary>
+            Type of amplifier which is plugged into the slot
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxAnalogOutConnector.AmplifierTypeName">
+            <summary>
+            Amplifier type name
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxAnalogOutConnector.AmplifierSerialNumber">
+            <summary>
+            Amplifier serial number to which the channel belongs
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Connectors.PmxAnalogOutConnector.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the connector among the device to which the connector belongs.
+            </summary>
+            <remarks>This information should be retrieved during scan or connect. The method implementation has to throw an cref="System.InvalidOperationException">, if no unique connector id is set.</remarks>
+            <returns>Unique connector identification on the device</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown, if it does not contain a value.</exception>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Connectors.PmxDigitalConnector">
+            <summary>
+            Represents a digital connector (able to hold one pin of a digital out or digital in port)
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxDigitalConnector.Slot">
+            <summary>
+            Slot to which the connector belongs
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxDigitalConnector.Position">
+            <summary>
+            Position of the connector on the amplifier
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxDigitalConnector.AmplifierType">
+            <summary>
+            Type of amplifier which is plugged into the slot
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxDigitalConnector.AmplifierTypeName">
+            <summary>
+            Amplifier type name
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxDigitalConnector.AmplifierSerialNumber">
+            <summary>
+            Amplifier serial number to which the channel belongs
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxDigitalConnector.Pin">
+            <summary>
+            Digital pin that is mapped to this connector
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Connectors.PmxDigitalConnector.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the connector among the device to which the connector belongs.
+            </summary>
+            <remarks>This information should be retrieved during scan or connect. The method implementation has to throw an cref="System.InvalidOperationException">, if no unique connector id is set.</remarks>
+            <returns>Unique connector identification on the device</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown, if it does not contain a value.</exception>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Connectors.PmxVirtualConnector">
+            <summary>
+            Represents a connector, to which no sensor can be attached (e.g. a connector that houses calculated channels).
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxVirtualConnector.Slot">
+            <summary>
+            Slot to which the connector belongs
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxVirtualConnector.Position">
+            <summary>
+            Position of the connector on the amplifier
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxVirtualConnector.AmplifierType">
+            <summary>
+            Type of amplifier which is plugged into the slot
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxVirtualConnector.AmplifierTypeName">
+            <summary>
+            Amplifier type name
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Connectors.PmxVirtualConnector.AmplifierSerialNumber">
+            <summary>
+            Amplifier serial number to which the channel belongs
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Connectors.PmxVirtualConnector.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the connector among the device to which the connector belongs.
+            </summary>
+            <remarks>This information should be retrieved during scan or connect. The method implementation has to throw an cref="System.InvalidOperationException">, if no unique connector id is set.</remarks>
+            <returns>Unique connector identification on the device</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown, if it does not contain a value.</exception>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Core.CommunicationManager">
+            <summary>
+            Handles all communications with a certain PMX device via command interface
+            </summary>
+            <seealso cref="T:System.IDisposable" />
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.#ctor(Hbm.Api.Pmx.PmxDevice,System.Int32)">
+            <summary>
+            Creates new instance of this class
+            </summary>
+            <param name="pmx">Device to connect to</param>
+            <param name="timeout">Timeout in ms</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.Finalize">
+            <summary>
+            Finalizer. Cleans up all resources
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Core.CommunicationManager.IsNetworkConnectionAlive">
+            <summary>
+            Checks if the device is currently connected with the physical network
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.Dispose">
+            <summary>
+            Releases all used resources
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ConnectToDevice">
+            <summary>
+            Connect to certain device
+            </summary>
+            <remarks>The device to connect to is specified through constructor of the class</remarks>
+            <exception cref="T:System.InvalidOperationException">ConnectionInfo not properly set.</exception>
+            <exception cref="T:System.TimeoutException">If no connection could be established within the given time.</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.WaitUntilDeviceIsReadyForParameterization(System.Int32)">
+            <summary>
+            Waits the until device is ready for parameterization.
+            Normally this function returns right away - unless the PMX has just been rebooted.
+            When the PMX is rebootet it is pretty early up again and delivers its connection info
+            via scan. However - at this time the device is NOT ready to be parametrized or even ready
+            to deliver its settings.
+            So we wait until the parameterization (e.g. after a reboot of the device) is possible again.
+            This should be possible not later than about 1 minute (MAX_TIME_IN_MS_UNTIL_DEVICE_IS_READY) 
+            after the device is reachable via LAN again (and delivers its connection infos via scan).
+            During this time we check the ALIVE toggling of the PMX and return true if we determine it
+            whithin this time span.
+            </summary>
+            <param name="timeoutInMs">The timeout in ms. (default is 60000)</param>
+            <returns>True, if device is ready</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.Disconnect">
+            <summary>
+            Disconnect from device
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SendMessage(System.String)">
+            <summary>
+            Sends commmand sequences directly to the device
+            </summary>
+            <param name="message">Command to be send</param>
+            <returns>Response of the device</returns>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException">Thrown if the device is not (longer) connected.</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SendMessage(System.String,System.Int32)">
+            <summary>
+            Sends commmand directly to the device and 
+            returns given number of bytes read from device
+            </summary>
+            <param name="message">Command to be send</param>
+            <param name="numberOfBytesToReceive">Number of bytes to receive from device</param>
+            <returns> The demanded number of bytes saved in global _binaryBuffer</returns>
+            <remarks>Due to performance issues we do not allocate new byte buffer 
+            for return values each time the function is called!
+            We use _binaryBuffer here!!! So assert, that e.g.SendMessage(string) function is not called until the binary response
+            of this function is evaluated - since SendMessage(string) also uses _binaryBuffer !!!!</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ReadBytesFromQueue(System.Int32)">
+            <summary>
+            Reads the bytes from queue.
+            </summary>
+            <param name="numberOfBytesToRead">The number of bytes to read.</param>
+            <returns> The demanded number of bytes saved in global _binaryBuffer</returns>
+            <remarks>Due to performance issues we do not allocate new byte buffer 
+            for return values each time the function is called!
+            We use _binaryBuffer here!!! So assert, that e.g.SendMessage(string) function is not called until the binary response
+            of this function is evaluated - since SendMessage(string) also uses _binaryBuffer !!!!</remarks>
+            <exception cref="T:System.TimeoutException">Couldn't read measurement values with given timeout!</exception>
+            <exception cref="T:System.IO.EndOfStreamException"></exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException"></exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SendMessageWithoutReply(System.String)">
+            <summary>
+            Sends a command directly to the device, without waiting for an answer
+            </summary>
+            <param name="message">Command to be send</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ReceiveReply">
+            <summary>
+            Receives the answer of a priviously send command
+            </summary>
+            <returns>Answer from device</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ReadDeviceInfo">
+            <summary>
+            Read firmware- and hardware version from the connected device
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetSerialNo">
+            <summary>
+            Returns the serial number of the device
+            </summary>
+            <returns>serial number if all ok, otherwise <c>null</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ReadTimeSource">
+            <summary>
+            Reads the <see cref="T:Hbm.Api.Common.Entities.TimeSources.TimeSource"/> of the connected device
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ReadNtpInfo(System.String@,System.Double@,System.String@)">
+            <summary>
+            Reads the NTP synchronization information and parses the relevant parts
+            </summary>
+            <param name="serverIpAddress">IP address of the used NTP server</param>
+            <param name="offsetInMs">Offset to time source in milliseconds, <see cref="F:System.Double.MaxValue"/> if offset can not be determined</param>
+            <param name="infoString">Complete string with all NTP specific information</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetSlotNumbers">
+            <summary>
+            Get the list of slotnumbers from the connected device
+            </summary>
+            <returns>returns all slots of the device</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SelectSlot(System.Int32)">
+            <summary>
+            Select the given slot on the connected device
+            </summary>
+            <param name="slotNumber">slot to select</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetConnectorNumbersOfSelectedSlot">
+            <summary>
+            Get the list of connectornumbers of the given slot number
+            </summary>
+            <returns>List of connectornumbers of the current selected slot</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SelectConnectorOfSelectedSlot(System.Int32)">
+            <summary>
+            Selects the given connector under the currently selected slot
+            </summary>
+            <param name="connectorNumber">Connector to select</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetAmplifierTypeOfSelectedSlot">
+            <summary>
+            Returns the amplifier type of the currently selected slot
+            </summary>
+            <returns><c>AmplifierType</c> of selected slot/connector</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetSlotAmplifierSerialNumber(System.Int32)">
+            <summary>
+            Returns the amplifier serial number of the currently selected slot
+            </summary>
+            <param name="slotNumber">The slot number.</param>
+            <returns>
+            Serial number of selected slot/connector
+            </returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ReadTedsBinaryDataBlock(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem},System.String@,System.Byte[]@)">
+            <summary>
+            Reads the teds binary data block.
+            </summary>
+            <param name="connector">The connector.</param>
+            <param name="problems">The problems.</param>
+            <param name="tid">The tid.</param>
+            <param name="binaryTeds">The binary teds.</param>
+            <returns><c>true</c> when the reading succeeded, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.WriteTedsBinaryDataBlock(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem},System.Byte[])">
+            <summary>
+            Writes the teds binary data block.
+            </summary>
+            <param name="connector">The connector.</param>
+            <param name="problems">The problems.</param>
+            <param name="binaryTeds">The binary teds.</param>
+            <returns><c>true</c> when the writing succeeded, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ActivateTeds(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem},Hbm.Api.Common.Entities.Statuses.ChannelTedsStatus@)">
+            <summary>
+            Reloads an already loaded (during connect) connector.
+            This may be necessary when TEDS were activated and so the settings of an existing connector
+            have been changed.
+            We have to UPDATE the settings of the existing objects only!!
+            </summary>
+            <param name="connectorOnWhichToActivateTeds">The connector where TEDS should be activated.</param>
+            <param name="problemsDuringActivation">The problems during activation will be added to this list.</param>
+            <param name="tedsStatus">The TEDS status.</param>
+            <returns><c>true</c> when the activation succeeded, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetConnectors">
+            <summary>
+            Returns all connectors of the device
+            </summary>
+            <returns>List of connectors of current device</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetDigitalConnectors(System.Int32,System.String,System.Int32,Hbm.Api.Pmx.Enums.AmplifierType)">
+            <summary>
+            Returns a list of 16 digital connectors.
+            Whether they are inputs or outputs is decided by the given connector number
+            (PMX Slot10.1 = 16Bit input,  SLOT10.2 = 16Bit output)
+            Actually the PMX has only ONE connector for digital in and ONE connector for digital out. 
+            Since we decided to use one connector for each PIN of a digital signal we have to create
+            16 digital ins and 16 digital out instead of one digital in and one digital out
+            </summary>
+            <param name="currentSlotNumber">Currently selected slot number</param>
+            <param name="currentAmplifierSerialNumber">Amplifier serial number of the selected slot</param>
+            <param name="currentConnectorNumber">Currently selected connector(position) number</param>
+            <param name="currentAmpType">Amplifier type of selected slot and position</param>
+            <returns>List of digital connectors</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetTedsStatusOfSelectedChannel(Hbm.Api.Pmx.Channels.IPmxChannel)">
+            <summary>
+            Returns the TEDS status. PMX delivers information concerning TID only.
+            </summary>
+            <param name="channel">Channel for which the status will be determined</param>
+            <returns>DeviceStatus with ChannelTedsStatus</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetEngineeringUnitOfSelectedConnector">
+            <summary>
+            Returns the string representing the engineering unit of the delivered unit number 
+            </summary>
+            <returns>Engineering unit</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetErrorStatusOfSelectedChannel(Hbm.Api.Common.Entities.Channels.Channel)">
+            <summary>
+            Reads the error status of the selected channel form the device
+            </summary>
+            <param name="channel">Channel from which to get the error status</param>
+            <returns>DeviceErrorStatus object in case of an error for the given channel or null, if there is no error for the given channel</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetNameOfSelectedConnector">
+            <summary>
+            Read the name of the currently selected connector.
+            </summary>
+            <returns>Name of the connector</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetAnalogInSensorOfSelectedConnector">
+            <summary>
+            Gets the sensor object of currently selected connector
+            </summary>
+            <remarks>Slot and sub channel (position) have to be selected PRIOR to this function call</remarks>
+            <returns>Sensor object corresponding to pmx sensor settings</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ReadConnectorNameOfSelectedConnector(Hbm.Api.Common.Entities.Connectors.Connector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Reads the name of the selected connector.
+            </summary>
+            <param name="pmxConnector">The PMX connector.</param>
+            <param name="problemsDuringAssign">The problems during assign.</param>
+            <returns>The connector name or <c>null</c> if failed.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetPossibleDataAcquisitionModes">
+            <summary>
+            Gets the possible data acquisition modes according to the current synchronization settings of the device.
+            When the device detects a hardware synchronization (typically established via a synchronization cable), the returned list will
+            will contain the mode <see cref="F:Hbm.Api.Common.Enums.DataAcquisitionMode.HardwareSynchronized"/>.
+            If the device uses a time based synchronization (e.g. PTP or NTP), the returned list will contain 
+            the mode <see cref="F:Hbm.Api.Common.Enums.DataAcquisitionMode.TimestampSynchronized"/>.
+            Since most devices are able to fulfill an unsynchronized measurement, the returned list will most likely contain the mode <see cref="F:Hbm.Api.Common.Enums.DataAcquisitionMode.Unsynchronized"/>.
+            If the device is not connected, the list of possible data acquisition modes will be empty.
+            </summary>
+            <returns>List of possible <see cref="T:Hbm.Api.Common.Enums.DataAcquisitionMode"/> for this device according to its current synchronization settings.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignConnector(Hbm.Api.Common.Entities.Connectors.Connector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns the properties of the given connector (and all its subcomponents like sensor, signals etc)
+            to the device
+            </summary>
+            <param name="connectorToAssign">Connector whose sensor and scaling settings already have been checked.</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignSignal(Hbm.Api.Common.Entities.Signals.Signal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns all properties of a signal 
+            (VirtualSignal:  Name, SampleRate, SynchronMode)
+            (AnalogInSignal: Name, SampleRate, SynchronMode, Filter )
+            </summary>
+            <param name="signalToAssign">The signal to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignSynchronMode(Hbm.Api.Common.Entities.Connectors.Connector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns SynchronMode 
+            </summary>
+            <param name="connectorToAssign">Connector that holds the signal to assign SynchronMode to</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns sensor settings (including scaling settings) to the previously selected analogInConnector
+            </summary>
+            <param name="pmxAnalogInConnector">Connector that holds the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignEngineeringUnitToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns engineering unit to previously selected analogInConnector
+            </summary>
+            <param name="pmxAnalogInConnector">Connector that holds the sensor with the demanded engineering unit</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignEngineeringUnitToSelectedConnector(Hbm.Api.Common.Entities.Channels.IUnit,System.String,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns engineering unit to channels that do not support a sensor and scaling object.
+            At present this is used for virtual channels 
+            </summary>
+            <param name="channel">Channel that holds the unit that should be assigned</param>
+            <param name="unit">Demanded engineering unit</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignSignalNameToSelectedConnectorChannelAndSignal(Hbm.Api.Common.Entities.Connectors.Connector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            PMX does not support connectornames or channelnames.
+            So the signal name is the leading property to assign the name to connector and channel
+            </summary>
+            <param name="pmxConnector">Connector that holds the signal- (and channel-) name to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignFilterToSelectedAnalogInConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns the filter of the current selected connector(Channel/Signal/Filter)
+            If given filtertype (Bessel,Butterworth etc.) or filterfrequency doesn't fit, it will 
+            be adapted to best fitting settings and the problemsDuringAssign list will be accordingly expanded 
+            </summary>
+            <param name="pmxAnalogInConnector">Connector that holds the filter to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignZeroToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns zero offset to previously selected analogInConnector
+            </summary>
+            <param name="pmxAnalogInConnector">Connector that holds the zero object</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignAutoCalibrationModeToSelectedChannel(Hbm.Api.Pmx.Channels.PmxAnalogInChannel,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Enables or disables auto calibration for given channel
+            </summary>
+            <param name="pmxAnalogInChannel">Channel to enable or disable auto calibration</param>
+            <param name="problemsDuringAssign">Problems that occurred during assign</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignTimeSource(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns the <see cref="T:Hbm.Api.Common.Entities.TimeSources.TimeSource"/> to the device
+            </summary>
+            <param name="problemsDuringAssign"></param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SetDigitalIO(Hbm.Api.Pmx.Signals.PmxDigitalSignal,Hbm.Api.Common.Enums.DigitalValueType)">
+            <summary>
+            Sets the digital output defined by digital signal to the given value
+            </summary>
+            <param name="digitalSignal">Digital out signal to set to value</param>
+            <param name="value">Value to set</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SetAnalogOut(Hbm.Api.Pmx.Signals.PmxAnalogOutSignal,System.Decimal)">
+            <summary>
+            Sets the analog output value of a certain signal to the given value
+            </summary>
+            <param name="analogOutSignal">Analog out signal to set to given value</param>
+            <param name="value">Value to set (-10..10)</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SetAnalogOutSourceSignal(Hbm.Api.Common.Entities.Channels.IInputSignalReference,Hbm.Api.Pmx.Signals.IPmxSignal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Sets a given signal as source signal for an analog out channel
+            </summary>
+            <param name="analogOutChannel">Analog out channel to which the source signal should be linked</param>
+            <param name="sourceSignal">Signal to link to analog out channel</param>
+            <param name="problemsDuringAssign">Problems that occurred during assign</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SetShuntOfSelectedConnector(Hbm.Api.Pmx.Connectors.IPmxConnector,System.Boolean,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Enables or disables shunt for given connector
+            </summary>
+            <param name="connector">Connector to enable or disable shunt</param>
+            <param name="enable">True if shunt should be enabled</param>
+            <param name="problemsDuringAssign">Problems that occurred during assign</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetShuntOfSelectedConnector">
+            <summary>
+            Returns the shunt mode of the selected connector
+            </summary>
+            <returns>Shunt mode</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SetAutoCalibrationOfSelectedChannel(Hbm.Api.Pmx.Channels.IPmxChannel,System.Boolean,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Enables or disables auto calibration for given channel
+            </summary>
+            <param name="channel">Channel to enable or disable auto calibration</param>
+            <param name="enable">True if auto calibration should be enabled</param>
+            <param name="problemsDuringAssign">Problems that occurred during assign</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SetLedModeOfSelectedConnector(Hbm.Api.Pmx.Connectors.IPmxConnector,Hbm.Api.Common.Enums.LedFlashMode,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Flashes the LED of the given connector in the given mode/color 
+            </summary>
+            <param name="connector">Connector that should be flashing</param>
+            <param name="mode">Mode/color to use for flashing</param>
+            <param name="problemsDuringAssign">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.SetLedModeOfDevice(Hbm.Api.Common.Enums.LedFlashMode,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Flashes the LED of the device in the given mode/color 
+            </summary>
+            <param name="mode">Mode/color to use for flashing</param>
+            <param name="problemsDuringAssign">Warnings and errors that occurred during assign process</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ResetDevice(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Loads factory default into currently active parametersets of the device
+            </summary>
+            <param name="problemsDuringAssign">Warnings and errors that occurred during assign process</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ReadAllMeasurementValues(System.Double[]@)">
+            <summary>
+            Reads a single measurement value from all signals of the device!
+            </summary>
+            <param name="measurementValues">Contains one measurement value for each signal of the device</param>
+            <returns><c>true</c> if no error occurred, else <c>false</c>.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ReadSingleMeasurementValue(System.Int32,System.Int32,System.Double@)">
+            <summary>
+            Reads a single measurement value from given slot/connector. PMX does not know a measurement value status.
+            Status is ok, if measurement value is smaller than 2e+20.
+            </summary>
+            <param name="slot">Slot that houses the signal to measure</param>
+            <param name="connector">Connector that houses the signal to measure</param>
+            <param name="measurementValue">Returns current measurement value</param>
+            <returns><c>true</c> if measurement value could be obtained, else <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignMeasurementGroups(System.Collections.Generic.List{System.Collections.Generic.List{Hbm.Api.Common.Entities.Signals.Signal}})">
+            <summary>
+            Assigns a measurement group for each signal of the signalLists 
+            and setups the DMP measurement rates for these (up to 3) groups..
+            Each of the signalList in signalLists contains signals that have the same SampleRate...
+            
+            Time channels of the measurement groups are set to NTP (2*32Bit integer, 4byte 2°-32 parts of a second, 4byte seconds since 1.1.1970!
+            </summary>
+            <param name="signalLists">List of signal lists gouped by samplerate</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignRecordingMasks(System.Collections.Generic.List{Hbm.Api.Common.Entities.Signals.Signal},System.Int32)">
+            <summary>
+            Assigns recording mask for data acquisition... 
+            Recording mask is build for each slot seperately and looks similiar to:
+            E.g.: Let following List of Slots and Positions {Slot,Position} be the sorted List of signals to measure:
+            List= {1,1},{1,2},{1,3},{2,2},{2,4} 
+            This list has to generate following sequence to parameterize the PMX:
+            PCS1; SMS1,2,3           //select slot1 and set recording mask to subchannels 1,2 and 3
+            PCS2; SMS2,4             //select slot2 and set recording mask to subchannels 2 and 4
+            ...
+            
+            MCS1,2,17,18            //use slot 1 and 2 (and timechannels1 (17) and timechannel2 (18) for measurement
+            
+            NumberOfDifferentSampleRates is used to activate the various timechannels...
+            </summary>
+            <param name="sortedSignalList">a sorted list of signals (slot/position ascendíng order)</param>
+            <param name="numberOfDifferentSampleRates">is needed to setup slots for time channels</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.StartDaq">
+            <summary>
+            Sends the start command for a continuous measurement to the pmx device
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.BeginConcurrentStartDaq">
+            <summary>
+            Starts an already prepared, continuous measurement session
+            without waiting for any reply of the device. Use this function in combination with
+            <c>CompleteConcurrentStartDaq</c>
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.EndConcurrentStartDaq">
+            <summary>
+            Ends the concurrent start of data acquisition (initiated via <c>BeginConcurrentStartDaq</c>)
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ReadDaqValues">
+            <summary>
+            Updates the circular buffer of all signals that have been prepared for measurement
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.StopDaq">
+            <summary>
+            Stops a started, continuous data acquisition
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetSupportedSampleRates">
+            <summary>
+            Returns a list of supported sample rates for the currently selected connector
+            </summary>
+            <returns>List of sample rates</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetSupportedSensorTypes(Hbm.Api.Common.Entities.Channels.Channel)">
+            <summary>
+            Returns a list of possible sensor types for given channel
+            </summary>
+            <param name="channel">Channel to check for valid sensor types</param>
+            <returns>List of possible sensor types</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ConvertValueToEngineeringUnit(System.String)">
+            <summary>
+            Returns EngineeringUnitEnum according to given string
+            </summary>
+            <param name="engineeringUnitString">String to convert into enum</param>
+            <returns>EngineeringUnit according to given string</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ConvertEngineeringUnitToValue(Hbm.Api.Pmx.Enums.EngineeringUnit)">
+            <summary>
+            Returns string according to given EngineeringUnit
+            </summary>
+            <param name="engineeringUnit">EngineeringUnit to convert to string</param>
+            <returns>String according to given EngineeringUnit</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetSupportedFilterFrequenciesOfSelectedConnector(Hbm.Api.Common.Entities.Filters.Filter)">
+            <summary>
+            Returns a list of supported filter frequencies for a given filter
+            </summary>
+            <param name="filter">Filter</param>
+            <returns>List of supported frequencies for given filter</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.CalculateYfromGivenX(Hbm.Api.SensorDB.Entities.Scalings.TwoPointScaling,System.Decimal)">
+            <summary>
+            Returns the engineering (y) unit for a given x (electrical unit)
+            </summary>
+            <param name="twoPointScaling">Scaling that is used to calulate the linear equation</param>
+            <param name="x"></param>
+            <returns>f(x)</returns>
+            <remarks>twoPointScaling has to be valid (no null or x1=x2!!!)</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.CalculateXfromGivenY(Hbm.Api.SensorDB.Entities.Scalings.TwoPointScaling,System.Decimal)">
+            <summary>
+            Returns the x (electrical unit) for a given engineering (y) unit
+            </summary>
+            <param name="twoPointScaling">Scaling that is used to calulate the inverse function of the linear equation</param>
+            <param name="y"></param>
+            <returns>f-1(y)</returns>
+            <remarks>twoPointScaling has to be a valid (no null or x1=x2!!!)</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetMinValue(System.Int32,System.Int32)">
+            <summary>
+            Returns the minimum measurement value for sensor of the given slot and position
+            </summary>
+            <param name="slot">Slot at which the sensor is located</param>
+            <param name="position">Position under the slot at which the sensor is located</param>
+            <returns>Minimum value</returns>
+            <remarks>There has to be a calculated channel that calculates the minimum value!</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetMaxValue(System.Int32,System.Int32)">
+            <summary>
+            Returns the maximum measurement value for sensor of the given slot and position
+            </summary>
+            <param name="slot">Slot at which the sensor is located</param>
+            <param name="position">Position under the slot at which the sensor is located</param>
+            <returns>Maximum value</returns>
+            <remarks>There has to be a calculated channel that calculates the maximum value!</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetPeakToPeakValue(System.Int32,System.Int32)">
+            <summary>
+            Returns the peak to peak measurement value for sensor of the given slot and position
+            </summary>
+            <param name="slot">Slot at which the sensor is located</param>
+            <param name="position">Position under the slot at which the sensor is located</param>
+            <returns>Peak to peak value</returns>
+            <remarks>There has to be a calculated channel that calculates the peak to peak value!</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ClearPeakValue(System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Clears the peak values of the given slot and position
+            </summary>
+            <param name="slot">Slot at which the sensor is located</param>
+            <param name="position">Position under the slot at which the sensor is located</param>
+            <param name="clearMin">True, if minimum value should be cleared</param>
+            <param name="clearMax">True, if maximum value should be cleared</param>
+            <param name="clearPeakToPeak">True, if peak to peak value should be cleared</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.HoldPeakValue(System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Freezes the current peak value of the given slot and position
+            </summary>
+            <param name="slot">Slot at which the sensor is located</param>
+            <param name="position">Position under the slot at which the sensor is located</param>
+            <param name="holdMin">True, if minimum value should be freezed</param>
+            <param name="holdMax">True, if maximum value should be freezed</param>
+            <param name="holdPeakToPeak">True, if peak to peak value should be freezed</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetDigitalOutBitMask">
+            <summary>
+            Returns the digital out status
+            </summary>
+            <returns>Digital out bit mask</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.LoadParameterSet(System.Int32)">
+            <summary>
+            Loads the parameter set with the given number
+            </summary>
+            <param name="parameterSetNumber">Number of the parameter set to load</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetCurrentParameterSetNumber">
+            <summary>
+            Returns the currently loaded parameter set number
+            </summary>
+            <returns>Current parameter set number</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetLimitSwitch(System.Int32)">
+            <summary>
+            Returns the limit switch that corresponds to the given number
+            </summary>
+            <param name="limitSwitchNumber">Number of the limit switch to return</param>
+            <returns>Limit switch according to given limit swicht number</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignLimitSwitch(Hbm.Api.Pmx.LimitSwitch)">
+            <summary>
+            Assigns a given limit swicht
+            </summary>
+            <param name="limitSwitchToSet">Limit switch to assign</param>
+            <returns>True, if assign has been successful</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetDeviceStatus">
+            <summary>
+            Returns the current devices status 
+            </summary>
+            <returns>Device status</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used by this instance
+            </summary>
+            <param name="disposing">Indicates if managed or unmanged resources should be released.</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetConnectorsOfSelectedSlotAndConnectorNumber(System.Int32,System.Int32,Hbm.Api.Pmx.Enums.AmplifierType)">
+            <summary>
+            Returns a list of connnector objects filled with all channels, signals, sensor etc.
+            </summary>
+            <param name="currentSlotNumber">Currently selected slotNumber</param>
+            <param name="currentConnectorNumber">Currently selected connectorNumber</param>
+            <param name="currentAmpType">Amplifier type of selected slot/connector</param>
+            <returns>
+            List of connectors (returns only more than one connector, if amplifier type is DigitalIO)
+            </returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetSelectedAnalogInConnector(System.Int32,System.String,System.Int32,Hbm.Api.Pmx.Enums.AmplifierType)">
+            <summary>
+            Returns an analog in connector including channel, signals and sensor properties
+            </summary>
+            <param name="currentSlotNumber">Number of already selected slot</param>
+            <param name="currentAmplifierSerialNumber">Amplifier serial number of the selected slot</param>
+            <param name="currentConnectorNumber">Number of already selected connector</param>
+            <param name="currentAmpType">Amplifier type of selected slot/connector</param>
+            <returns>Analog in connector of selected slot and connector</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetSelectedAnalogOutConnector(System.Int32,System.String,System.Int32,Hbm.Api.Pmx.Enums.AmplifierType)">
+            <summary>
+            Returns an analog out connector including channel and signal
+            </summary>
+            <param name="currentSlotNumber">Number of already selected slot</param>
+            <param name="currentAmplifierSerialNumber">Amplifier serial number of the selected slot</param>
+            <param name="currentConnectorNumber">Number of already selected connector</param>
+            <param name="currentAmpType">Amplifier type of selected slot/connector</param>
+            <returns>Analog out connector of selected slot and connector</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetSelectedVirtualConnector(System.Int32,System.String,System.Int32,Hbm.Api.Pmx.Enums.AmplifierType)">
+            <summary>
+            Returns a virtualConnector including channel, and signals.
+            </summary>
+            <param name="currentSlotNumber">Number of already selected slot</param>
+            <param name="currentAmplifierSerialNumber">Amplifier serial number of the selected slot</param>
+            <param name="currentConnectorNumber">Number of already selected connector</param>
+            <param name="currentAmpType">Amplifier type of selected slot/connector</param>
+            <returns>Virtual connector read from current slot and position</returns>
+            <remarks>Notice: slot and connector will not be selected again. This has to be done before calling this function!!</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetAnalogInSignalOfSelectedConnector(System.String,System.Int32,System.Int32)">
+            <summary>
+            Returns the filled AnalogInSignal
+            </summary>
+            <param name="signalName">Name to assign to the signal</param>
+            <param name="slot">Slot to assign to the signal</param>
+            <param name="position">Position to assign to the signal</param>
+            <returns>AnalogInSignal of selected connector. There is always only ONE signal per connector (PMX)</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetAnalogOutSignalOfSelectedConnector(System.String,System.Int32,System.Int32)">
+            <summary>
+            Returns the filled AnalogOutSignal
+            </summary>
+            <param name="signalName">Name to assign to the signal</param>
+            <param name="slot">Slot to assign to the signal</param>
+            <param name="position">Position to assign to the signal</param>
+            <returns>AnalogOutSignal of selected connector.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetOutputScalingOfSelectedConnector">
+            <summary>
+            Reads the scaling of the selected analog out connector
+            </summary>
+            <returns>Scaling of the selected analog out connector</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetVirtualSignalOfSelectedConnector(System.String,System.Int32,System.Int32)">
+            <summary>
+            Returns the filled VirtualSignal
+            </summary>
+            <param name="signalName">Name to assign to the signal</param>
+            <param name="slot">Slot to assign to the signal</param>
+            <param name="position">Position to assign to the signal</param>
+            <returns>VirtualSignal of selected connector. There is always only ONE signal per connector (PMX)</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetFilterOfSelectedConnector">
+            <summary>
+            Gets the filter object of the currently selected connector
+            </summary>
+            <returns>Filter object corresponding to pmx filter settings</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetParameterList(System.String,System.Int32,System.Double)">
+            <summary>
+            Sends a command to the device and returns the answer as list of doubles. Use this function
+            to evaluate more complex queries...
+            </summary>
+            <param name="command">Command to send to device</param>
+            <param name="minLength">Minimum expected answer length</param>
+            <param name="defaultValue">Default value for missing parameters</param>
+            <returns>List of received answer parameters</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetSampleRateOfSelectedConnector">
+            <summary>
+            Returns the sample rate of the selected connector (=channel=signal...PMX)
+            </summary>
+            <returns>Sample rate</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetZeroOfSelectedConnector">
+            <summary>
+            Returns the zero settings of the selected connector (=channel PMX!)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetAutoCalibrationOfSelectedConnector">
+            <summary>
+            Returns the auto calibration mode of the selected connector
+            </summary>
+            <returns>Auto calibration mode</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.FormatLocationHint(System.Int32,System.Int32)">
+            <summary>
+            Returns a formatted location hint that describes the position of a certain connector 
+            </summary>
+            <param name="slot">Slot to use for generating location hint</param>
+            <param name="position">Position to use for generating location hint</param>
+            <returns>Formatted location hint</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.FormatShortLocationHint(System.Int32,System.Int32)">
+            <summary>
+            Returns a short formatted location hint that describes the position of a certain connector 
+            </summary>
+            <param name="slot">Slot of the connector</param>
+            <param name="position">Position of the connector</param>
+            <returns>Formatted location hint</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.FormatSortableLocationHint(System.Int32,System.Int32)">
+            <summary>
+            Returns a sortable formatted location hint that describes the position of a certain connector 
+            </summary>
+            <param name="slot">Slot of the connector</param>
+            <param name="position">Position of the connector</param>
+            <returns>Formatted location hint</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.FormatShortDigitalLocationHint(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns a short formatted location hint that describes the position of a certain digital connector 
+            </summary>
+            <param name="slot">Slot of the connector</param>
+            <param name="position">Position of the connector</param>
+            <param name="pin">Pin number</param>
+            <returns>Formatted location hint(e.g. '10.1.01' or '10.2.16'</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.FormatSortableDigitalLocationHint(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns a sortable formatted location hint that describes the position of a certain digital connector 
+            </summary>
+            <param name="slot">Slot of the connector</param>
+            <param name="position">Position of the connector</param>
+            <param name="pin">Pin number</param>
+            <returns>Formatted location hint</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignVirtualConnector(Hbm.Api.Pmx.Connectors.PmxVirtualConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns all settings of the given connector to the virtual connector of the device
+            </summary>
+            <param name="pmxVirtualConnector">Connector that holds the settings to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignDigitalConnector(Hbm.Api.Pmx.Connectors.PmxDigitalConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns all settings of the given connector to the digital connector of the device
+            </summary>
+            <param name="pmxDigitalConnector">Connector that holds the settings to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignAnalogInConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns all settings of the given connector to the physical connector of the device
+            </summary>
+            <param name="pmxAnalogInConnector">Connector that holds the settings to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignAnalogInSignal(Hbm.Api.Pmx.Signals.PmxAnalogInSignal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns analogInSignal settings (name, sample rate, filter and synchronMode) to the device
+            </summary>
+            <param name="signalToAssign">Signal that holds the settings to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignAnalogOutConnector(Hbm.Api.Pmx.Connectors.PmxAnalogOutConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns an analog out connector
+            </summary>
+            <param name="pmxAnalogOutConnector">Connector to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignAnalogOutSignal(Hbm.Api.Pmx.Signals.PmxAnalogOutSignal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns analogInSignal settings (name, sample rate, filter and synchronMode) to the device
+            </summary>
+            <param name="signalToAssign">Signal that holds the settings to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignFilterToSelectedAnalogOutConnector(Hbm.Api.Pmx.Connectors.PmxAnalogOutConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns the filter of the given analog out connector to the device
+            </summary>
+            <param name="pmxAnalogOutConnector">Connector that holds the signal which filter should be assigned</param>
+            <param name="problemsDuringAssign"></param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssigngOutputScalingToSelectedAnalogOutConnector(Hbm.Api.Pmx.Signals.PmxAnalogOutSignal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns an analog output scaling 
+            </summary>
+            <param name="pmxAnalogOutSignal">Signal that contains the scaling</param>
+            <param name="problemsDuringAssign">Problems that occurred during assign</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignVirtualSignal(Hbm.Api.Pmx.Signals.PmxVirtualSignal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns virtualSignal settings (name, sample rateand synchronMode) to the device
+            </summary>
+            <param name="signalToAssign">Signal that holds the settings to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignDigitalSignal(Hbm.Api.Pmx.Signals.PmxDigitalSignal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns digital signal settings (name, sample rate and synchronMode) to the device
+            </summary>
+            <param name="signalToAssign">Signal that holds the settings to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.UnifySampleRatesOfOfDependentChannels(Hbm.Api.Pmx.Connectors.PmxDigitalConnector)">
+            <summary>
+            Sets the same sample rate for all signals of the slot to which the given pmxDigitalConnector is connected.
+            All digital signals connected to the same slot and position do support only ONE common sample rate!
+            Sample rates of dependent digital channels are checked and a SampleRatesChanged event is generated if there are differences to 
+            the sample rate of the given connector.
+            </summary>
+            <param name="pmxDigitalConnector">Connector on which the sample rate of the digital signal has been changed</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GenerateDigitalChannelName(System.Int32,System.Int32)">
+            <summary>
+            Generates a name for a digital channel and signal according to given parameters
+            </summary>
+            <param name="position">Position at which the digital channel is located (position1 = digitalIN, position2 = digitalOUT)</param>
+            <param name="pin">Pin of the digital signal (first possible pin is 1)</param>
+            <returns>Name of the digital signal / digital channel</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignScalingToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns scaling settings to the previously selected analogInConnector
+            </summary>
+            <param name="pmxAnalogInConnector">Connector that holds the scaling to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignTwoPointScalingToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Function assigns the 2 scaling points only!!!
+            No MaxEngineering or MinEngineering, no EngineerngUnit etc...
+            </summary>
+            <param name="pmxAnalogInConnector">Connector that holds the scaling to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignSampleRateToSelectedConnector(Hbm.Api.Common.Entities.Connectors.Connector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns sampleRate of the signal of the connector to the device...
+            </summary>
+            <remarks> Until now NO DEVICE SETTINGS will be changed!!! Actually this is just a check for valid sample rates.
+            Since ALL signals of the pmx do support samplerates, we ALWAYS have a best fitting samplerate</remarks>
+            <param name="connector">Connector that holds the sample rate to assign</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.UnifySensorSettingsOfDependentChannels(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector)">
+            <summary>
+            Unifies certain sensor settings of frequency sensors of dependent channels and raises SensorsChanged events for the changed channels.
+            </summary>
+            <param name="pmxAnalogInConnector">Connector at which settings should be checked for dependencies.</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignLvdtSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns a LVDT sensor 
+            </summary>
+            <param name="pmxAnaogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignHalfBridgeSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns a half bridge sensor
+            </summary>
+            <param name="pmxAnaogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignFullBridgeSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns a full bridge sensor
+            </summary>
+            <param name="pmxAnaogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignInductiveHalfBridgeSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns an inductive half bridge sensor
+            </summary>
+            <param name="pmxAnaogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignInductiveFullBridgeSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns an inductive full bridge sensor
+            </summary>
+            <param name="pmxAnalogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssingCarrierFrequency(Hbm.Api.SensorDB.Entities.Sensors.BridgeSensor,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assings the carrier frequency.
+            </summary>
+            <param name="bridgeSensor">The bridge sensor.</param>
+            <param name="problemsDuringAssign">The problems during assign.</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignPotentiometerSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns a potentiometer sensor
+            </summary>
+            <param name="pmxAnalogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignCurrentSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns a current sensor
+            </summary>
+            <param name="pmxAnalogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignVoltageSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns a voltage sensor
+            </summary>
+            <param name="pmxAnalogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignPWMSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns a pwm sensor
+            </summary>
+            <param name="pmxAnalogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignCounterSensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns a counter sensor
+            </summary>
+            <param name="pmxAnalogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignSSISensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns a ssi sensor
+            </summary>
+            <param name="pmxAnalogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AssignFrequencySensorToSelectedConnector(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Assigns a frequency sensor
+            </summary>
+            <param name="pmxAnalogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AdaptFrequencySensorSettingsToMeetRestrictionsForPosition1And3(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Checks a subset of properties that must not be changed at amplifier460/position1 and position3
+            and changes the properties according to the current settings of the sensor...
+            This function has to be called BEFORE the sensor will be assigned... (because e.g. no
+            MinEngineeringRange etc. will be calculated here! Ranges differ according to isInductive!!)
+            
+            Following parameters must not be changed:
+            IsInductive          - FrequencySensor at position 1 and 3 is always digital!
+            Glitchfilter         - must not be changed since it depends on the sensor setting of position 2/4
+            IsTerminationEnabled - must not be changed since it depends on the sensor setting of position 2/4
+            DigitalInputType     - must not be changed since it depends on the sensor setting of position 2/4
+            </summary>
+            <param name="pmxAnalogInConnector">Connector to which to assign the sensor</param>
+            <param name="problemsDuringAssign">Problems that occurred during assignment</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetBridgeSensitivityAndUpdateRanges(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem},Hbm.Api.SensorDB.Entities.Sensors.BridgeSensor,System.Decimal@,System.Decimal@)">
+            <summary>
+            Updates min and max engineering range of bridge sensors and returns best fitting transducer sensitivity
+            </summary>
+            <param name="pmxAnaogInConnector">Connector at which the sensor is located</param>
+            <param name="problemsDuringAssign">List of problems that occurred during the assign of min/max engineering range</param>
+            <param name="tempSensor">Sensor that contains the scaling that is used to calculate the engineering range</param>
+            <returns>Best transducer sensitivity settings to meet the given engineering range</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetBestFittingTransducerSensitivity(System.Decimal)">
+            <summary>
+            Returns best fitting transducer sensitivity according to given electrical range of a bridge sensor
+            </summary>
+            <param name="electricalRange">Electrical range of a bridge sensor</param>
+            <returns>Best fitting transducer sensitivity</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetBestFittingSampleRate(System.Decimal)">
+            <summary>
+            Returns the best fitting sample rate according to given, demanded sample rate
+            </summary>
+            <param name="demandedSampleRate">Sample rate</param>
+            <returns>Best fitting sample rate</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetBestFittingClockFrequency(System.Int32)">
+            <summary>
+            Returns the best fitting clock frequency according to given, demanded clock frequency
+            </summary>
+            <param name="demandedClockFrequency">Clock frequency</param>
+            <returns>Best fitting clock frequency</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ConvertTransducerSensitivityToValue(Hbm.Api.Pmx.Enums.TransducerSensitivity)">
+            <summary>
+            Converst a given TransducerSensitivity enum into a decimal value
+            </summary>
+            <param name="sensitivity">TransducerSensitivityEnum to convert</param>
+            <returns>Decimal value corresponding to given sensitivity</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetBestFittingFilterFrequencyOfSelectedConnector(Hbm.Api.Common.Entities.Filters.Filter)">
+            <summary>
+            Returns best fitting filter frequency for given filter
+            </summary>
+            <param name="demandedFilter">Filter with demanded filter frequency</param>
+            <returns>Best fitting filter frequency for given filter</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetBestFittingGlitchFilter(System.Double)">
+            <summary>
+            Returns the best fitting glitch filter in ns for a given, demanded filter in ns
+            </summary>
+            <param name="glitchFilter">Filter in ns to find best fitting, supported filter</param>
+            <returns>Best fitting filter in ns!!!</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.TransformScalingToTwoPointScaling(Hbm.Api.Pmx.Connectors.PmxAnalogInConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Transforms given ZeroSpan- or Table-scaling(with 2 points) of sensor under a given analogInConnector into 
+            a TwoPoint scaling that is supported by PMX devices
+            </summary>
+            <param name="pmxAnalogInConnector">Connector that holds the scaling that should be transformed</param>
+            <param name="problemsDuringAssign">Problems that occurred during transformation</param>
+            <returns>True, if given scaling has been transformed</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ExtractNames(System.String)">
+            <summary>
+            Extracts a list of names out of a concatenated string
+            </summary>
+            <param name="namesString">String containing multiple names delimited by <i>:</i></param>
+            <returns>List of extracted names</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ConvertToAscii(System.String)">
+            <summary>
+            Removes all characters from a string that are not within ascii code range 0..127
+            </summary>
+            <param name="stringToConvertToAscii">String to convert to ASCII </param>
+            <returns>String that contains ASCII characters only</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.ApplyAutoFilter(Hbm.Api.Common.Entities.Signals.AnalogInSignal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Applies the best fitting filter to the given signal.
+            </summary>
+            <param name="analogInSignal">The signal to apply the auto filter on.</param>
+            <param name="problems">Problems during assignment.</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.GetNumberOfErrorsFromProblemList(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Returns the number of errors, contained in the given list of problems
+            </summary>
+            <param name="problemList">List of problems to check for errors</param>
+            <returns>Number of errors in given list of problems</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AdaptEngineeringRanges(Hbm.Api.Common.Entities.Device,Hbm.Api.SensorDB.Entities.Sensor,System.Decimal,System.Decimal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Adapts the engineering ranges and the hardware engineering ranges according to the given min and max hardware engineering ranges
+            </summary>
+            <param name="device">Device instance (for generating appropriate problems)</param>
+            <param name="sensor">Sensor to have the scaling parameters available ( and the sensor for generating appropriate problems)</param>
+            <param name="minHardwareEngineering">Minimum engineering range (possible for mgc and given sensor type)</param>
+            <param name="maxHardwareEngineering">Maximum engineering range (possible for mgc and given sensor type)</param>
+            <param name="problemsDuringAssign">List of problems to be extended in case of occurring problems</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AdaptHardwareEngineeringRange(Hbm.Api.Common.Entities.Device,Hbm.Api.SensorDB.Entities.Sensor,System.Decimal,System.Decimal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Adapts the hardware engineering range to the given min and max hardware engineering values
+            </summary>
+            <param name="device">Device instance (for generating appropriate problems)</param>
+            <param name="sensor">Sensor to have the scaling parameters available ( and the sensor for generating appropriate problems)</param>
+            <param name="minHardwareEngineering">Minimum engineering range (possible for mgc and given sensor type)</param>
+            <param name="maxHardwareEngineering">Maximum engineering range (possible for mgc and given sensor type)</param>
+            <param name="problemsDuringAssign">List of problems to be extended in case of occurring problems</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.CommunicationManager.AdaptEngineeringRange(Hbm.Api.Common.Entities.Device,Hbm.Api.SensorDB.Entities.Sensor,System.Decimal,System.Decimal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Adapts the MinEngineeringRange and the MaxEngineering range to a valid value between the given calculatedMinEngineeringRange and calculatedMaxEngineeringRange 
+            </summary>
+            <param name="device">Device instance (for generating appropriate problems)</param>
+            <param name="sensor">Sensor to have the scaling parameters available ( and the sensor for generating appropriate problems)</param>
+            <param name="calculatedMinEngineeringRange">Minimum engineering range (possible for mgc and given sensor type)</param>
+            <param name="calculatedMaxEngineeringRange">Maximum engineering range (possible for mgc and given sensor type)</param>
+            <param name="problemsDuringAssign">List of problems to be extended in case of occurring problems</param>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Core.Scanner">
+            <summary>
+            Provides Scan functionalities
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.Scanner.Scan(System.String)">
+            <summary>
+            Scan network for devices
+            </summary>
+            <param name="familyName">Name to scan for</param>
+            <returns>List of found devices</returns>
+            <exception cref="T:Hbm.Api.Scan.Entities.ScanFailedException">Thrown if errors during scan for network adapters occur.</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Core.Scanner.ScanForDevice(System.String,System.String)">
+            <summary>
+            Scan for certain PMX device
+            </summary>
+            <param name="familyName">Name to scan for</param>
+            <param name="deviceName">Name of the device</param>
+            <returns>Device if found, otherwise <c>null</c></returns>
+            <exception cref="T:Hbm.Api.Scan.Entities.ScanFailedException">Thrown if errors during scan for network adapters occur.</exception>
+        </member>
+        <member name="T:Hbm.Api.Pmx.DataConverter.PmxDeviceConverter">
+            <summary>
+            Converter for converting a <see cref="T:Hbm.Api.Scan.Entities.Device"/> into a <see cref="T:Hbm.Api.Pmx.PmxDevice"/>
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.DataConverter.PmxDeviceConverter.HBM_PROTOCOL_NAME">
+            <summary>
+            Name of the protocol of the device for direct connecting with the device.
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.DataConverter.PmxDeviceConverter.Convert(Hbm.Api.Scan.Entities.Device)">
+            <summary>
+            Converts a <see cref="T:Hbm.Api.Scan.Entities.Device"/> into a <see cref="T:Hbm.Api.Pmx.PmxDevice"/>
+            </summary>
+            <remarks>
+            All information which is not available after scan will be added after connecting to the device. 
+            </remarks>
+            <param name="scanDevice">Device entity from Hbm.API.Scan</param>
+            <returns>Instance of PmxDevice, containing the converted data</returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.AmplifierType">
+            <summary>
+            PMX amplifier types
+            </summary>
+            <remarks>
+            The values of the enum items are the same as  
+            the amplifier type numbers returned by 
+            the query language of the device.
+            </remarks>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.AmplifierType.Unknown">
+            <summary>
+            Unknown amplifier
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.AmplifierType.PX401">
+            <summary>
+            Amplifier PX401 (Voltage, Current)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.AmplifierType.PX455">
+            <summary>
+            Amplifier PX455 (Bridge, LVDT, Potentiometer)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.AmplifierType.PX878">
+            <summary>
+            Amplifier PX878 (Analog out)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.AmplifierType.PX460">
+            <summary>
+            Amplifier PX460 (Frequency, ImpulseCounter, PWM, SSI)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.AmplifierType.VirtualCalc">
+            <summary>
+            Amplifier for virtual calculated channels
+            </summary>        
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.AmplifierType.DigitalIO">
+            <summary>
+            Amplifier for digitial IO.
+            The number of physical IOs (which can NOT be determined) depends on the 
+            number of PX878 modules that are plugged into the PMX. There are always 16 DIs 
+            and 16 DOs. The first PX878 delivers the first 8 DIs and DOs (0..7), the second
+            PX878 delivers the second 8 DIs and DOs (8..15).
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.PmxDeviceStatus">
+            <summary>
+            Device status
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.PmxDeviceStatus.NoError">
+            <summary>
+            No error
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.PmxDeviceStatus.FactorySettingsError">
+            <summary>
+            Factory calibration for PMX-housing currpted (not meascards!)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.PmxDeviceStatus.SyncMaster">
+            <summary>
+            1 = Device is sync master
+            0 = Device is sync slave
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.PmxDeviceStatus.SyncMessageError">
+            <summary>
+            Missing or invalid sysnc messages
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.PmxDeviceStatus.SyncUnlockedSlaveError">
+            <summary>
+            Cannot lock, regulatro is not able to synchronize to master
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.PmxDeviceStatus.Alive">
+            <summary>
+            Toggles with ~ 1Hz
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.PmxDeviceStatus.PowerOverLoad">
+            <summary>
+            Power supply overload occurred
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.PmxDeviceStatus.CatBufferOverrun">
+            <summary>
+            "Catman" interface buffer overrun
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.PmxDeviceStatus.SystemNotReady">
+            <summary>
+            E.g. change of parameterset in progress failed
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.PmxDeviceStatus.DSPOverRun">
+            <summary>
+            E.g. to many calculated channels
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.EngineeringUnit">
+            <summary>
+            PMX engineering units
+            </summary>
+            <remarks>
+            The values of the enum items are the same as  
+            the engineering numbers returned by 
+            the query language of the device.
+            </remarks>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.ExcitationAmplitude">
+            <summary>
+            PMX supported excitation amplitudes
+            </summary>
+            <remarks>
+            The values of the enum items are the same as  
+            the excitation amplitude numbers returned by 
+            the query language of the device.
+            </remarks>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.FilterCharacteristic">
+            <summary>
+            PMX supported filter characteristics
+            </summary>
+            <remarks>
+            The values of the enum items are the same as  
+            the filter characteristic numbers returned by 
+            the query language of the device.
+            </remarks>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.FilterFrequency">
+            <summary>
+            PMX supported filter frequencies
+            </summary>
+            <remarks>
+            The values of the enum items are the same as  
+            the filter frequency numbers returned by 
+            the query language of the device.
+            </remarks>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.InputType">
+            <summary>
+            Input types for PX460 only 
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.LimitSwitchOperatingDirection">
+            <summary>
+            PMX limit switch operation directions
+            </summary>
+            <remarks>
+            The values of the enum items are the same as  
+            returned by the query language of the device.
+            </remarks>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.LimitSwitchOperatingDirection.Off">
+            <summary>
+            Limit swicht is not evaluated
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.LimitSwitchOperatingDirection.AboveLimit">
+            <summary>
+            Limit switch triggers above a certain value
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.LimitSwitchOperatingDirection.BelowLimit">
+            <summary>
+            Limit switch triggers below a certain value
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.LimitSwitchOperatingDirection.InBand">
+            <summary>
+            Limit switch triggers within a given bandwidth
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.Enums.LimitSwitchOperatingDirection.OutOfBand">
+            <summary>
+            Limit switch triggers above a given bandwidth
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.SampleRate">
+            <summary>
+            PMX supported sample rates
+            </summary>
+            <remarks>
+            The values of the enum items are the same as  
+            the sample rate numbers returned by 
+            the query language of the device.
+            </remarks>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.PmxSensorType">
+            <summary>
+            PMX sensor types
+            </summary>
+            <remarks>
+            The values of the enum items are the same as  
+            the sensor type numbers returned by 
+            the query language of the device.
+            </remarks>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.SsiBaudRate">
+            <summary>
+            PMX supported SSI baud rates
+            </summary>
+            <remarks>
+            The values of the enum items are the same as  
+            the SSI baud rate numbers returned by 
+            the query language of the device.
+            </remarks>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Enums.TransducerSensitivity">
+            <summary>
+            PMX supported transducer sensitivities
+            </summary>
+            <remarks>
+            The values of the enum items are the same as  
+            the excitation amplitude numbers returned by 
+            the query language of the device.
+            </remarks>
+        </member>
+        <member name="T:Hbm.Api.Pmx.LimitSwitch">
+            <summary>
+            Class that describes a limit switch.
+            </summary>
+            <remarks>PMX supports up to 32 limit switches.</remarks>
+        </member>
+        <member name="P:Hbm.Api.Pmx.LimitSwitch.LimitSwitchNumber">
+            <summary>
+            Number of the limit switch. This can range from 1 to 32.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.LimitSwitch.Enabled">
+            <summary>
+            Determines if limit switch operation is activated. 
+            </summary>
+            <remarks><c>true</c>, if limit switch operation is activated, otherwise <c>false</c></remarks>
+        </member>
+        <member name="P:Hbm.Api.Pmx.LimitSwitch.InputSignal">
+            <summary>
+            Signal whose measurement value is used to evaluate the limit switch.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.LimitSwitch.OperatingDirection">
+            <summary>
+            Operation direction of the limit switch. 
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.LimitSwitch.Limit">
+            <summary>
+            Limit value. Dependents on <c>OperationDirection</c>, it may also be used to define the lower band value.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.LimitSwitch.Hysteresis">
+            <summary>
+            Hysteresis value. Dependents on <c>OperationDirection</c>, it may also be used to define the band span.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.LimitSwitch.ResetBehaviorMask">
+            <summary>
+            Reset behavior. Binary mask which is ANDed with all digital inputs. 
+            The reset behavior can be inverted with <c>InvertResetBehavior</c>. Default setting is 0.
+            </summary>
+            <remarks>
+            If the result is greater than 0 (true) this limit switch is cleared. 
+            Value range: 0,1,2,4,8,16,...32768 corresponding to the 16 digital inputs of the PMX.
+            Can be used for hysteresis management.
+            </remarks>
+        </member>
+        <member name="P:Hbm.Api.Pmx.LimitSwitch.InvertResetBehaviour">
+            <summary>
+            If true, the defined <c>ResetBehavior</c> is inverted.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.LimitSwitch.IgnoreMeasurementValueStatus">
+            <summary>
+            Determines if the status of the measurement value is ignored during evaluation of limit switch status.
+            </summary>
+            <remarks>
+            If set to <c>true</c>, the status of the measurement value is ignored during evaluation of limit switch status.
+            If set to <c>false</c>, the limit switch is only evaluated, if measurement value status is OK. Otherwise limit switch status will be frozen.
+            </remarks>
+        </member>
+        <member name="T:Hbm.Api.Pmx.PmxAdditionalFeatures">
+            <summary>
+            Class that holds all additional features of a PmxDevice.
+            Additional features cover all public functions that are not  
+            predetermined by the abstract functions of the Device class.
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.#ctor(Hbm.Api.Pmx.PmxDevice)">
+            <summary>
+            Constructor 
+            </summary>
+            <param name="pmxDevice">PmxDevice that supports the additional features</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.GetEngineeringUnit(Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Gets the engineering unit of the given signal
+            </summary>
+            <param name="signal">Signal from which to get the engineering unit</param>
+            <returns>Engineering unit of the given signal</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.GetMinValue(Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Gets the minimum value of the given signal
+            </summary>
+            <param name="signal"></param>
+            <returns>Minimum value for given signal</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.GetMaxValue(Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Gets the maximum value of the given signal
+            </summary>
+            <param name="signal"></param>
+            <returns>Maximum value for given signal</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.GetPeakToPeakValue(Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Gets the peak to peak value of the given signal
+            </summary>
+            <param name="signal"></param>
+            <returns>Maximum value for given signal</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.ClearPeakValues(Hbm.Api.Common.Entities.Signals.Signal,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Clears the peak values (min, max, peak to peak) of the given signal
+            </summary>
+            <param name="signal">Signal that holds the peak values</param>
+            <param name="clearMin">Set to true, if you want to clear the minimum value</param>
+            <param name="clearMax">Set to true, if you want to clear the maximum value</param>
+            <param name="clearPeakToPeak">Set to true, if you want to clear the peak to peak value</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.HoldPeakValues(Hbm.Api.Common.Entities.Signals.Signal,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Holds or enables peak value function of signal
+            </summary>
+            <param name="signal">Signal for which peak should be enabled/disabled</param>
+            <param name="holdMin">True, if min value should be frozen</param>
+            <param name="holdMax">True, if max value should be frozen</param>
+            <param name="holdPeakToPeak">True, if peak to peak value should be frozen</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.GetDigitalOutBitMask">
+            <summary>
+            Reads the digital output port of the PMX device.(16 bit)
+            </summary>
+            <returns>Bitmask of the 16 digital outputs of the PMX </returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.LoadParameterSet(System.Int32)">
+            <summary>
+            Loads and activates given parameter set number
+            </summary>
+            <param name="parameterSetNumber">Parameter set to load (0,1,2,...). 
+            -1 means: Load factory setup into currently active parameter set and activate it.</param>
+            <returns>True, if parameter set exists and has been loaded</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.GetCurrentParameterSetNumber">
+            <summary>
+            Returns the current parameter set number (the one that recently has been loaded)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.ActivateTEDS(Hbm.Api.Common.Entities.Connectors.Connector)">
+            <summary>
+            Loads and activates TEDS settings at given connector
+            </summary>
+            <param name="connectorAtWhichToActivateTEDS"></param>
+            <returns>True, if TEDS settings could be loaded and activated</returns>
+            <remarks>On success, the sensor object of the given connector will be replaced by an updated version according to TEDS settings</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.SendCommand(System.String)">
+            <summary>
+            Sends a command directly to PMX device and returns the answer of the device as string.
+            Do not use this function for binary access (e.g. to update continuous measurement functions)
+            </summary>
+            <param name="directAccessCommand"></param>
+            <returns>Response of the device to directAccessCommand</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.SendCommandWithoutReply(System.String)">
+            <summary>
+            Sends a command directly to the device, without waiting for an answer
+            </summary>
+            <param name="directAccessCommand">Command to be send</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.ReceiveReply">
+            <summary>
+            Receives the answer of a previously send command
+            </summary>
+            <returns>Answer from device</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.GetLimitSwitch(System.Int32)">
+            <summary>
+            Gets <c>LimitSwitch</c> settings from device
+            </summary>
+            <param name="limitSwitchNumber">Number of limit switch to get (1..32)</param>
+            <returns>LimitSwitch settings according to demanded number</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.AssignLimitSwitch(Hbm.Api.Pmx.LimitSwitch)">
+            <summary>
+            Assigns <see cref="T:Hbm.Api.Pmx.LimitSwitch"/> settings to a device
+            </summary>
+            <remarks>
+            If a limit switch with an already in use LimitSwitchNumber is assigned, that existing limit switch
+            will be overidden.
+            </remarks>
+            <param name="limitSwitch"><see cref="T:Hbm.Api.Pmx.LimitSwitch"/> object to assign</param>
+            <returns><c>true</c>, if assignment was successful, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxAdditionalFeatures.GetDeviceStatus">
+            <summary>
+            Returns the current status of the device
+            </summary>
+            <returns>Status of the device. See <see cref="T:Hbm.Api.Pmx.Enums.PmxDeviceStatus"/></returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.PmxDevice">
+            <summary>
+            Represents a PMX device
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.#ctor">
+            <summary>
+            Creates new instance of the class
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.#ctor(System.String,System.Int32)">
+            <summary>
+            Creates a new instance of the class
+            </summary>
+            <param name="ip4Address">IP address of the device</param>
+            <param name="port">Port for connecting the device</param>
+        </member>
+        <member name="P:Hbm.Api.Pmx.PmxDevice.FamilyName">
+            <summary>
+            Name of the family to which this device belongs
+            </summary>
+            <remarks>This MUST be exactly the same string as in property FamilyName in class <see cref="T:Hbm.Api.Pmx.PmxDeviceFamily"/></remarks>
+        </member>
+        <member name="P:Hbm.Api.Pmx.PmxDevice.NetAdapter">
+            <summary>
+            Network adapter of the device. Only for internal use
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.PmxDevice.SignalLists">
+            <summary>
+            Returns a list of signal lists, each containing signals with the same sample rate.
+            PMX allows a maximum of 3 different sample rates that may be used at once.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.PmxDevice.AdditionalFeatures">
+            <summary>
+            Additional features of the PMX device.
+            </summary>
+            <remarks>
+            Additional features cover all public functions that are not  
+            predetermined by the abstract functions of the Device class.
+            E.g.: LoadParameterSet() function of PmxDevice belongs to these
+            additional features of PmxDevice, whereas AssignConnector() does NOT belong to
+            additional features, since it is an abstract function of the Device class.
+            </remarks>
+        </member>
+        <member name="P:Hbm.Api.Pmx.PmxDevice.LogContextDevPmxStatus">
+            <summary>
+            Log Context for categorization status log messages to the specific device. Only for internal use.
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.AssignConnector(Hbm.Api.Common.Entities.Connectors.Connector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns the settings of the given connector (including channels, sensor, signals etc.)
+            to the physical connector of the device.
+            Warnings and errors during assign process are collected in list of problems.
+            </summary>
+            <param name="connector">Existing (modified) connector</param>
+            <param name="problems"> Warnings and errors that occurred during assign process</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="connector"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownConnectorException">Thrown, if connector does not belong to this device</exception>
+            <returns><c>true</c> if no problem occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.AssignChannel(Hbm.Api.Common.Entities.Channels.Channel,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns the settings of the given channel (including sensor, signals etc.)
+            to the physical channel of the device.
+            Warnings and errors during assign process are collected in list of problems.
+            </summary>
+            <param name="channel">Existing (modified) channel</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="channel"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownChannelException">Thrown, if channel does not belong to this device</exception>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.AssignSignal(Hbm.Api.Common.Entities.Signals.Signal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns the settings of the given signal
+            to the physical signal of the device.
+            Warnings and errors during assign process are collected in list of problems.
+            </summary>
+            <param name="signal">Existing (modified) signal</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="signal"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownSignalException">Thrown, if <paramref name="signal"/>  does not belong to this device</exception>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.AssignSensor(Hbm.Api.Common.Entities.Channels.Channel,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns the sensor settings of the given channel to the physical channel
+            of the device.
+            Warnings and errors during assign process are collected in list of problems. 
+            </summary>
+            <param name="channel">Existing (modified) channel</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="channel"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown, if <paramref name="channel"/> supports no sensor</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownChannelException">Thrown, if <paramref name="channel"/> does not belong to this device</exception>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.AssignZero(Hbm.Api.Common.Entities.Channels.Channel,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns the zero settings of the given channel to the physical channel
+            of the device.
+            Warnings and errors during assign process are collected in list of problems. 
+            </summary>
+            <param name="channel">Existing (modified) channel</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="channel"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownChannelException">Thrown, if <paramref name="channel"/> does not belong to this device</exception>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.AssignAutoCalibrationMode(Hbm.Api.Common.Entities.Channels.Channel,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns the <see cref="T:Hbm.Api.Common.Enums.AutoCalibrationMode"/> of the given channel to the physical channel
+            of the device.
+            Warnings and errors during assign process are collected in list of problems. 
+            </summary>
+            <param name="channel">Existing (modified) channel</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.AssignTimeSource(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns the <see cref="T:Hbm.Api.Common.Entities.TimeSources.TimeSource"/> to the device.
+            Warnings and errors during assign process are collected in list of problems.
+            </summary>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetTedsUsageMode(Hbm.Api.Common.Entities.Connectors.Connector,Hbm.Api.Common.Enums.TedsUsageMode,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Sets the TEDS usage mode and re-reads the connector settings.
+            </summary>
+            <param name="connector">The connector.</param>
+            <param name="tedsUsageMode">The TEDS usage mode to be set.</param>
+            <param name="problems">Output: The list of problems or empty if none occurred.</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.ReadTeds(Hbm.Api.Common.Entities.Connectors.Connector,System.String@,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Reads the sensor from the TEDS connected to the given connector.
+            </summary>
+            <param name="connector">The connector.</param>
+            <param name="tid"></param>
+            <param name="problems">The problems.</param>
+            <returns>The sensor. </returns>
+            <exception cref="T:System.ArgumentNullException">connector</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownConnectorException">Connector does not belong to current device!</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.WriteTeds(Hbm.Api.Common.Entities.Connectors.Connector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@,Hbm.Api.SensorDB.Entities.Sensor,System.String,System.String)">
+            <summary>
+            Writes the given sensor to the TEDS connected to the given connector.
+            </summary>
+            <param name="connector">The connector.</param>
+            <param name="problems">The problems.</param>
+            <param name="sensor">The sensor.</param>
+            <param name="tid">Optional transducer ID.</param>
+            <param name="channelName">Optional channel name.</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c>.</returns>
+            <exception cref="T:System.ArgumentNullException">connector</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownConnectorException">Connector does not belong to current device!</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.ActivateTeds(Hbm.Api.Common.Entities.Connectors.Connector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Activates the TEDS settings at the given connector and loads the new channel parameters.
+            </summary>
+            <param name="connector">Connecter, whose connected TEDS shall be activated.</param>
+            <param name="problems">Empty or a list of warnings and errors that occurred during the activation process.</param>
+            <returns><c>true</c>, if the TEDS settings have been activated, otherwise <c>false</c>.</returns>
+            <remarks>
+            On success, the sensor object and some channel properties of the given connector will be replaced by an updated version according to TEDS settings.
+            </remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetTimeSourceQuality(System.Double@,System.String@)">
+            <summary>
+            Returns the offset (timespan between synchronization time source and time of device) in ms and a <see cref="T:Hbm.Api.Common.Entities.TimeSources.TimeSource"/> dependent
+            string with further information about the quality of the synchronization.
+            For <see cref="T:Hbm.Api.Common.Entities.TimeSources.NtpTimeSource"/> this string includes the parameters (comma seperated): "remote, refid, st, t, when, poll, reach, delay, offset, jitter"
+            For <see cref="T:Hbm.Api.Common.Entities.TimeSources.PtpTimeSource"/> this string includes the following parmeters (comma seperated): "GrandmasterID, SyncMode, TimeScaleFlags, UtcOffset, UtcOffsetUsed, MasterOffset"
+            </summary>
+            <param name="offsetInMs">Offset to time source in milliseconds, <see cref="F:System.Double.MaxValue"/> if offset can not be determined</param>
+            <param name="quality">TimeSource type dependent information about the synchronization quality. </param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetSupportedFilterFrequencies(Hbm.Api.Common.Entities.Filters.Filter,System.Boolean)">
+            <summary>
+            Get a list of supported filter frequencies for given filter
+            </summary>
+            <param name="filter">Filter, whose possible filter frequencies you want to get</param>
+            <param name="isOfflineQuery">True, if possible filter frequencies should be returned without communication with the device (e.g. due to performance reasons)</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="filter"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException">Thrown, if device is not connected</exception>        
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownFilterException">Thrown, if filter does not belong to this device</exception>
+            <returns>List of possible filter frequencies</returns>		
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetSupportedSensorTypes(Hbm.Api.Common.Entities.Channels.Channel,System.Boolean)">
+            <summary>
+            Get a list of supported sensor types for a given channel
+            </summary>
+            <param name="channel">Channel, whose possible sensor types you want to get</param>
+            <param name="isOfflineQuery">True, if possible sensor types should be returned without communication with the device (e.g. due to performance reasons)</param>
+            <returns>List of possible sensor types</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="channel"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownChannelException">Thrown, if channel does not belong to this device</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException">Thrown, if device is not connected</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetSupportedScalingTypes(Hbm.Api.Common.Entities.Channels.Channel,System.Boolean)">
+            <summary>
+            Get a list of supported scaling types for given channel
+            </summary>
+            <param name="channel">Channel, whose possible scaling types you want to get</param>
+            <param name="isOfflineQuery">True, if possible scaling types should be returned without communication with the device (e.g. due to performance reasons)</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="channel"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownChannelException">Thrown, if <paramref name="channel"/> does not belong to this device</exception>
+            <returns>List of possible scaling types</returns>
+            <remarks>Possible scaling types may also depend on the current sensor of the channel!</remarks>		
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetSupportedSampleRates(Hbm.Api.Common.Entities.Signals.Signal,System.Boolean)">
+            <summary>
+            Get a list of supported sample rates
+            </summary>
+            <param name="signal">Signal, whose possible sample rates you want to get</param>
+            <param name="isOfflineQuery">True, if possible sample rates should be returned without communication with the device (e.g. due to performance reasons)</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="signal"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownSignalException">Thrown, if <paramref name="signal"/> does not belong to this device</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException">Thrown, if device is not connected</exception>        
+            <returns>List of possible sample rates</returns>		
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetSupportedFilters(Hbm.Api.Common.Entities.Signals.Signal,System.Boolean)">
+            <summary>
+            Get a list of supported filters for given signal
+            </summary>
+            <param name="signal">Signal, whose possible filters you want to get</param>
+            <param name="isOfflineQuery">True, if possible filters should be returned without communication with the device (e.g. due to performance reasons)</param>
+            <returns>List of possible filters</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="signal"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownSignalException">Thrown, if signal does not belong to this device</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetSupportedJackType(Hbm.Api.Common.Entities.Signals.Signal,System.Boolean)">
+            <summary>
+            Gets the type of the supported jack for the given signal
+            </summary>
+            <param name="signal">The signal.</param>
+            <param name="isOfflineQuery">True, if possible jack type should be returned without communication with the device (e.g. due to performance reasons)</param>
+            <returns>
+            Name of the jack type
+            </returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.ReadSingleMeasurementValue(System.Collections.Generic.List{Hbm.Api.Common.Entities.Signals.Signal})">
+            <summary>
+            Obtains a single measurement value for each given <see cref="T:Hbm.Api.Common.Entities.Signals.Signal"/> without initializing a complete DAQ session.
+            Filter settings will be ignored.
+            The measurement value is internally saved in <see cref="T:Hbm.Api.Common.Entities.Signals.Signal"/> and can be obtained from there by calling <see cref="M:Hbm.Api.Common.Entities.Signals.Signal.GetSingleMeasurementValue"/>.
+            </summary>
+            <param name="measurementSignals">Signals to get measurement values from</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="measurementSignals"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown, if count of <paramref name="measurementSignals"/> is 0</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException">Thrown, if device is not connected</exception>        
+            <remarks>Since the device does not support time stamps for single measurement values, the current time of your 
+            pc is used to generate a time stamp.</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.ReadSingleMeasurementValueOfAllSignals">
+            <summary>
+            Obtains a single measurement value for all <see cref="T:Hbm.Api.Common.Entities.Signals.Signal"/>s of the device without initializing a complete DAQ session.
+            Filter settings will be ignored.
+            The measurement values are internally saved in <see cref="T:Hbm.Api.Common.Entities.Signals.Signal"/> and can be obtained from there by calling <see cref="M:Hbm.Api.Common.Entities.Signals.Signal.GetSingleMeasurementValue"/>.
+            </summary>
+            <remarks>Since the device does not support time stamps for single measurement values, the current time of your 
+            pc is used to generate a time stamp.</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetDigitalIO(Hbm.Api.Common.Entities.Signals.DigitalSignal,Hbm.Api.Common.Enums.DigitalValueType)">
+            <summary>
+            Sets the digital signal according to the given value
+            </summary>
+            <param name="digitalSignal">Digital signal to adjust</param>
+            <param name="value">Value to set</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="digitalSignal"/> is <c>null</c>.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown, if connector of <paramref name="digitalSignal"/> supports no output operation</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownSignalException">Thrown, if <paramref name="digitalSignal"/> does not belong to this device</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException">Thrown, if device is not connected</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetAnalogOut(Hbm.Api.Common.Entities.Signals.AnalogOutSignal,System.Decimal)">
+            <summary>
+            Sets the analog out signal to the given value
+            </summary>
+            <param name="analogOutSignal">Analog out signal to adjust</param>
+            <param name="value">Value to set</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="analogOutSignal"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownSignalException">Thrown, if <paramref name="analogOutSignal"/> does not belong to this device</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException">Thrown, if device is not connected</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetInputSignalReference(Hbm.Api.Common.Entities.Channels.IInputSignalReference,Hbm.Api.Common.Entities.Device,Hbm.Api.Common.Entities.Signals.Signal,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns the reference of an input signal to the given <paramref name="channel"/>. 
+            The reference consists of the input signal's device and the input signal itself.
+            </summary>
+            <param name="channel">(Output) channel, which will contains the input signal reference</param>
+            <param name="inputSignalDevice">Device of the input signal</param>
+            <param name="inputSignal">Input signal</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="channel"/>, <paramref name="inputSignalDevice"/> or <paramref name="inputSignal"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown, if <paramref name="inputSignal"/>is a <see cref="T:Hbm.Api.Common.Entities.Signals.DigitalSignal"/> or an <see cref="T:Hbm.Api.Common.Entities.Signals.AnalogOutSignal"/></exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownChannelException">Thrown, if <paramref name="channel"/> does not belong to this device</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownSignalException">Thrown, if <paramref name="inputSignal"/> does not belong to this device</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException">Thrown, if device is not connected</exception>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.ChangeIp(System.String,System.String,System.Boolean,System.String,System.UInt32,System.String,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Changes the device ipAddress
+            </summary>
+            <param name="ipAddress">ipAdress to apply</param>
+            <param name="subnetMask">subnetmask</param>
+            <param name="isDhcp">indicator if it is an automatic assign</param>
+            <param name="gateWay">gateway</param>
+            <param name="tcpPort">tcpPort</param>
+            <param name="interfaceName">Name of the network interface</param>
+            <param name="problems">List of problems</param>
+            <returns>True if success, otherwise false</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetDeviceName(System.String,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Sets the name of the device. PMX devices cannot be renamed.
+            </summary>
+            <param name="newName">New name</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetChannelName(Hbm.Api.Common.Entities.Channels.Channel,System.String,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns a channel name to the given <paramref name="channel"/>. 
+            </summary>
+            <remarks>
+            The implementation should call <see cref="M:Hbm.Api.Common.Messaging.MessageBroker.RaiseChannelNameChangedAsync(System.Object,Hbm.Api.Common.Messaging.ChannelsEventArgs)"/> 
+            after a successful assignment of the channel name.
+            </remarks>
+            <param name="channel">Channel, which will be renamed</param>
+            <param name="channelName">New name of the channel</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="channel"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownChannelException">Thrown, if <paramref name="channel"/> does not belong to this device</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException">Thrown, if device is not connected</exception>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetSignalName(Hbm.Api.Common.Entities.Signals.Signal,System.String,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns a signal name to the given <paramref name="signal"/>. 
+            </summary>
+            <remarks>
+            The implementation should call <see cref="M:Hbm.Api.Common.Messaging.MessageBroker.RaiseSignalNameChangedAsync(System.Object,Hbm.Api.Common.Messaging.SignalsEventArgs)"/> 
+            after a successful assignment of the signal name.
+            </remarks>
+            <param name="signal">Signal, which will be renamed</param>
+            <param name="signalName">New name of the signal</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="signal"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownChannelException">Thrown, if channel to which this signal belongs does not belong to this device</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException">Thrown, if device is not connected</exception>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetShunt(Hbm.Api.Common.Entities.Connectors.Connector,Hbm.Api.Common.Enums.ShuntMode,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Sets the configuration of the shunt output of the given connector
+            </summary>
+            <param name="connector">Connector whose shunt output should be set</param>
+            <param name="mode"><see cref="T:Hbm.Api.Common.Enums.ShuntMode"/> for given connector.</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetShunt(System.Collections.Generic.List{Hbm.Api.Common.Entities.Connectors.Connector},Hbm.Api.Common.Enums.ShuntMode,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Sets the configurations of the shunt outputs of the given connectors
+            </summary>
+            <param name="connectors">Connectors whose shunt outputs should be set</param>
+            <param name="mode"><see cref="T:Hbm.Api.Common.Enums.ShuntMode"/> for given connectors.</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetDataRateDomain(Hbm.Api.Common.Enums.DataRateDomainType,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Sets the data rate domain.
+            </summary>
+            <param name="dataRateDomain">The data rate domain.</param>
+            <param name="problems">The problems.</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetShunt(Hbm.Api.Common.Entities.Connectors.Connector)">
+            <summary>
+            Gets the <see cref="T:Hbm.Api.Common.Enums.ShuntMode"/> for the given connector
+            </summary>
+            <param name="connector">Connector from which to get its <see cref="T:Hbm.Api.Common.Enums.ShuntMode"/></param>
+            <returns><see cref="T:Hbm.Api.Common.Enums.ShuntMode"/> of given connector</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetShunt(System.Collections.Generic.List{Hbm.Api.Common.Entities.Connectors.Connector})">
+            <summary>
+            Gets the <see cref="T:Hbm.Api.Common.Enums.ShuntMode"/> for the given connectors
+            </summary>
+            <param name="connectors">List of connectors from which to get their <see cref="T:Hbm.Api.Common.Enums.ShuntMode"/></param>
+            <returns>List of <see cref="T:Hbm.Api.Common.Enums.ShuntMode"/> of given connectors</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.FlashLed(Hbm.Api.Common.Entities.Connectors.Connector,Hbm.Api.Common.Enums.LedFlashMode,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Flashes the LED of the given connector in the given mode/color 
+            </summary>
+            <param name="connector">Connector that should be flashing</param>
+            <param name="mode">Mode/color to use for flashing</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.FlashLed(System.Collections.Generic.List{Hbm.Api.Common.Entities.Connectors.Connector},Hbm.Api.Common.Enums.LedFlashMode,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Flashes the LEDs of the given connectors in the given mode/color 
+            </summary>
+            <param name="connectors">Connectors that should be flashing</param>
+            <param name="mode">Mode/color to use for flashing</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.FlashLed(Hbm.Api.Common.Enums.LedFlashMode,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Flashes the device LED in the given mode/color 
+            </summary>
+            <param name="mode">Mode/color to use for flashing</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetSlotNumberOfSignal(Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Returns slot number of the signal regardless of its type
+            </summary>
+            <param name="signal">Signal whose slot should be returned</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="signal"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownSignalException">Thrown, if <paramref name="signal"/> does not belong to this device</exception>
+            <returns>Slot number of the signal</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetPositionNumberOfSignal(Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Returns position number of the signal, regardless of its type
+            </summary>
+            <param name="signal">Signal whose position should be returned</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="signal"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownSignalException">Thrown, if <paramref name="signal"/> does not belong to this device</exception>
+            <returns>Position number of the signal</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetConnectorOfSlotAndPosition(System.Int32,System.Int32)">
+            <summary>
+            Finds the connector that belongs to the given slot and position
+            </summary>
+            <param name="slot">Slot at which the connector is located</param>
+            <param name="position">Position within slot at which the signal is loacted</param>
+            <returns>Connector that has been found at given slot/position or null if no corresponding connector could be found.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetSignalOfSlotAndPosition(System.Int32,System.Int32)">
+            <summary>
+            Finds a signal that belongs to the given slot and position
+            </summary>
+            <param name="slot">Slot at which the signal is located</param>
+            <param name="position">Position within slot at which the signal is located</param>
+            <returns>Signal that has been found at given slot/position or null if no corresponding signal could be found.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetSupportedCanBitRates">
+            <summary>
+            Gets the supported CAN bit rates.
+            </summary>
+            <returns>
+            The List of supported CAN bit rates.
+            </returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetCanBusParameters(Hbm.Api.Common.Entities.Connectors.CanConnector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns all CAN bus parameters of the given <see cref="T:Hbm.Api.Common.Entities.Connectors.CanConnector"/> (e.g. <see cref="P:Hbm.Api.Common.Entities.Connectors.CanConnector.BitRate"/>,
+            <see cref="P:Hbm.Api.Common.Entities.Connectors.CanConnector.IsTerminated"/>, <see cref="P:Hbm.Api.Common.Entities.Connectors.CanConnector.SupplyVoltage"/>, etc. but NOT its channels.
+            </summary>
+            <param name="canConnector">Existing (modified) <see cref="T:Hbm.Api.Common.Entities.Connectors.CanConnector"/> whose properties should be assigned</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetCanChannelActivation(System.Collections.Generic.List{Hbm.Api.Common.Entities.Channels.Channel},System.Boolean,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Activates or deactivates the given list of channels. Only <see cref="T:Hbm.Api.Common.Entities.Channels.CanInChannel"/> and
+            <see cref="T:Hbm.Api.Common.Entities.Channels.CanOutChannel"/> can be activated or deactivated. 
+            </summary>
+            <param name="canChannels">Channels that should be activated or deactivated</param>
+            <param name="activated">True, if given channels should be activated</param>
+            <param name="problems">Warnings and errors that occurred during activation/deactivation process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SetUnit(Hbm.Api.Common.Entities.Channels.Channel,System.String,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Assigns the unit of the given channel
+            </summary>
+            <param name="channel">Channel whose unit should be set</param>
+            <param name="unit">Unit to assign</param>
+            <param name="problems">Warnings and errors that occurred during assign process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetDeviceStatusList(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@,Hbm.Api.Common.Enums.StatusType)">
+            <summary>
+            Gets the list of device statuses.
+            </summary>
+            <param name="problems">List of warnings and/or errors that occurred during the process or empty list.</param>
+            <param name="statusTypesToGet"> <see cref="T:Hbm.Api.Common.Enums.StatusType"/> with the demanded status types (default is all status information).</param>
+            <returns>The list of device statuses.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetDeviceStatusList(Hbm.Api.Common.Entities.Channels.Channel,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Gets the list of device statuses for the given channel.
+            </summary>
+            <param name="channel">Channel to get the statuses for.</param>
+            <param name="problems">List of warnings and/or errors that occurred during the process or empty list.</param>
+            <returns>The list of device statuses.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetDeviceStatusList(Hbm.Api.Common.Entities.Connectors.Connector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Gets the list of device statuses for the given connector.
+            </summary>
+            <param name="connector">Connector to get the statuses for.</param>
+            <param name="problems">List of warnings and/or errors that occurred during the process or empty list.</param>
+            <returns>The list of device statuses.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetDeviceErrorStatusList(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Gets the list of device error statuses.
+            </summary>
+            <param name="problems">List of warnings and/or errors that occurred during the process or empty list.</param>
+            <returns>The list of device error statuses.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetDeviceErrorStatusList(Hbm.Api.Common.Entities.Connectors.Connector,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Gets the list of device error statuses for the given connector.
+            </summary>
+            <param name="connector">Connector to get the error statuses for.</param>
+            <param name="problems">List of warnings and/or errors that occurred during the process or empty list.</param>
+            <returns>The list of device error statuses for the given connector.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetDeviceErrorStatusList(Hbm.Api.Common.Entities.Channels.Channel,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Gets the list of device error statuses for the given channel.
+            </summary>
+            <param name="channel">Channel to get the error statuses for.</param>
+            <param name="problems">List of warnings and/or errors that occurred during the process or empty list.</param>
+            <returns>The list of device error statuses for the given channel.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.Reset(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Resets the device to its factory default settings. 
+            Caution! After this function has been called, the device will be disconnected.
+            This is necessary because the parameterization of the device changes by 
+            loading the factory defaults and the device therefore will be no longer consistent with the associated object model of the device.
+            (When implementing this function, be sure to disconnect the device and to call <see cref="M:Hbm.Api.Common.Messaging.MessageBroker.RaiseDeviceDisconnectedAsync(System.Object,Hbm.Api.Common.Messaging.DeviceEventArgs)"/> to signal
+            that the device has been disconnected.) 
+            </summary>
+            <param name="problems">Warnings and errors that occurred during resetting the device</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+            <remarks >Notice that the device may be unreachable for a certain time and the device is disconnected after the execution of this function.</remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetAmplifierType(Hbm.Api.Common.Entities.Channels.Channel)">
+            <summary>
+            Gets the amplifier type of the channel.
+            </summary>
+            <param name="channel">The channel whose amplifier type should be returned.</param>
+            <returns>Amplifier type for the given channel.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetAmplifierSerialNumber(Hbm.Api.Common.Entities.Channels.Channel)">
+            <summary>
+            Gets the amplifier serial number of the channel.
+            </summary>
+            <param name="channel">The channel whose amplifier serial number should be returned.</param>
+            <returns>
+            Amplifier serial number for the given channel.
+            </returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetChannelHardwareInfo(Hbm.Api.Common.Entities.Channels.Channel)">
+            <summary>
+            Gets the hardware information (e.g. amplifier type) of the channel.
+            </summary>
+            <param name="channel">The channel whose hardware info should be returned.</param>
+            <returns>
+            Hardware info for the given channel.
+            </returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.IsFirmwareVersionSupported(System.String)">
+            <summary>
+            Determines whether the given firmware version is supported.
+            </summary>
+            <param name="firmwareVersion">The firmware version to check.</param>
+            <returns>
+            false, if given firmware version is not supported
+            </returns>
+            <remarks>
+            The function returns also true, if the given firmware version is higher than the latest known one
+            (at the time at which the API has been released).
+            </remarks>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.PrepareDaq(System.Collections.Generic.List{Hbm.Api.Common.Entities.Signals.Signal})">
+            <summary>
+            Prepares a continuous measurement session.
+            </summary>
+            <param name="measurementSignals">The signals which will be used for the measurement.</param>       
+            <exception cref="T:System.ArgumentNullException"><paramref name="measurementSignals"/> is <c>null</c>.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.UnknownSignalException">Thrown if <paramref name="measurementSignals"/> contains a signal that does not belong
+            to this device.</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.PrepareDaqFailedException">Thrown if there were errors during the preparation of the measurement (e.g.
+            not supported sample rates or to many sample rates for this device)</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException"> is thrown if connection to the device has been lost (e.g. due to communication error)</exception>
+            <exception cref="T:Hbm.Api.Common.Exceptions.TooManySampleRatesException"> thrown if more than 3 sample rates are detected</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.BeginStartDaq">
+            <summary>
+            Starts an already prepared (via <c>PrepareDaq</c>) continuous measurement session
+            without waiting for any reply of the device. Use this function in combination with
+            <c>EndStartDaq</c>
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.EndStartDaq">
+            <summary>
+            Ends the concurrent start of data acquisition (initiated via <c>BeginStartDaq</c>)
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.ReadDaqValues">
+            <summary>
+            Updates the <c>Signal.CircularBuffer</c>
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.StopDaq">
+            <summary>
+            Stops a running continuous measurement session
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.Connect(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Connect to the underlying physical device.
+            </summary>
+            <param name="problems">List of warnings and errors that occurred during the connect process</param>
+            <returns><c>true</c> if no problem occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.Reconnect(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Reconnect to the underlying physical device with already partial or fully filled object model (Connectors etc.)
+            The already available connectors are written to the physical device and the missing connectors are filled up back from the device by keeping the original object instances.
+            </summary>
+            <param name="problems">List of warnings and errors that occurred during the reconnect process</param>
+            <returns><c>true</c> if no error occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.RefreshDeviceInfo(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Refreshes relevant device properties like Name, SerialNo etc..
+            Use this function if you want to get information about the device itself - without reading all connectors.
+            </summary>
+            <param name="problems">Warnings and errors that occurred during the refresh process</param>
+            <returns><c>true</c> if no error has occurred, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.MapConnectionInfo(Hbm.Api.Common.Entities.ConnectionInfos.ConnectionInfo)">
+            <summary>
+            Maps the given ConnectionInfo to a possible ConnectionInfo for the device.
+            If this is not possible, the function returns null.
+            Example: Given ConnectionInfo is EthernetConnectionInfo but the device supports 
+            StreamingConnectionInfo only:  The function maps the EthernetConnectionInfo onto
+            a StreamingConnectionInfo and fills the missing parameters e.g. with default streaming parameters 
+            if possible. If this is not possible the function has to return null.
+            </summary>
+            <param name="connectionInfo">The ConnectionInfo to map onto a supported ConnectionInfo</param>
+            <returns>Valid ConnectionInfo for the device or null if mapping is not possible</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.HandleChannelsChangesTriggeredByTedsActivation(System.Collections.Generic.Dictionary{Hbm.Api.Common.Entities.Connectors.Connector,Hbm.Api.Common.Entities.Channels.Channel},System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Handles the channels changes triggered by teds activation.
+            </summary>
+            <param name="channels">The channels.</param>
+            <param name="problems">The problems.</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetPossibleDataAcquisitionModes">
+            <summary>
+            Gets the possible data acquisition modes according to the current synchronization settings of the device.
+            When the device detects a hardware synchronization (typically established via a synchronization cable), the returned list
+            will contain the mode <see cref="F:Hbm.Api.Common.Enums.DataAcquisitionMode.HardwareSynchronized"/>.
+            If the device uses a time based synchronization (e.g. PTP or NTP), the returned list will contain 
+            the mode <see cref="F:Hbm.Api.Common.Enums.DataAcquisitionMode.TimestampSynchronized"/>.
+            Since most devices are able to fulfill an unsynchronized measurement, the returned list will most likely contain the mode <see cref="F:Hbm.Api.Common.Enums.DataAcquisitionMode.Unsynchronized"/>.
+            If the device is not connected, the list of possible data acquisition modes will be empty.
+            </summary>
+            <returns>List of possible <see cref="T:Hbm.Api.Common.Enums.DataAcquisitionMode"/> for this device according to its current synchronization settings.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.Disconnect">
+            <summary>
+            Disconnect from device
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.HandleDeviceNotConnectedException">
+            <summary>
+            Function that disconnects the device in case of an <see cref="T:Hbm.Api.Common.Exceptions.DeviceNotConnectedException"/> that
+            has been thrown by the communication manager
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.HandleDeviceStatus(Hbm.Api.Common.Entities.Statuses.ChannelTedsStatus)">
+            <summary>
+            Handles the device status and raises events if changed.
+            </summary>
+            <param name="tedsStatus">The teds status.</param>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetMissingDeviceInfosByScan">
+            <summary>
+            Sets device infos that can not be obtained via communicationManager (3Byte-commands)
+            This function has been used to obtain a serial number (as long as we couldn't
+            get it via IDN? ... but now this works... 
+            Perhaps we can use it later to get Services and Adapter....(streaming??)
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetChannelTedsStatus(System.Collections.Generic.List{Hbm.Api.Common.Entities.Channels.Channel})">
+            <summary>
+            Returns a list of ChannelTedsStatus for all given channels
+            </summary>
+            <param name="channels">List of channels from which to get the ChannelTedsStatus</param>
+            <returns>List of ChannelTedsStatus one for each given channel</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetChannelOverFlowStatus(System.Collections.Generic.List{Hbm.Api.Common.Entities.Channels.Channel})">
+            <summary>
+            Returns a list of ChannelOverflowStatus (one for each measurable signal) for all given channels
+            </summary>
+            <param name="channels">List of channels from which to get the ChannelOverflowStatus</param>
+            <returns>List of ChannelOverflowStatus (one for each measurable signal)</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetConnectorConnectedStatus(System.Collections.Generic.List{Hbm.Api.Common.Entities.Connectors.Connector})">
+            <summary>
+            Returns a list of ConnectorConnectedStatus (one for each given connector) 
+            </summary>
+            <param name="connectors">List of connectors from which to get ConnectorConnectedStatus</param>
+            <returns>List of ConnectorConnectedStatus (one for each connector)</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetConnectorParamBusyStatus(System.Collections.Generic.List{Hbm.Api.Common.Entities.Connectors.Connector})">
+            <summary>
+            Returns a list of ConnectorParamBusyStatus (one for each given connector) 
+            </summary>
+            <param name="connectors">List of connectors from which to get ConnectorParamBusyStatus</param>
+            <returns>List of ConnectorParamBusyStatus (one for each connector)</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.GetDeviceErrorStatusList(System.Collections.Generic.List{Hbm.Api.Common.Entities.Channels.Channel},System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Gets the list of device error statuses for the given channels.
+            </summary>
+            <param name="channelList">Channels to get the error statuses for</param>
+            <param name="problems">List of warnings and/or errors that occurred during the process or empty list.</param>
+            <returns>The list of device error statuses for the given channels</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.IsSameDevice(System.String)">
+            <summary>
+            Checks if the current device matches the given serial number
+            </summary>
+            <param name="serialNo">serial number to ceck</param>
+            <returns><c>true</c> if serial numbers match, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.ReadBackConnectors">
+            <summary>
+            Reads all connectors from device, compares them to currently available connectors in the device and filles up the object model to fully reflect the physical device structure
+            by keeping already existing object instances at the same time.
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.SortConnectors">
+            <summary>
+            Reorders the connector list to reflect the <see cref="!:IPmxConnector.Slot"/>, <see cref="!:IPmxConnector.Position"/> 
+            and <see cref="P:Hbm.Api.Pmx.Connectors.PmxDigitalConnector.Pin"/> properties correctly in ascending order.
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDevice.HasSignalNameChanged(Hbm.Api.Common.Entities.Connectors.Connector,Hbm.Api.Common.Entities.Channels.Channel,System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Determines whether [has signal name changed].
+            </summary>
+            <param name="connector">The connector.</param>
+            <param name="pmxAnalogInChannel">The PMX analog in channel.</param>
+            <param name="problems">The problems.</param>
+            <returns>
+              <c>true</c> if [has signal name changed]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.PmxDeviceFamily">
+            <summary>
+            Concrete device family implementation for PMX devices
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.PmxDeviceFamily.FAMILY_NAME">
+            <summary>
+            Name of the device family.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.PmxDeviceFamily.FamilyName">
+            <summary>
+            Get name of the device family (ReadOnly)
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.PmxDeviceFamily.IsScanSupported">
+            <summary>
+            Indicates if a device family supports a scan mechanism
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.PmxDeviceFamily.SkillReader">
+            <summary>
+            Path to assembly that contains the device specific derivation of SkillReader
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDeviceFamily.Scan">
+            <summary>
+            Scan network for PMX devices
+            </summary>
+            <returns>List of found PMX devices</returns>
+            <exception cref="T:Hbm.Api.Scan.Entities.ScanFailedException">Thrown if errors during scan for network adapters occur.</exception>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDeviceFamily.Find(System.Collections.Generic.List{Hbm.Api.Common.Entities.ConnectionInfos.ConnectionInfo},System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem}@)">
+            <summary>
+            Finds devices according to given connetionInfos.
+            </summary>
+            <param name="connectionInfos">The connection infos.</param>
+            <param name="problems">List of warnings and errors that occurred during the find process</param>
+            <returns>
+            List of all found devices
+            </returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDeviceFamily.GetPossibleDataAcquisitionModes(System.Collections.Generic.List{Hbm.Api.Common.Entities.Device},Hbm.Api.Common.Entities.TimeSources.TimeSource@)">
+            <summary>
+            Gets the possible data acquisition modes by taking into account all given devices of the family.
+            CommonTimeSource is set to the timesource that is used by all devices of the family (only relevant if 
+            <see cref="F:Hbm.Api.Common.Enums.DataAcquisitionMode.TimestampSynchronized"/> is supported by the given devices).
+            </summary>
+            <param name="devices">Devices that belong to the family and take part in the measurement</param>
+            <param name="commonTimeSource">TimeSource that is supported by all devices (typically e.g. an <see cref="T:Hbm.Api.Common.Entities.TimeSources.NtpTimeSource"/>)</param>
+            <returns>Possible <see cref="T:Hbm.Api.Common.Enums.DataAcquisitionMode"/>s according to the possibilities of the given devices.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.PmxDeviceFamily.PrepareDataAcquisition(Hbm.Api.Common.Enums.DataAcquisitionMode,System.Collections.Generic.List{Hbm.Api.Common.Entities.Device})">
+            <summary>
+            Function to do final device settings according to the given <see cref="T:Hbm.Api.Common.Enums.DataAcquisitionMode"/>. 
+            Use this function to setup e.g. trigger master and trigger slave, choose certain time stamp settings etc. which is relevant for the given data
+            acquisition mode. Since all devices of a certain device family, that take part in the measurement are also given to this function,
+            there is the possibility to handle certain devices in different ways (e.g. trigger master gets other settings/preparations than the slaves etc.).
+            </summary>
+            <param name="dataAcquisitionMode"><see cref="T:Hbm.Api.Common.Enums.DataAcquisitionMode"/> that describes how to start the measurement</param>
+            <param name="devicesToPrepare">Devices of the family that take part in the measurement</param>
+            <remarks>Do not use <see cref="F:Hbm.Api.Common.Enums.DataAcquisitionMode.Auto"/> but one of the DataAcquisitionModes returned by the function <see cref="M:Hbm.Api.Pmx.PmxDeviceFamily.GetPossibleDataAcquisitionModes(System.Collections.Generic.List{Hbm.Api.Common.Entities.Device},Hbm.Api.Common.Entities.TimeSources.TimeSource@)"/></remarks>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Signals.IPmxSignal">
+            <summary>
+            Interface for additional properties of PmxSignal
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.IPmxSignal.Slot">
+            <summary>
+            The slot number of the device to which the signal belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.IPmxSignal.Position">
+            <summary>
+            The position within the slot to which the signal belongs.
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Signals.PmxAnalogInSignal">
+            <summary>
+            Represents a measurement signal delivered by a physical sensor
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.PmxAnalogInSignal.Slot">
+            <summary>
+            The slot number of the device to which the signal belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.PmxAnalogInSignal.Position">
+            <summary>
+            The position within the slot to which the signal belongs.
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Signals.PmxAnalogInSignal.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the signal among the device to which the signal belongs.
+            </summary>
+            <remarks>In case of a streamable signal, this method must return the information used by the streaming to identify the signal on the hardware module.
+            This information should be retrieved during scan or connect.</remarks>
+            <returns>Unique signal identification on the device</returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Signals.PmxAnalogOutSignal">
+            <summary>
+            Pmx specific implementation of an analog out signal
+            </summary>
+            <remarks>
+            This kind of signal cannot be part of a measurement.
+            </remarks>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.PmxAnalogOutSignal.Slot">
+            <summary>
+            The slot number of the device to which the signal belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.PmxAnalogOutSignal.Position">
+            <summary>
+            The position within the slot to which the signal belongs.
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Signals.PmxAnalogOutSignal.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the signal among the device to which the signal belongs.
+            </summary>
+            <remarks>In case of a streamable signal, this method must return the information used by the streaming to identify the signal on the hardware module.
+            This information should be retrieved during scan or connect.</remarks>
+            <returns>Unique signal identification on the device</returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Signals.PmxDigitalSignal">
+            <summary>
+             Represents a part of a digital signal (actually one bit of a "native" digital in or digital out signal of the PMX)
+             according to its masked bit.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.PmxDigitalSignal.Slot">
+            <summary>
+            The slot number of the device to which the signal belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.PmxDigitalSignal.Position">
+            <summary>
+            The position within the slot to which the signal belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.PmxDigitalSignal.Pin">
+            <summary>
+            Digital pin that is mapped to this signal
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Signals.PmxDigitalSignal.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the signal among the device to which the signal belongs.
+            </summary>
+            <remarks>In case of a streamable signal, this method must return the information used by the streaming to identify the signal on the hardware module.
+            This information should be retrieved during scan or connect.</remarks>
+            <returns>Unique signal identification on the device</returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Signals.PmxVirtualSignal">
+            <summary>
+             Represents a measurement signal, not delivered by a physical sensor (e.g. a calculated signal)
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.PmxVirtualSignal.Slot">
+            <summary>
+            The slot number of the device to which the signal belongs.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.Signals.PmxVirtualSignal.Position">
+            <summary>
+            The position within the slot to which the signal belongs.
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Signals.PmxVirtualSignal.GetUniqueID">
+            <summary>
+            Returns a unique string that identifies the signal among the device to which the signal belongs.
+            </summary>
+            <remarks>In case of a streamable signal, this method must return the information used by the streaming to identify the signal on the hardware module.
+            This information should be retrieved during scan or connect.</remarks>
+            <returns>Unique signal identification on the device</returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.Signals.SignalSorter">
+            <summary>
+            Helpclass that is used to sort signals (to be able to assign incomming measurement values to the according signal objects)
+            Usage: SignalList.Sort(SignalSorter.CompareSignalBySlotPosition); //sorts SignalList in ascending order (signal of Slot0 Position 0 is first element)
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.Signals.SignalSorter.CompareSignalsBySlotPosition(Hbm.Api.Common.Entities.Signals.Signal,Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Compares the position of two given signals (as they appear within a pmx device Slot/position...).
+            Slot0/Position0 is the minimum and SlotN/PositionM the maximum value.
+            </summary>
+            <param name="sig1">Signal 1 to compare with signal 2</param>
+            <param name="sig2">Signal 2 to compare with signal 1</param>
+            <returns>1  if sig1 > sig2, 0  if sig1 = sig2, -1 if sig1 smaller than sig2 </returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader">
+            <summary>
+            Class that realizes the ISkillReader interface
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Domains">
+            <summary>
+            Gets or sets the domains that describes the possible settings of
+            amplifiers of the PMX device family
+            </summary>
+            <value>
+            The domains.
+            </value>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.MinimumFirmwareVersionSupported">
+            <summary>
+            Gets or sets the minimum firmware version supported.
+            </summary>
+            <value>
+            The minimum firmware version supported.
+            </value>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#Init">
+            <summary>
+            Use this function to do any initialization tasks (e.g. reading a file with device skill infos or connecting to a database,etc.)
+            </summary>
+            <returns>True, if initialization was successful </returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#GetSupportedSensorTypes(Hbm.Api.Common.Entities.Device,Hbm.Api.Common.Entities.Channels.Channel)">
+            <summary>
+            Gets the supported sensor types of the given channel
+            </summary>
+            <param name="device">Device from which to get the possible sensor types</param>
+            <param name="channel">Channel from which to get the possible sensor types</param>
+            <returns>List of possible sensor types</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#GetSupportedFilterFrequencies(Hbm.Api.Common.Entities.Device,Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Gets the supported filter frequencies for the filter type that is used by the given signal.
+            We use signal instead of e.g. filter here, because we also need the channel to decide
+            which filter frequencies are possible (e.g. for MGC). The channel is accessable via signal.
+            </summary>
+            <param name="device">Device from which to get the possible filter frequencies</param>
+            <param name="signal">Signal from which to get the possible filter frequencies (depending on its filter)</param>
+            <returns>List of possible filter frequencies</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#GetSupportedSampleRates(Hbm.Api.Common.Entities.Device,Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Gets the supported sample rates of the given signal
+            </summary>
+            <param name="device">Device from which to get the possible sample rates</param>
+            <param name="signal">Signal from which to get the possible sample rates</param>
+            <returns>List of possible sample rates</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#GetSupportedScalingTypes(Hbm.Api.Common.Entities.Device,Hbm.Api.Common.Entities.Channels.Channel)">
+            <summary>
+            Gets the supported scaling types of the given channel
+            </summary>
+            <param name="device">Device from which to get the possible scaling types</param>
+            <param name="channel">Channel from which to get the possible scaling types</param>
+            <returns>List of possible scaling types</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#GetSupportedFilters(Hbm.Api.Common.Entities.Device,Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Gets the supported filters of the given signal
+            </summary>
+            <param name="device">Device from which to get the possible filters</param>
+            <param name="signal">Signal from which to get the possible filters</param>
+            <returns>List of possible filters</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#GetSupportedPhysicalUnits(Hbm.Api.Common.Entities.Device,Hbm.Api.Common.Entities.Channels.Channel)">
+            <summary>
+            Gets the possible physical units for the sensor type that is used by the given channel.
+            We use channel instead of e.g. sensor here, because we also need the channel to decide
+            which physical units are possible (e.g. for MGC). The sensor is accessable via channel.
+            </summary>
+            <param name="device">Device from which to get the possible physical units</param>
+            <param name="channel">Channel from which to get the possible units (depending on its sensor)</param>
+            <returns>Possible physical units or an empty list if there are no restrictions</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#GetSupportedJackType(Hbm.Api.Common.Entities.Device,Hbm.Api.Common.Entities.Signals.Signal)">
+            <summary>
+            Gets the type of the jack.
+            </summary>
+            <param name="device">The device.</param>
+            <param name="signal">The signal.</param>
+            <returns>Name of the jack type</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#GetSupportedCanBitRates(Hbm.Api.Common.Entities.Device)">
+            <summary>
+            Gets the supported CAN bit rates.
+            </summary>
+            <param name="device">The device.</param>
+            <returns>
+            The list of supported CAN bit rates.
+            </returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#SupportsCanBusTermination(Hbm.Api.Common.Entities.Device)">
+            <summary>
+            Determines whether the specified device supports CAN bus termination.
+            </summary>
+            <param name="device">The device.</param>
+            <returns>
+            Whether the specified device supports CAN bus termination.
+            </returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Hbm#Api#Common#Entities#ISkillReader#SupportsChangingConnectorType(Hbm.Api.Common.Entities.Device)">
+            <summary>
+            Determines whether the specified device supports switching to and from CAN bus.
+            </summary>
+            <param name="device">The device.</param>
+            <returns>Whether the specified device supports switching to and from CAN bus.</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.GetSkillReaderConfigPath">
+            <summary>
+            Returns the full path and filename to the configuration file 
+            </summary>
+            <returns>Path and filename of configuration file</returns>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.GetAmplifier(Hbm.Api.Common.Entities.Device,Hbm.Api.Common.Entities.Connectors.Connector)">
+            <summary>
+            Gets the amplifier object depending on the sample rate domain and the model of the given device
+            </summary>
+            <param name="device">The device.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterTypes">
+            <summary>
+            Possible filter types 
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterTypes.Bessel">
+            <summary>
+            Bessel filter
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterTypes.Butterworth">
+            <summary>
+            Butterworth filter
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterTypes.ButterworthFir">
+            <summary>
+            Butterworth FIR filter
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterTypes.LinearPhase">
+            <summary>
+            Linear phase filter
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterTypes.NoFilter">
+            <summary>
+            No filter
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterInfo">
+            <summary>
+            Class that combines filter type and filter frequencies
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterInfo.Filtertype">
+            <summary>
+            Filter type
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterInfo.Frequencies">
+            <summary>
+            Frequencies for filter type
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterInfo.#ctor(Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.FilterTypes,System.Collections.Generic.List{System.Decimal})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="filterType">Filter type</param>
+            <param name="frequencies">Frequencies for filter type</param>
+        </member>
+        <member name="T:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Domain">
+            <summary>
+            Domain that holds a list of amplifiers according to the sample rate domain of a device
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Domain.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Domain"/> class.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Domain.Type">
+            <summary>
+            Gets or sets the type (e.g. "Classic" or "Decimal")
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Domain.Amplifiers">
+            <summary>
+            Gets or sets the amplifiers.
+            </summary>
+            <value>
+            The amplifiers.
+            </value>
+        </member>
+        <member name="T:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Amplifier">
+            <summary>
+            Class that holds the possible settings for a certain amplifier type
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Amplifier.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Amplifier"/> class.
+            </summary>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Amplifier.ModuleTypes">
+            <summary>
+            Gets or sets the types for which the defined possibilities are valid
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Amplifier.PossibleSamplerates">
+            <summary>
+            Gets or sets the possible samplerates.
+            </summary>
+            <value>
+            The possible samplerates.
+            </value>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Amplifier.PossibleFilters">
+            <summary>
+            Gets or sets the possible filters.
+            </summary>
+            <value>
+            The possible filters.
+            </value>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Amplifier.PossibleSensorTypes">
+            <summary>
+            Gets or sets the possible sensor types.
+            </summary>
+            <value>
+            The possible sensor types.
+            </value>
+        </member>
+        <member name="P:Hbm.Api.Pmx.SkillReaders.PmxFileSkillReader.Amplifier.PossibleScalingTypes">
+            <summary>
+            Gets or sets the possible scaling types.
+            </summary>
+            <value>
+            The possible scaling types.
+            </value>
+        </member>
+    </members>
+</doc>

@@ -16,20 +16,44 @@ using Hbm.Api.Common.Entities.Filters;
 using Hbm.Api.Common.Entities.ConnectionInfos;
 using Hbm.Api.Common.Enums;
 using Hbm.Api.Scan;
+using Hbm.Api.Pmx;
+using Hbm.Api.QuantumX;
+using Hbm.Api.Mgc;
+
 
 
 namespace HMB_Utility
 {
+    public enum family
+    {
+        PMX,
+        QuantumX,
+        MGC
+    };
+
+    public enum defaultPorts
+    {
+        useDefault = -1,
+        PMX = 55000,
+        QuantumX = 5001,
+        MGC = 7
+    }
+
+    
+
+
     class HBM_Object
     {
+        
         DaqEnvironment _daqEnvironment; //main object to work 
         DaqMeasurement _daqMeasurement; //main object to measurment
-        Device _device;  //device to use
+        Device _device;  //device to connect by IP
         List<Signal> _signalsToMeasure; //list of signals to continuous measurment
 
-        public List<Device> _deviceList { get; private set; } // devices found by the scan
+        public List<Device> deviceList { get; private set; } // devices found by the scan
         public event EventHandler<Exception> exceptionEvent;
         public event EventHandler<List<Problem>> problemEvent;
+        public event EventHandler<string> errorEvent;
 
 
         public HBM_Object()
@@ -38,32 +62,73 @@ namespace HMB_Utility
             _daqMeasurement = new DaqMeasurement();
         }
 
-        public bool Search()
+        public bool SearchDevices()
         {
             try
             {
-                _deviceList = _daqEnvironment.Scan();
+                deviceList = _daqEnvironment.Scan();
             }
             catch (Hbm.Api.Scan.Entities.ScanFailedException ex)
             {
                 exceptionEvent(this, ex);
             }
-            _deviceList = _deviceList.OrderBy(d => d.Name).ToList();
+            deviceList = deviceList.OrderBy(d => d.Name).ToList();
             return true;
         }
         
         public bool ConnectToFoundDevices(List<Device> devList)
         {
-            List<Problem> problemList = new List<Problem>();
-            _daqEnvironment.Connect(devList, out problemList);
-            if (problemList.Count > 0)
+            List<Problem> ConnectToFoundDevicesProblemList = new List<Problem>();
+            if (_daqEnvironment.Connect(devList, out ConnectToFoundDevicesProblemList))
             {
-                problemEvent(this, problemList);
+                return true;
+            }
+            else
+            {
+                problemEvent(this, ConnectToFoundDevicesProblemList);
                 return false;
             }
-            return true;
+            
         }
 
+        public bool ConnectToDeviceByIP(family _family, string ip, int port = (int)defaultPorts.useDefault)
+        {
+            List<Problem> ConnectToDeviceByIPProblemList = new List<Problem>();
+            
+            switch (_family)
+            {
+                case (family.PMX):
+                    if (port == (int)defaultPorts.useDefault)
+                        _device = new PmxDevice(ip, (int)defaultPorts.PMX);
+                    else
+                        _device = new PmxDevice(ip, port);
+                    break;
+                case (family.QuantumX):
+                    if (port == (int)defaultPorts.useDefault)
+                        _device = new QuantumXDevice(ip, (int)defaultPorts.QuantumX);
+                    else
+                        _device = new QuantumXDevice(ip, port);
+                    break;
+                case (family.MGC):
+                    if (port == (int)defaultPorts.useDefault)
+                        _device = new MgcDevice(ip, (int)defaultPorts.QuantumX);
+                    else
+                        _device = new MgcDevice(ip, port);
+                    break;
+                default:
+                    errorEvent(this, "Wrong family");
+                    return false;
+            }
 
+            if (_daqEnvironment.Connect(_device, out ConnectToDeviceByIPProblemList))
+            {
+                return true;
+            }
+            else
+            {
+                problemEvent(this, ConnectToDeviceByIPProblemList);
+                return false;
+            }
+        }
     }
 }

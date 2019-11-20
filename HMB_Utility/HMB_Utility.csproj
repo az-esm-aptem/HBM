@@ -43,9 +43,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Hbm.Api.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Hbm.Api.Mgc, Version=4.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Hbm.Api.Mgc.dll</HintPath>
+    </Reference>
     <Reference Include="Hbm.Api.Pmx, Version=4.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Hbm.Api.Pmx.dll</HintPath>
+    </Reference>
+    <Reference Include="Hbm.Api.QuantumX, Version=4.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Hbm.Api.QuantumX.dll</HintPath>
     </Reference>
     <Reference Include="Hbm.Api.Scan, Version=4.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
