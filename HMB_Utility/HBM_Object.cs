@@ -132,5 +132,10 @@ namespace HMB_Utility
                 return false;
             }
         }
+
+        public List<Signal> GetSignals(List<Device>deviceList)
+        {
+
+        }
     }
 }
