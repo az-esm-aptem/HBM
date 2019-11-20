@@ -67,13 +67,15 @@ namespace HMB_Utility
             try
             {
                 deviceList = _daqEnvironment.Scan();
+                deviceList = deviceList.OrderBy(d => d.Name).ToList();
+                return true;
             }
             catch (Hbm.Api.Scan.Entities.ScanFailedException ex)
             {
                 exceptionEvent(this, ex);
             }
-            deviceList = deviceList.OrderBy(d => d.Name).ToList();
-            return true;
+            return false;
+            
         }
         
         public bool ConnectToFoundDevices(List<Device> devList)
