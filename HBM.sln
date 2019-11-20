@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HMB_Utility", "HMB_Utility\HMB_Utility.csproj", "{895E8D6C-9B8A-4D4F-B55A-5F1A2981688A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{895E8D6C-9B8A-4D4F-B55A-5F1A2981688A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{895E8D6C-9B8A-4D4F-B55A-5F1A2981688A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{895E8D6C-9B8A-4D4F-B55A-5F1A2981688A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{895E8D6C-9B8A-4D4F-B55A-5F1A2981688A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {662DD5C7-8264-4105-AECC-AB653641EF13}
+	EndGlobalSection
+EndGlobal
