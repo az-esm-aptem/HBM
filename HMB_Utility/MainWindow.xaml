@@ -7,6 +7,25 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <TreeView>
+            <TreeViewItem Header="Devices" >
+                <TreeViewItem Header="Device1" >
+                    <TreeViewItem Header="Connector1" >
+                            <TreeViewItem Header="Channel1">
+                            <TreeViewItem Header="Signal1"/>
+                            <TreeViewItem Header="Signal2"/>
+                            <TreeViewItem Header="Signal3"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Channel2"/>
+                            <TreeViewItem Header="Channel3"/>
+                    </TreeViewItem>
+
+
+                    <TreeViewItem Header="Connector2"/>
+                        <TreeViewItem Header="Connector3"/>
+                    
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
     </Grid>
 </Window>

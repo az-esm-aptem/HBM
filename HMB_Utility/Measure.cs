@@ -14,7 +14,7 @@ using Hbm.Api.Common.Entities.Channels;
 using Hbm.Api.Common.Entities.Signals;
 using Hbm.Api.Common.Entities.Filters;
 using Hbm.Api.Common.Entities.ConnectionInfos;
-using Hbm.Api.Common.Enums;
+using Hbm.Api.Common.Enums; 
 using Hbm.Api.Scan;
 using Hbm.Api.Pmx;
 using Hbm.Api.QuantumX;
@@ -22,11 +22,11 @@ using Hbm.Api.Mgc;
 
 namespace HMB_Utility
 {
-    class Measure
+    public class Measure
     {
-        static public void GetMeasurmentValue(List<Signal>signals)
+        static public void GetMeasurmentValue(List<Device> devices)
         {
-
+            
         } 
     }
 }

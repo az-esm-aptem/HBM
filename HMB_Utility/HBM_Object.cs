@@ -42,7 +42,7 @@ namespace HMB_Utility
     
 
 
-    class HBM_Object
+    public class HBM_Object
     {
         
         DaqEnvironment _daqEnvironment; //main object to work 
@@ -75,7 +75,6 @@ namespace HMB_Utility
                 exceptionEvent(this, ex);
             }
             return false;
-            
         }
         
         public bool ConnectToFoundDevices(List<Device> devList)
@@ -133,9 +132,50 @@ namespace HMB_Utility
             }
         }
 
-        public List<Signal> GetSignals(List<Device>deviceList)
+        #region GetSignals
+        public List<Signal> GetSignals()
         {
-
+            List<Signal> signals = new List<Signal>();
+            foreach (Device dev in deviceList)
+            {
+                if (dev.IsConnected)
+                {
+                    foreach (Connector con in dev.Connectors)
+                    {
+                        foreach (Channel ch in con.Channels)
+                        {
+                            foreach (Signal sig in ch.Signals)
+                            {
+                                signals.Add(sig);
+                            }
+                        }
+                    }
+                }
+            }
+            return signals;
         }
+        
+        public List<Signal> GetSignals(List<Device> _deviceList)
+        {
+            List<Signal> signals = new List<Signal>();
+            foreach (Device dev in _deviceList)
+            {
+                if (dev.IsConnected)
+                {
+                    foreach (Connector con in dev.Connectors)
+                    {
+                        foreach (Channel ch in con.Channels)
+                        {
+                            foreach (Signal sig in ch.Signals)
+                            {
+                                signals.Add(sig);
+                            }
+                        }
+                    }
+                }
+            }
+            return signals;
+        }
+        #endregion
     }
 }
