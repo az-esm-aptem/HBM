@@ -131,51 +131,5 @@ namespace HMB_Utility
                 return false;
             }
         }
-
-        #region GetSignals
-        public List<Signal> GetSignals()
-        {
-            List<Signal> signals = new List<Signal>();
-            foreach (Device dev in deviceList)
-            {
-                if (dev.IsConnected)
-                {
-                    foreach (Connector con in dev.Connectors)
-                    {
-                        foreach (Channel ch in con.Channels)
-                        {
-                            foreach (Signal sig in ch.Signals)
-                            {
-                                signals.Add(sig);
-                            }
-                        }
-                    }
-                }
-            }
-            return signals;
-        }
-        
-        public List<Signal> GetSignals(List<Device> _deviceList)
-        {
-            List<Signal> signals = new List<Signal>();
-            foreach (Device dev in _deviceList)
-            {
-                if (dev.IsConnected)
-                {
-                    foreach (Connector con in dev.Connectors)
-                    {
-                        foreach (Channel ch in con.Channels)
-                        {
-                            foreach (Signal sig in ch.Signals)
-                            {
-                                signals.Add(sig);
-                            }
-                        }
-                    }
-                }
-            }
-            return signals;
-        }
-        #endregion
     }
 }

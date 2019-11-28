@@ -24,9 +24,37 @@ namespace HMB_Utility
 {
     public class Measure
     {
-        static public void GetMeasurmentValue(List<Device> devices)
+        public static event EventHandler<Exception> exceptionEvent;
+        static public List<MeasurementValue> GetMeasurmentValue(List<Device> devices)
         {
-            
+            List<MeasurementValue> measurementValues = new List<MeasurementValue>();
+            try
+            {
+                foreach (Device dev in devices)
+                {
+                    foreach (Connector con in dev.Connectors)
+                    {
+                        foreach (Channel ch in con.Channels)
+                        {
+                            foreach (Signal sig in ch.Signals)
+                            {
+                                if (sig.IsMeasurable)
+                                {
+                                    measurementValues.Add(sig.GetSingleMeasurementValue());
+                                }
+                                else measurementValues.Add(new MeasurementValue(0, 0, MeasurementValueState.Overflow));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                exceptionEvent(typeof(Measure), ex);
+                measurementValues.Clear();
+                return measurementValues;
+            }
+            return measurementValues;
         } 
     }
 }
