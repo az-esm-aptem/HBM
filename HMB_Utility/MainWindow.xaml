@@ -5,27 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HMB_Utility"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TreeView>
-            <TreeViewItem Header="Devices" >
-                <TreeViewItem Header="Device1" >
-                    <TreeViewItem Header="Connector1" >
-                            <TreeViewItem Header="Channel1">
-                            <TreeViewItem Header="Signal1"/>
-                            <TreeViewItem Header="Signal2"/>
-                            <TreeViewItem Header="Signal3"/>
-                        </TreeViewItem>
-                        <TreeViewItem Header="Channel2"/>
-                            <TreeViewItem Header="Channel3"/>
-                    </TreeViewItem>
-
-
-                    <TreeViewItem Header="Connector2"/>
-                        <TreeViewItem Header="Connector3"/>
-                    
-                </TreeViewItem>
-            </TreeViewItem>
+        Title="MainWindow" Height="600" Width="900">
+    <Grid x:Name="baseGrid" ShowGridLines="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="10,539,0,0" VerticalAlignment="Top" Width="102" Click="SearchDeviceButton_Click" Grid.Column="0"/>
+        <TreeView x:Name="overviewTree" Margin="10,10,10,35" Grid.Column="0">
+            <TreeViewItem x:Name="Devices_TreeViewItem" Header="Devices"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="257"/>
         </TreeView>
+        <GridSplitter Grid.Column="0" ShowsPreview="True" Width="3"/>
     </Grid>
 </Window>

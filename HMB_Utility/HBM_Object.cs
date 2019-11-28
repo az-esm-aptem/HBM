@@ -131,5 +131,13 @@ namespace HMB_Utility
                 return false;
             }
         }
+
+        public bool ChangeSignalName(Device dev, string name) //must contains just ONE signal!!!
+        {
+
+            return false;
+            
+
+        }
     }
 }

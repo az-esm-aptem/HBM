@@ -56,5 +56,10 @@ namespace HMB_Utility
             }
             return measurementValues;
         } 
+
+        public static void StartDaqSession()
+        {
+
+        }
     }
 }
