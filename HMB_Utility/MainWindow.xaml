@@ -5,17 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HMB_Utility"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900">
+        Title="MainWindow" Height="600" Width="700">
     <Grid x:Name="baseGrid" ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" MinHeight="150" MaxHeight="200"></RowDefinition>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="200" MaxWidth="500" MinWidth ="100"/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="10,539,0,0" VerticalAlignment="Top" Width="102" Click="SearchDeviceButton_Click" Grid.Column="0"/>
-        <TreeView x:Name="overviewTree" Margin="10,10,10,35" Grid.Column="0">
+        <Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="102"
+                Click="SearchDeviceButton_Click" Grid.Column="1" Grid.Row="0" Height="20" />
+        <TreeView x:Name="overviewTree" Margin="10" Grid.Column="0">
             <TreeViewItem x:Name="Devices_TreeViewItem" Header="Devices"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="257"/>
         </TreeView>
-        <GridSplitter Grid.Column="0" ShowsPreview="True" Width="3"/>
+        <GridSplitter Grid.Row="0" ShowsPreview="True" Width="3" VerticalAlignment="Stretch"/>
+        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="291" Height="20"/>
+        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="285" Height="20"/>
+        <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                 TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" Width="672"  />
+        <!--<GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="3"
+        HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowsPreview="True"/>-->
     </Grid>
 </Window>
