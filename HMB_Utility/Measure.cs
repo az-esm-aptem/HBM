@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 using Hbm.Api.Common;
 using Hbm.Api.Common.Messaging;
@@ -24,7 +25,11 @@ namespace HMB_Utility
 {
     public class Measure
     {
+        public delegate bool fetchDataFromDaq(List <Device> devices);
+        public static event EventHandler<List<Problem>> problemEvent;
         public static event EventHandler<Exception> exceptionEvent;
+        public static System.Threading.Timer dataFetchTimer = null;
+        private delegate bool fetchDelegate(DaqMeasurement daqMeasurement, List<Device> devices, fetchDataFromDaq fetchDataMethod);
         static public List<MeasurementValue> GetMeasurmentValue(List<Device> devices)
         {
             List<MeasurementValue> measurementValues = new List<MeasurementValue>();
@@ -57,9 +62,55 @@ namespace HMB_Utility
             return measurementValues;
         } 
 
-        public static void StartDaqSession()
+        //Device list contains the Signal list wherein all signals should be measured bu DAQ session
+        public static bool DaqPrepare(DaqMeasurement daqMeasurement, List<Device> devices, double sampleRate)  
         {
+            List<Problem> daqPrepareProblems = new List<Problem>();
+            foreach (Device dev in devices)
+            {
+                foreach (Connector con in dev.Connectors)
+                {
+                    foreach (Channel ch in con.Channels)
+                    {
+                        foreach (Signal sig in ch.Signals)
+                        {
+                            sig.SampleRate = 2400; //Hz
+                            dev.AssignSignal(sig, out daqPrepareProblems);
+                            daqMeasurement.AddSignals(dev, sig);
+                        }
+                    }
+                }
+            }
+            if (!daqPrepareProblems.IsEmpty())
+            {
+                problemEvent(typeof(Measure), daqPrepareProblems);
+                if (daqPrepareProblems.HasError()) return false;
+            }
+            daqMeasurement.PrepareDaq();
+            return true;
+        }
 
+        public static void DaqRun(DaqMeasurement daqMeasurement, int fetchPeriod)
+        {
+            daqMeasurement.StartDaq(DataAcquisitionMode.Auto);
+            
+            dataFetchTimer = new System.Threading.Timer(fetch, null, Timeout.Infinite, 0);
+        }
+
+        private static void fetch(object obj)
+        {
+            
+        }
+
+        private static bool FetchData(DaqMeasurement daqMeasurement, List<Device> devices, fetchDataFromDaq fetchDataMethod)
+        {
+            if (!daqMeasurement.IsRunning)
+            {
+                return false;
+            }
+            daqMeasurement.FillMeasurementValues();
+            fetchDataMethod(devices);
+            return true;
         }
     }
 }

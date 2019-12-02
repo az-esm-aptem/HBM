@@ -79,14 +79,14 @@ namespace HMB_Utility
         
         public bool ConnectToFoundDevices(List<Device> devList)
         {
-            List<Problem> ConnectToFoundDevicesProblemList = new List<Problem>();
-            if (_daqEnvironment.Connect(devList, out ConnectToFoundDevicesProblemList))
+            List<Problem> connectToFoundDevicesProblemList = new List<Problem>();
+            if (_daqEnvironment.Connect(devList, out connectToFoundDevicesProblemList))
             {
                 return true;
             }
             else
             {
-                problemEvent(this, ConnectToFoundDevicesProblemList);
+                problemEvent(this, connectToFoundDevicesProblemList);
                 return false;
             }
             

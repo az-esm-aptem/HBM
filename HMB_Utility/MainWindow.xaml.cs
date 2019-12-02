@@ -36,7 +36,8 @@ namespace HMB_Utility
         {
             for (int i = 1; i < 5; i++)
             {
-                Devices_TreeViewItem.Items.Add(new TreeViewItem { Header = string.Format("Device - {0}", i) });
+                Devices_TreeViewItem.Items.Add(new TreeViewItem { Header = string.Format("Device - {0}", i), Name = string.Format("Device_{0}", i) });
+
             }
         }
     }
