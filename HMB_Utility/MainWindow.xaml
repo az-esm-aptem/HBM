@@ -17,8 +17,9 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="102"
                 Click="SearchDeviceButton_Click" Grid.Column="1" Grid.Row="0" Height="20" />
-        <TreeView x:Name="overviewTree" Margin="10" Grid.Column="0">
-            <TreeViewItem x:Name="Devices_TreeViewItem" Header="Devices"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="257"/>
+        <TreeView x:Name="overviewTree" Margin="10" Grid.Column="0" >
+            
+            <TreeViewItem x:Name="Devices_TreeViewItem" Header="Devices"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="500"/>
         </TreeView>
         <GridSplitter Grid.Row="0" ShowsPreview="True" Width="3" VerticalAlignment="Stretch"/>
         <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="291" Height="20"/>

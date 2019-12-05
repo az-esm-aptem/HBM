@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
+using System.Threading;
 
 using Hbm.Api.Common;
 using Hbm.Api.Common.Messaging;
@@ -44,9 +46,9 @@ namespace HMB_Utility
 
     public class HBM_Object
     {
-        
-        DaqEnvironment _daqEnvironment; //main object to work 
-        DaqMeasurement _daqMeasurement; //main object to measurment
+
+        public static DaqEnvironment _daqEnvironment = null; //main object to work 
+        public static DaqMeasurement _daqMeasurement = null; //main object to measurment
         Device _device;  //device to connect by IP
         List<Signal> _signalsToMeasure; //list of signals to continuous measurment
 
@@ -54,26 +56,66 @@ namespace HMB_Utility
         public event EventHandler<Exception> exceptionEvent;
         public event EventHandler<List<Problem>> problemEvent;
         public event EventHandler<string> errorEvent;
-
+        
 
         public HBM_Object()
         {
-            _daqEnvironment = DaqEnvironment.GetInstance();
-            _daqMeasurement = new DaqMeasurement();
+            if (_daqEnvironment == null) _daqEnvironment = DaqEnvironment.GetInstance();
+            if (_daqMeasurement == null) _daqMeasurement = new DaqMeasurement();
         }
 
-        public bool SearchDevices()
+        ~HBM_Object()
         {
+            if (_daqEnvironment != null) _daqEnvironment.Dispose();
+            if (_daqMeasurement != null) _daqMeasurement.Dispose();
+        }
+
+        //period - The time interval between invocations the scan method to waiting devices gathering
+        //searchTime - The time interval for searching. If this time is up and no one device found - returns method returns False, and device list is empty
+        public bool SearchDevices(int period = 3000, int searchTime = 30000)  
+        {
+            int count = 0;
+            int foundDevices = 0;
+            bool searchEnd = false;
+            System.Threading.TimerCallback scanning = (object o) => {
+                Console.WriteLine("Invoke {0} {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId.ToString());  //TO DELETE!!!!
+                deviceList = _daqEnvironment.Scan();
+                if (deviceList.Count == 0)
+                {
+                    count++;
+                }
+                else
+                    if (deviceList.Count > foundDevices) foundDevices = deviceList.Count;
+                    else searchEnd = true;
+            };
+            System.Threading.Timer searchTimer = new System.Threading.Timer(scanning, null, System.Threading.Timeout.Infinite, 0);
+
             try
             {
-                deviceList = _daqEnvironment.Scan();
-                deviceList = deviceList.OrderBy(d => d.Name).ToList();
-                return true;
+                
+                searchTimer.Change(0, period);
+
+                //waiting for found devices
+                while (!searchEnd && (period*count) < searchTime) {  };
+
+                if (searchEnd)
+                {
+                    deviceList = deviceList.OrderBy(d => d.Name).ToList();
+                    searchTimer.Dispose();
+                    return true;
+                }
+
+                if (period * count > searchTime)
+                {
+                    searchTimer.Dispose();
+                    return false;
+                }
             }
             catch (Hbm.Api.Scan.Entities.ScanFailedException ex)
             {
                 exceptionEvent(this, ex);
             }
+            searchTimer.Dispose();
             return false;
         }
         
@@ -134,8 +176,16 @@ namespace HMB_Utility
 
         public bool ChangeSignalName(Device dev, string name) //must contains just ONE signal!!!
         {
+            List<Signal> sigToChangeName = dev.GetAllSignals();
+            List<Problem> prList = new List<Problem>();
 
-            return false;
+            foreach (Signal s in sigToChangeName)
+            {
+                s.Name = name;
+                dev.AssignSignal(s, out prList);
+            }
+            
+            return false; //TODO
             
 
         }

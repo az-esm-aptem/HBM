@@ -25,11 +25,12 @@ namespace HMB_Utility
 {
     public class Measure
     {
-        public delegate bool fetchDataFromDaq(List <Device> devices);
+       
+        public delegate bool fetchDataFromDaq(List <Device> devices); //delegate to the method that describe how to save the data from DAQ
         public static event EventHandler<List<Problem>> problemEvent;
         public static event EventHandler<Exception> exceptionEvent;
-        public static System.Threading.Timer dataFetchTimer = null;
-        private delegate bool fetchDelegate(DaqMeasurement daqMeasurement, List<Device> devices, fetchDataFromDaq fetchDataMethod);
+        public static System.Threading.Timer dataFetchTimer = null;  //timer for periodically data fetch
+       
         static public List<MeasurementValue> GetMeasurmentValue(List<Device> devices)
         {
             List<MeasurementValue> measurementValues = new List<MeasurementValue>();
@@ -63,7 +64,7 @@ namespace HMB_Utility
         } 
 
         //Device list contains the Signal list wherein all signals should be measured bu DAQ session
-        public static bool DaqPrepare(DaqMeasurement daqMeasurement, List<Device> devices, double sampleRate)  
+        public static bool DaqPrepare(DaqMeasurement daqMeasurement, List<Device> devices, decimal sampleRate = 2400)  
         {
             List<Problem> daqPrepareProblems = new List<Problem>();
             foreach (Device dev in devices)
@@ -74,7 +75,7 @@ namespace HMB_Utility
                     {
                         foreach (Signal sig in ch.Signals)
                         {
-                            sig.SampleRate = 2400; //Hz
+                            sig.SampleRate = sampleRate; //Hz
                             dev.AssignSignal(sig, out daqPrepareProblems);
                             daqMeasurement.AddSignals(dev, sig);
                         }
@@ -90,27 +91,22 @@ namespace HMB_Utility
             return true;
         }
 
-        public static void DaqRun(DaqMeasurement daqMeasurement, int fetchPeriod)
+        public static void DaqRun(DaqMeasurement daqMeasurement, List<Device> devices, fetchDataFromDaq fetchDataMethod, int fetchPeriod = 1000)
         {
             daqMeasurement.StartDaq(DataAcquisitionMode.Auto);
-            
-            dataFetchTimer = new System.Threading.Timer(fetch, null, Timeout.Infinite, 0);
-        }
-
-        private static void fetch(object obj)
-        {
+            dataFetchTimer = new Timer(((object obj) => FetchData(daqMeasurement, devices, fetchDataMethod)), null, 0, fetchPeriod); 
             
         }
 
-        private static bool FetchData(DaqMeasurement daqMeasurement, List<Device> devices, fetchDataFromDaq fetchDataMethod)
+        private static void FetchData(DaqMeasurement daqMeasurement, List<Device> devices, fetchDataFromDaq fetchDataMethod)
         {
             if (!daqMeasurement.IsRunning)
             {
-                return false;
+                return;
             }
             daqMeasurement.FillMeasurementValues();
             fetchDataMethod(devices);
-            return true;
+            
         }
     }
 }
