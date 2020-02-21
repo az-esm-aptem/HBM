@@ -45,6 +45,7 @@ namespace HMB_Utility
         public MainWindow()
         {
             InitializeComponent();
+            //DataContext = new ApplicationViewModel();
             logger = new HBM_Object();
 
         }
@@ -56,7 +57,7 @@ namespace HMB_Utility
             //searchTask.Start();
             //searchTask.Wait();
             
-            if (logger.SearchDevices(3000, 10000))
+            if (logger.SearchDevices(3000, 20000))
             {
                 if (logger.ConnectToFoundDevices(logger.deviceList))
                 {
@@ -97,30 +98,32 @@ namespace HMB_Utility
                     //    }
                     //}
 
-                    //for (int i = 0; i < logger.deviceList.Count; i++)
-                    //{
-                    //    deviceTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Name + '(' + logger.deviceList[i].FamilyName + ')'), Name = string.Format("Device_{0}", i) });
-                    //    Devices_TreeViewItem.Items.Add(deviceTreeViewItems[i]);
-                    //    for (int j = 0; j < logger.deviceList[i].Connectors.Count; j++)
-                    //    {
-                    //        connectorTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Connectors[j].LocationHint), Name = string.Format("Connector_{0}", j) });
-                    //        deviceTreeViewItems[i].Items.Add(connectorTreeViewItems[j]);
-                    //        for (int k = 0; k < logger.deviceList[i].Connectors[j].Channels.Count; k++)
-                    //        {
-                    //            chanelTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Connectors[j].Channels[k].Name), Name = string.Format("Channel_{0}", k) });
-                    //            connectorTreeViewItems[j].Items.Add(chanelTreeViewItems[k]);
-                    //            for (int n = 0; n < logger.deviceList[i].Connectors[j].Channels[k].Signals.Count; n++)
-                    //            {
-                    //                signalTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Connectors[j].Channels[k].Signals[n].Name), Name = string.Format("Signal_{0}", n) });
-                    //                chanelTreeViewItems[k].Items.Add(signalTreeViewItems[n]);
-                    //            }
-                    //        }
-                    //    }
-                    //}
-
+                    for (int i = 0; i < logger.deviceList.Count; i++)
+                    {
+                        
+                        deviceTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Name + '(' + logger.deviceList[i].FamilyName + ')'), Name = string.Format("Device_{0}", i) });
+                        Devices_TreeViewItem.Items.Add(deviceTreeViewItems[i]);
+                        for (int j = 0; j < logger.deviceList[i].Connectors.Count; j++)
+                        {
+                            connectorTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Connectors[j].LocationHint), Name = string.Format("Connector_{0}", j) });
+                            deviceTreeViewItems[i].Items.Add(connectorTreeViewItems[j]);
+                            //for (int k = 0; k < logger.deviceList[i].Connectors[j].Channels.Count; k++)
+                            //{
+                            //    chanelTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Connectors[j].Channels[k].Name), Name = string.Format("Channel_{0}", k) });
+                            //    connectorTreeViewItems[j].Items.Add(chanelTreeViewItems[k]);
+                            //    for (int n = 0; n < logger.deviceList[i].Connectors[j].Channels[k].Signals.Count; n++)
+                            //    {
+                            //        signalTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Connectors[j].Channels[k].Signals[n].Name), Name = string.Format("Signal_{0}", n) });
+                            //        chanelTreeViewItems[k].Items.Add(signalTreeViewItems[n]);
+                            //    }
+                            //}
+                        }
+                        deviceTreeViewItems.Clear();
+                        connectorTreeViewItems.Clear();
+                        chanelTreeViewItems.Clear();
+                        signalTreeViewItems.Clear();
+                    }
                 }
-
-
             }
         }
     }
