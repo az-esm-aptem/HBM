@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Threading;
+using System.Configuration;
 
 using Hbm.Api.Common;
 using Hbm.Api.Common.Messaging;
@@ -26,26 +27,11 @@ using Hbm.Api.Mgc;
 
 namespace HMB_Utility
 {
-    public enum family
-    {
-        PMX,
-        QuantumX,
-        MGC
-    };
-
-    public enum defaultPorts
-    {
-        useDefault = -1,
-        PMX = 55000,
-        QuantumX = 5001,
-        MGC = 7
-    }
-
+   
     
-
-
     public class HBM_Object
     {
+        private static HBM_Object instance;
 
         public static DaqEnvironment _daqEnvironment = null; //main object to work 
         public static DaqMeasurement _daqMeasurement = null; //main object to measurment
@@ -56,12 +42,21 @@ namespace HMB_Utility
         public event EventHandler<Exception> exceptionEvent;
         public event EventHandler<List<Problem>> problemEvent;
         public event EventHandler<string> errorEvent;
-        
 
-        public HBM_Object()
+        private HBM_Object() 
         {
-            if (_daqEnvironment == null) _daqEnvironment = DaqEnvironment.GetInstance();
-            if (_daqMeasurement == null) _daqMeasurement = new DaqMeasurement();
+            _daqEnvironment = DaqEnvironment.GetInstance();
+            _daqMeasurement = new DaqMeasurement();
+        }
+
+        public static HBM_Object GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new HBM_Object();
+            }
+            return instance;
+            
         }
 
         ~HBM_Object()
@@ -134,27 +129,30 @@ namespace HMB_Utility
             
         }
 
-        public bool ConnectToDeviceByIP(family _family, string ip, int port = (int)defaultPorts.useDefault)
+        public bool ConnectToDeviceByIP(HBMFamily.family family, string ip, int port = -1) 
         {
             List<Problem> ConnectToDeviceByIPProblemList = new List<Problem>();
-            
-            switch (_family)
+            int.TryParse(ConfigurationManager.AppSettings["PMXPort"], out int PMXPort);
+            int.TryParse(ConfigurationManager.AppSettings["QuantumXPort"], out int QuantumXPort);
+            int.TryParse(ConfigurationManager.AppSettings["MGCPort"], out int MGCPort);
+
+            switch (family)
             {
-                case (family.PMX):
-                    if (port == (int)defaultPorts.useDefault)
-                        _device = new PmxDevice(ip, (int)defaultPorts.PMX);
+                case (HBMFamily.family.PMX):
+                    if (port <= 0)
+                        _device = new PmxDevice(ip, PMXPort);
                     else
                         _device = new PmxDevice(ip, port);
                     break;
-                case (family.QuantumX):
-                    if (port == (int)defaultPorts.useDefault)
-                        _device = new QuantumXDevice(ip, (int)defaultPorts.QuantumX);
+                case (HBMFamily.family.QuantumX):
+                    if (port <= 0)
+                        _device = new QuantumXDevice(ip, QuantumXPort);
                     else
                         _device = new QuantumXDevice(ip, port);
                     break;
-                case (family.MGC):
-                    if (port == (int)defaultPorts.useDefault)
-                        _device = new MgcDevice(ip, (int)defaultPorts.QuantumX);
+                case (HBMFamily.family.MGC):
+                    if (port <= 0)
+                        _device = new MgcDevice(ip, MGCPort);
                     else
                         _device = new MgcDevice(ip, port);
                     break;

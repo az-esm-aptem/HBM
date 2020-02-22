@@ -37,94 +37,18 @@ namespace HMB_Utility
     /// 
     public partial class MainWindow : Window
     {
-        TreeViewItem Connectors;
-        TreeViewItem Channels;
-        TreeViewItem Signals;
         HBM_Object logger;
-
         public MainWindow()
         {
             InitializeComponent();
-            //DataContext = new ApplicationViewModel();
-            logger = new HBM_Object();
+            logger = HBM_Object.GetInstance();
 
         }
 
         private void SearchDeviceButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            //Task searchTask = new Task(() => logger.SearchDevices());
-            //searchTask.Start();
-            //searchTask.Wait();
-            
-            if (logger.SearchDevices(3000, 20000))
-            {
-                if (logger.ConnectToFoundDevices(logger.deviceList))
-                {
-                    List<TreeViewItem> deviceTreeViewItems = new List<TreeViewItem>();
-                    List<TreeViewItem> connectorTreeViewItems = new List<TreeViewItem>();
-                    List<TreeViewItem> chanelTreeViewItems = new List<TreeViewItem>();
-                    List<TreeViewItem> signalTreeViewItems = new List<TreeViewItem>();
-
-                    //List<Signal> sl = logger.deviceList[0].GetAllSignals();
-
-                    //List<Signal> signalToChangeName = new List<Signal> {sl[0]};
-                    //Console.WriteLine(signalToChangeName[0].Name);
-
-
-
-                    //foreach (Signal s in sl)
-                    //{
-                    //    Console.WriteLine(s.Name);
-                    //}
-                    //logger.deviceList[0].Connectors[0].Channels[0].Name = "CHANNEL222222";
-                    //List<Problem> pl = new List<Problem>();
-                    //logger.deviceList[0].AssignChannel(logger.deviceList[0].Connectors[0].Channels[0], out pl);
-
-                    //foreach (Device dev in logger.deviceList)
-                    //{
-                    //    Console.WriteLine(dev.Name);
-                    //    foreach (Connector con in dev.Connectors)
-                    //    {
-                    //        Console.WriteLine(con.LocationHint);
-                    //        foreach (Channel ch in con.Channels)
-                    //        {
-                    //            Console.WriteLine(ch.Name);
-                    //            foreach (Signal sig in ch.Signals)
-                    //            {
-                    //                Console.WriteLine(sig.Name);
-                    //            }
-                    //        }
-                    //    }
-                    //}
-
-                    for (int i = 0; i < logger.deviceList.Count; i++)
-                    {
-                        
-                        deviceTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Name + '(' + logger.deviceList[i].FamilyName + ')'), Name = string.Format("Device_{0}", i) });
-                        Devices_TreeViewItem.Items.Add(deviceTreeViewItems[i]);
-                        for (int j = 0; j < logger.deviceList[i].Connectors.Count; j++)
-                        {
-                            connectorTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Connectors[j].LocationHint), Name = string.Format("Connector_{0}", j) });
-                            deviceTreeViewItems[i].Items.Add(connectorTreeViewItems[j]);
-                            //for (int k = 0; k < logger.deviceList[i].Connectors[j].Channels.Count; k++)
-                            //{
-                            //    chanelTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Connectors[j].Channels[k].Name), Name = string.Format("Channel_{0}", k) });
-                            //    connectorTreeViewItems[j].Items.Add(chanelTreeViewItems[k]);
-                            //    for (int n = 0; n < logger.deviceList[i].Connectors[j].Channels[k].Signals.Count; n++)
-                            //    {
-                            //        signalTreeViewItems.Add(new TreeViewItem { Header = string.Format(logger.deviceList[i].Connectors[j].Channels[k].Signals[n].Name), Name = string.Format("Signal_{0}", n) });
-                            //        chanelTreeViewItems[k].Items.Add(signalTreeViewItems[n]);
-                            //    }
-                            //}
-                        }
-                        deviceTreeViewItems.Clear();
-                        connectorTreeViewItems.Clear();
-                        chanelTreeViewItems.Clear();
-                        signalTreeViewItems.Clear();
-                    }
-                }
-            }
+           
+                
         }
     }
 }
