@@ -29,6 +29,8 @@ using Hbm.Api.Pmx;
 using Hbm.Api.QuantumX;
 using Hbm.Api.Mgc;
 
+using DB;
+
 namespace HMB_Utility
 {
     /// <summary>
@@ -45,10 +47,22 @@ namespace HMB_Utility
 
         }
 
+        public async void SearchAsync(int period = 3000, int searchTime = 30000)
+        {
+            bool result = await Task.Run(() => logger.SearchDevices(period, searchTime));
+        }
+
         private void SearchDeviceButton_Click(object sender, RoutedEventArgs e)
         {
-           
-                
+            //SearchAsync();
+
+            using (HBMContext db = new HBMContext())
+            {
+                db.Devices.Add(new DeviceModel { Name = "Test device", IpAddress = "192.168.0.0" });
+                db.SaveChanges();
+            }
+
+
         }
     }
 }

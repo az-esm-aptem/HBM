@@ -66,14 +66,13 @@ namespace HMB_Utility
         }
 
         //period - The time interval between invocations the scan method to waiting devices gathering
-        //searchTime - The time interval for searching. If this time is up and no one device found - returns method returns False, and device list is empty
+        //searchTime - The time interval for searching. If this time is up and no one device found - the method returns False, and device list is empty
         public bool SearchDevices(int period = 3000, int searchTime = 30000)  
         {
             int count = 0;
             int foundDevices = 0;
             bool searchEnd = false;
             System.Threading.TimerCallback scanning = (object o) => {
-                Console.WriteLine("Invoke {0} {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId.ToString());  //TO DELETE!!!!
                 deviceList = _daqEnvironment.Scan();
                 if (deviceList.Count == 0)
                 {
