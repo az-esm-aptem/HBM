@@ -17,17 +17,40 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="102"
                 Click="SearchDeviceButton_Click" Grid.Column="1" Grid.Row="0" Height="20" />
+        <!--<TreeView x:Name="overviewTree" Margin="10" Grid.Column="0" >
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=Connectors}">
+                    <TextBlock Text="{Binding Name}" />
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ShortLocationHint}" />
+                        </DataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>-->
+
         <TreeView x:Name="overviewTree" Margin="10" Grid.Column="0" >
-
-            <TreeViewItem x:Name="Devices_TreeViewItem" Header="Devices"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="500"/>
-
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=Connectors}">
+                    <TextBlock Text="{Binding Name}" />
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
         </TreeView>
+        
+        
         <GridSplitter Grid.Row="0" ShowsPreview="True" Width="3" VerticalAlignment="Stretch"/>
-        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="25,351,0,0" VerticalAlignment="Top" Width="291" Height="20"/>
-        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="25,308,0,0" VerticalAlignment="Top" Width="285" Height="20"/>
+        <Button x:Name="Btn2" Content="Read Data" Grid.Column="1" HorizontalAlignment="Left" Margin="25,351,0,0" VerticalAlignment="Top" Width="291" Height="20" Click="Btn2_Click"/>
+        <Button x:Name="Btn1" Content="Start single measurment" Grid.Column="1" HorizontalAlignment="Left" Margin="25,308,0,0" VerticalAlignment="Top" Width="285" Height="20" Click="Btn1_Click"/>
         <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
                  TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" Width="672"  />
-        <TextBox x:Name="TB1" Grid.Column="1" HorizontalAlignment="Left" Height="108" Margin="25,55,0,0" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Width="356"/>
+        <TextBox x:Name="TB1" Grid.Column="1" HorizontalAlignment="Left" Height="251" Margin="25,35,0,0" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Width="189"/>
+        <Button x:Name="Btn3" Content="Create DB" Grid.Column="1" HorizontalAlignment="Left" Margin="273,146,0,0" VerticalAlignment="Top" Width="75" Click="Btn3_Click"/>
         <!--<GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="3"
         HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowsPreview="True"/>-->
     </Grid>

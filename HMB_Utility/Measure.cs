@@ -23,44 +23,35 @@ using Hbm.Api.Mgc;
 
 namespace HMB_Utility
 {
-    public class Measure
+    public static class Measure
     {
        
         public delegate bool fetchDataFromDaq(List <Device> devices); //delegate to the method that describe how to save the data from DAQ
+        public delegate void StoreSingleMeasurmentData(Signal sig);
         public static event EventHandler<List<Problem>> problemEvent;
         public static event EventHandler<Exception> exceptionEvent;
         public static System.Threading.Timer dataFetchTimer = null;  //timer for periodically data fetch
        
-        static public List<MeasurementValue> GetMeasurmentValue(List<Device> devices)
+        static public void GetMeasurmentValue(List<Device> devices, StoreSingleMeasurmentData storeMethod)
         {
             List<MeasurementValue> measurementValues = new List<MeasurementValue>();
-            try
-            {
                 foreach (Device dev in devices)
                 {
-                    foreach (Connector con in dev.Connectors)
+                    dev.ReadSingleMeasurementValueOfAllSignals();
+                    List<Signal> signalsToMeasure = dev.GetAllSignals();
+                    foreach (Signal sig in signalsToMeasure)
                     {
-                        foreach (Channel ch in con.Channels)
+                        if ((sig is AnalogInSignal) && sig.IsMeasurable)
                         {
-                            foreach (Signal sig in ch.Signals)
-                            {
-                                if (sig.IsMeasurable)
-                                {
-                                    measurementValues.Add(sig.GetSingleMeasurementValue());
-                                }
-                                else measurementValues.Add(new MeasurementValue(0, 0, MeasurementValueState.Overflow));
-                            }
+
+                            storeMethod(sig);
+                            measurementValues.Add(sig.GetSingleMeasurementValue());
+                            
                         }
+                        
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                exceptionEvent(typeof(Measure), ex);
-                measurementValues.Clear();
-                return measurementValues;
-            }
-            return measurementValues;
+           
         } 
 
         //Device list contains the Signal list wherein all signals should be measured bu DAQ session

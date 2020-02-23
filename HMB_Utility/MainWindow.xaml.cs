@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 using Hbm.Api.Common;
 using Hbm.Api.Common.Messaging;
@@ -45,7 +46,7 @@ namespace HMB_Utility
         {
             InitializeComponent();
             logger = HBM_Object.GetInstance();
-
+            Btn1.IsEnabled = false;
         }
 
         public async Task SearchAsync(int period = 2000, int searchTime = 30000)
@@ -90,6 +91,7 @@ namespace HMB_Utility
             TB1.Text += "Devices";
             foreach (Device dev in logger.deviceList)
             {
+                
                 TB1.Text += Environment.NewLine + dev.Name;
                 List<Signal> signals = dev.GetAllSignals();
                 TB1.Text += Environment.NewLine + "Signals";
@@ -99,9 +101,65 @@ namespace HMB_Utility
                 }
             }
 
-            //await SaveToBDAsync(logger.deviceList);
+            
+            
+           
 
 
+        }
+
+        private void Btn1_Click(object sender, RoutedEventArgs e)
+        {
+
+            HMB_Utility.Measure.GetMeasurmentValue(logger.deviceList, DataToDB.SaveSingleMeasurments);
+
+
+            //ObservableCollection<Device> devices = new ObservableCollection<Device>(logger.deviceList);
+            //overviewTree.ItemsSource = logger.deviceList;
+
+
+
+
+            //ObservableCollection<DeviceToUI> devicesToUI = new ObservableCollection<DeviceToUI>();
+            //foreach (Device dev in logger.deviceList)
+            //{
+            //    DeviceToUI devUI = new DeviceToUI
+            //    {
+            //        Name = dev.Name,
+            //        IpAddress = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress,
+            //        Model = dev.Model,
+            //        SerialNo = dev.SerialNo,
+            //        Signals = new ObservableCollection<Signal>(dev.GetAllSignals())
+            //    };
+            //    devicesToUI.Add(devUI);
+            //}
+
+            //overviewTree.ItemsSource = devicesToUI;
+
+        }
+
+        private void Btn2_Click(object sender, RoutedEventArgs e)
+        {
+            using (HBMContext db = new HBMContext())
+            {
+                var sig = db.Signals.Include(d => d.Values);
+                foreach (var s in sig)
+                {
+                    Console.WriteLine(s.Name);
+                   
+                        foreach (var val in s.Values)
+                        {
+                            Console.WriteLine("{0}\t{1}", val.dateTime, val.MeasuredValue);
+                        }
+                    
+                }
+            }
+        }
+
+        private async void Btn3_Click(object sender, RoutedEventArgs e)
+        {
+            await SaveToBDAsync(logger.deviceList);
+            Btn1.IsEnabled = true;
         }
     }
 }
