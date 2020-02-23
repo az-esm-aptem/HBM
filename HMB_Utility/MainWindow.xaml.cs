@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Data.Entity;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -47,20 +48,58 @@ namespace HMB_Utility
 
         }
 
-        public async void SearchAsync(int period = 3000, int searchTime = 30000)
+        public async Task SearchAsync(int period = 2000, int searchTime = 30000)
         {
-            bool result = await Task.Run(() => logger.SearchDevices(period, searchTime));
+             await Task.Run(() => logger.SearchDevices(period, searchTime));
         }
 
-        private void SearchDeviceButton_Click(object sender, RoutedEventArgs e)
+        public async Task ConnectAsync(List<Device>devList)
         {
-            //SearchAsync();
+            await Task.Run(() => logger.ConnectToFoundDevices(devList));
+        }
 
+        public async Task SaveToBDAsync(List<Device> devList)
+        {
+            await Task.Run(() => DataToDB.SaveDevices(devList));
+        }
+
+        public void ShowDevices()
+        {
             using (HBMContext db = new HBMContext())
             {
-                db.Devices.Add(new DeviceModel { Name = "Test device", IpAddress = "192.168.0.0" });
-                db.SaveChanges();
+                var dev = db.Devices.Include(d => d.Signals).ToList();
+                foreach (var d in dev)
+                {
+                    Console.WriteLine(d.Name);
+                    foreach (var s in d.Signals)
+                    {
+                        Console.WriteLine(s.Name);
+                    }
+                }
             }
+        }
+
+        private async void SearchDeviceButton_Click(object sender, RoutedEventArgs e)
+        {
+            TB1.Clear();
+            TB1.Text += "Searching...";
+
+            await SearchAsync();
+            await ConnectAsync(logger.deviceList);
+            TB1.Clear();
+            TB1.Text += "Devices";
+            foreach (Device dev in logger.deviceList)
+            {
+                TB1.Text += Environment.NewLine + dev.Name;
+                List<Signal> signals = dev.GetAllSignals();
+                TB1.Text += Environment.NewLine + "Signals";
+                foreach (Signal sig in signals)
+                {
+                    TB1.Text += Environment.NewLine + sig.Name;
+                }
+            }
+
+            //await SaveToBDAsync(logger.deviceList);
 
 
         }

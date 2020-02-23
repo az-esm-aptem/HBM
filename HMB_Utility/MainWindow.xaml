@@ -18,15 +18,16 @@
         <Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="102"
                 Click="SearchDeviceButton_Click" Grid.Column="1" Grid.Row="0" Height="20" />
         <TreeView x:Name="overviewTree" Margin="10" Grid.Column="0" >
-            
+
             <TreeViewItem x:Name="Devices_TreeViewItem" Header="Devices"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="500"/>
-            
+
         </TreeView>
         <GridSplitter Grid.Row="0" ShowsPreview="True" Width="3" VerticalAlignment="Stretch"/>
-        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="291" Height="20"/>
-        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="285" Height="20"/>
+        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="25,351,0,0" VerticalAlignment="Top" Width="291" Height="20"/>
+        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="25,308,0,0" VerticalAlignment="Top" Width="285" Height="20"/>
         <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
                  TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" Width="672"  />
+        <TextBox x:Name="TB1" Grid.Column="1" HorizontalAlignment="Left" Height="108" Margin="25,55,0,0" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Width="356"/>
         <!--<GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="3"
         HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowsPreview="True"/>-->
     </Grid>

@@ -36,7 +36,7 @@ namespace HMB_Utility
                     string ip = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress;
 
                     DeviceModel oldDM = db.Devices.FirstOrDefault(d => d.IpAddress == ip);  //checking if the device already exist in the DB
-                    if (oldDM == null) continue; //if already exist - continue with next device
+                    if (oldDM != null) continue; //if already exist - continue with next device
 
                     //adding new device in the DB
                     DeviceModel newDM = new DeviceModel { Name = dev.Name, IpAddress = ip, Model = dev.Model, SerialNo = dev.SerialNo };
@@ -49,6 +49,8 @@ namespace HMB_Utility
                     foreach (Signal sig in signals)
                     {
                         db.Signals.Add(new SignalModel {Name = sig.Name, SampleRate = sig.SampleRate, Device = newDM });
+                        db.SaveChanges();
+
                     }
                 }
 
