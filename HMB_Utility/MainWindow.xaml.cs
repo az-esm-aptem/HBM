@@ -42,10 +42,12 @@ namespace HMB_Utility
     public partial class MainWindow : Window
     {
         HBM_Object logger;
+        List<DAQ> sessions;
         public MainWindow()
         {
             InitializeComponent();
             logger = HBM_Object.GetInstance();
+            sessions = new List<DAQ>();
             Btn1.IsEnabled = false;
         }
 
@@ -111,7 +113,7 @@ namespace HMB_Utility
         private void Btn1_Click(object sender, RoutedEventArgs e)
         {
 
-            HMB_Utility.Measure.GetMeasurmentValue(logger.deviceList, DataToDB.SaveSingleMeasurments);
+            HMB_Utility.Measuring.GetMeasurmentValue(logger.deviceList, DataToDB.SaveSingleMeasurments);
 
 
             //ObservableCollection<Device> devices = new ObservableCollection<Device>(logger.deviceList);
@@ -160,6 +162,32 @@ namespace HMB_Utility
         {
             await SaveToBDAsync(logger.deviceList);
             Btn1.IsEnabled = true;
+        }
+
+     
+        private void Btn4_Click(object sender, RoutedEventArgs e)
+        {
+            
+            foreach(Device dev in logger.deviceList)
+            {
+                sessions.Add(new DAQ(dev, DataToDB.SaveDAQMeasurments));
+            }
+            foreach (DAQ daq in sessions)
+            {
+                daq.Start(3000, 1);
+            }
+            Btn4.IsEnabled = false;
+            Btn5.IsEnabled = true;
+        }
+
+        private void Btn5_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (DAQ daq in sessions)
+            {
+                daq.Stop();
+                Btn5.IsEnabled = false;
+                Btn4.IsEnabled = true;
+            }
         }
     }
 }

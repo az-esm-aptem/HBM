@@ -21,16 +21,21 @@ using Hbm.Api.QuantumX;
 using Hbm.Api.Mgc;
 
 using DB;
+using System.Threading;
 
 namespace HMB_Utility
 {
     
     public static class DataToDB
     {
+        static Mutex mutexObj = new Mutex();
+        public static event EventHandler<Exception> exceptionEvent;
         public static void SaveDevices(List<Device>devList)
         {
             using (HBMContext db = new HBMContext())
             {
+                List<DeviceModel> devicesToAdd = new List<DeviceModel>();
+                List<SignalModel> signalsToAdd = new List<SignalModel>();
                 foreach (Device dev in devList)
                 {
                     string ip = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress;
@@ -40,28 +45,36 @@ namespace HMB_Utility
 
                     //adding new device in the DB
                     DeviceModel newDM = new DeviceModel { Name = dev.Name, IpAddress = ip, Model = dev.Model, SerialNo = dev.SerialNo };
-                    db.Devices.Add(newDM);
-                    db.SaveChanges();
-                    
-                    List<Signal> signals = dev.GetAllSignals();
+                    devicesToAdd.Add (newDM);
+
+                    List<Signal> allSignals = dev.GetAllSignals();
 
                     //adding signals
-                    foreach (Signal sig in signals)
+                    foreach (Signal sig in allSignals)
                     {
-                        if ((sig is AnalogInSignal))
+                        if (TypeFilter.Check(sig) && sig.IsMeasurable)
                         {
-                            if (sig.IsMeasurable)
-                            {
-                                db.Signals.Add(new SignalModel { Name = sig.Name, SampleRate = sig.SampleRate, UniqueId = sig.GetUniqueID(), Device = newDM });
-                                db.SaveChanges();
-                            }
+                            signalsToAdd.Add(new SignalModel { Name = sig.Name, SampleRate = sig.SampleRate, UniqueId = sig.GetUniqueID(), Device = newDM });                           
                         }
-                        
                     }
                 }
-
-            }
+                using (var transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.Devices.AddRange(devicesToAdd);
+                        db.Signals.AddRange(signalsToAdd);
+                        db.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        exceptionEvent?.Invoke(typeof(DataToDB), ex);
+                    }
+                }
                 
+            }
         }
 
         public static void SaveSingleMeasurments(Signal sig)
@@ -81,14 +94,64 @@ namespace HMB_Utility
                         State = (int)sig.GetSingleMeasurementValue().State,
                         Signal = signalInDB
                     };
-                    db.Values.Add(newVal);
-                    db.SaveChanges();
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            db.Values.Add(newVal);
+                            db.SaveChanges();
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            exceptionEvent?.Invoke(typeof(DataToDB), ex);
+                        }
+                    }
                 }
-                
             }
-
         }
 
-        
+        public static void SaveDAQMeasurments(Signal sig)
+        {
+            mutexObj.WaitOne();
+            using (HBMContext db = new HBMContext())
+            {
+                string sigName = sig.Name;
+                List<ValuesModel> valuesToAdd = new List<ValuesModel>();
+                var signalInDB = db.Signals.Where(s => s.Name == sigName).FirstOrDefault();
+                int count = sig.ContinuousMeasurementValues.UpdatedValueCount;
+
+                if (signalInDB != null)
+                {
+                    for(int i = 0; i<count; i++)
+                    {
+                        valuesToAdd.Add(new ValuesModel
+                        {
+                            dateTime = DateTime.Now,
+                            MeasuredValue = sig.ContinuousMeasurementValues.Values[i],
+                            TimeStamp = sig.ContinuousMeasurementValues.Timestamps[0]+i*(double)sig.SampleRate,
+                            State = (int)sig.ContinuousMeasurementValues.States[0],
+                            Signal = signalInDB
+                        }); ;
+                    }
+                }
+                using (var transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.Values.AddRange(valuesToAdd);
+                        db.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        exceptionEvent?.Invoke(typeof(DataToDB), ex);
+                    }
+                }
+            }
+            mutexObj.ReleaseMutex();
+        }
     }
 }

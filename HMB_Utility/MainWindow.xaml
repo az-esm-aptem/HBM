@@ -50,7 +50,9 @@
         <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
                  TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" Width="672"  />
         <TextBox x:Name="TB1" Grid.Column="1" HorizontalAlignment="Left" Height="251" Margin="25,35,0,0" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Width="189"/>
-        <Button x:Name="Btn3" Content="Create DB" Grid.Column="1" HorizontalAlignment="Left" Margin="273,146,0,0" VerticalAlignment="Top" Width="75" Click="Btn3_Click"/>
+        <Button x:Name="Btn3" Content="Create DB" Grid.Column="1" HorizontalAlignment="Left" Margin="241,35,0,0" VerticalAlignment="Top" Width="75" Click="Btn3_Click"/>
+        <Button x:Name="Btn4" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="241,107,0,0" VerticalAlignment="Top" Width="75" Click="Btn4_Click"/>
+        <Button x:Name="Btn5" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="241,160,0,0" VerticalAlignment="Top" Width="75" Click="Btn5_Click"/>
         <!--<GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="3"
         HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowsPreview="True"/>-->
     </Grid>
