@@ -48,6 +48,7 @@ namespace HMB_Utility
                     devicesToAdd.Add (newDM);
 
                     List<Signal> allSignals = dev.GetAllSignals();
+                    
 
                     //adding signals
                     foreach (Signal sig in allSignals)

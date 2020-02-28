@@ -44,6 +44,13 @@ namespace HMB_Utility
             saveDataMethod = saveMethod;
             measDevice = dev;
         }
+
+        ~DAQ()
+        {
+            daqSession.Dispose();
+        }
+
+
         public void Start(int fetchPeriod = 500, decimal sampleRate = 2400)
         {
             List<Signal> AllSignals = measDevice.GetAllSignals();

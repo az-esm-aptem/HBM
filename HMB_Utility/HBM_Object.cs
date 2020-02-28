@@ -34,7 +34,6 @@ namespace HMB_Utility
         private static HBM_Object instance;
 
         public static DaqEnvironment _daqEnvironment = null; //main object to work 
-        //public static DaqMeasurement _daqMeasurement = null; //main object to measurment
         Device _device;  //device to connect by IP
         //List<Signal> _signalsToMeasure; //list of signals to continuous measurment
 
@@ -46,7 +45,6 @@ namespace HMB_Utility
         private HBM_Object() 
         {
             _daqEnvironment = DaqEnvironment.GetInstance();
-            //_daqMeasurement = new DaqMeasurement();
         }
 
         public static HBM_Object GetInstance()
@@ -62,7 +60,6 @@ namespace HMB_Utility
         ~HBM_Object()
         {
             if (_daqEnvironment != null) _daqEnvironment.Dispose();
-            //if (_daqMeasurement != null) _daqMeasurement.Dispose();
         }
 
         //period - The time interval between invocations the scan method to waiting devices gathering
