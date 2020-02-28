@@ -85,6 +85,9 @@ namespace HMB_Utility
 
             while (time < searchTime) { };
 
+            searchTimer.Stop();
+            searchTimer.Dispose();
+
             if (deviceList.Count > 0)
             {
                 deviceList.OrderBy(d => d.Name);

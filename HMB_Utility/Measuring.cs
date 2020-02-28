@@ -25,23 +25,39 @@ namespace HMB_Utility
 {
     public static class Measuring
     {
-        
+        public static event EventHandler<string> errorEvent;
         public delegate void StoreSingleMeasurmentData(Signal sig);
 
-        public static void GetMeasurmentValue(FoundDevice dev, StoreSingleMeasurmentData storeMethod)
+        private static void GetMeasurmentValue(List<FoundDevice> devices, StoreSingleMeasurmentData storeMethod)
         {
-            List<MeasurementValue> measurementValues = new List<MeasurementValue>();
-            dev.device.ReadSingleMeasurementValue(dev.signalsToMeas);
-            foreach (Signal sig in dev.signalsToMeas)
+            
+            foreach (var dev in devices)
             {
-                if (sig.IsMeasurable)
+                if (dev.signalsToMeas.Count > 0)
                 {
-                    storeMethod(sig);
-                    measurementValues.Add(sig.GetSingleMeasurementValue());
+                    dev.device.ReadSingleMeasurementValue(dev.signalsToMeas);
+                    foreach (Signal sig in dev.signalsToMeas)
+                    {
+                        if (sig.IsMeasurable)
+                        {
+                            storeMethod(sig);
+                        }
+                    }
+                }
+                else
+                {
+                    errorEvent?.Invoke(typeof(Measuring), "No signals to measure!");
                 }
             }
         }
-        
+
+        public static async Task GetMeasurmentValueAsync(List<FoundDevice> devices, StoreSingleMeasurmentData storeMethod)
+        {
+            await Task.Run(() => GetMeasurmentValue(devices, storeMethod));
+        }
+
+
+
 
     }
 }

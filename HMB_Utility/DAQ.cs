@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
+using System.Timers;
 
 using Hbm.Api.Common;
 using Hbm.Api.Common.Messaging;
@@ -29,7 +29,7 @@ namespace HMB_Utility
         public delegate void SaveDataFromDaq(Signal sig); //delegate to the method that describe how to save the data from DAQ
         SaveDataFromDaq saveDataMethod;
         public event EventHandler<string> warningEvent;
-        System.Threading.Timer dataFetchTimer = null;
+        System.Timers.Timer dataFetchTimer = null;
         DaqMeasurement daqSession = null;
         List<Problem> daqPrepareProblems = null;
         List<Signal> signalsToMeasure = null;
@@ -40,7 +40,6 @@ namespace HMB_Utility
             daqPrepareProblems = new List<Problem>();
             daqSession = new DaqMeasurement();
             signalsToMeasure = dev.signalsToMeas;
-            dataFetchTimer = new System.Threading.Timer(FetchData, null, Timeout.Infinite, 0);
             saveDataMethod = saveMethod;
             measDevice = dev.device;
         }
@@ -64,7 +63,23 @@ namespace HMB_Utility
             daqSession.AddSignals(measDevice, signalsToMeasure);
             daqSession.PrepareDaq();
             daqSession.StartDaq(DataAcquisitionMode.Unsynchronized);
-            dataFetchTimer.Change(0, fetchPeriod);//starts every fetchPeriod ms
+            dataFetchTimer = new System.Timers.Timer(fetchPeriod); //starts every fetchPeriod ms
+            dataFetchTimer.AutoReset = true;
+            dataFetchTimer.Elapsed += (o, s) =>
+            {
+                dataFetchTimer.Stop();
+                if (daqSession.IsRunning)
+                {
+                    daqSession.FillMeasurementValues();
+                    foreach (Signal sig in signalsToMeasure)
+                    {
+                        if (sig.ContinuousMeasurementValues.BufferOverrunOccurred) warningEvent?.Invoke(typeof(DAQ), String.Format("{0} {1} buffer overrun", measDevice, sig));
+                        saveDataMethod(sig);
+                    }
+                }
+                dataFetchTimer.Start();
+            };
+            dataFetchTimer.Start();
         }
 
         public async Task StartAsync (int fetchPeriod = 500, decimal sampleRate = 2400)
@@ -74,24 +89,9 @@ namespace HMB_Utility
 
         public void Stop()
         {
-            dataFetchTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            dataFetchTimer.Stop();
             dataFetchTimer.Dispose();
             daqSession.StopDaq();
-            daqSession.Dispose();
-        }
-
-
-        private void FetchData(object o)
-        {
-            if (daqSession.IsRunning)
-            {
-                daqSession.FillMeasurementValues();
-                foreach (Signal sig in signalsToMeasure)
-                {
-                    if (sig.ContinuousMeasurementValues.BufferOverrunOccurred) warningEvent?.Invoke(typeof(DAQ), String.Format("{0} {1} buffer overrun", measDevice, sig));
-                    saveDataMethod(sig);
-                }
-            }
         }
     }
 }

@@ -113,46 +113,34 @@ namespace HMB_Utility
             }
         }
 
-        private void Btn1_Click(object sender, RoutedEventArgs e)
+        private async void Btn1_Click(object sender, RoutedEventArgs e)
         {
-
+            PrepareSignalList();
+            await Measuring.GetMeasurmentValueAsync(devices, DataToDB.SaveSingleMeasurments);
         }
 
         private void Btn2_Click(object sender, RoutedEventArgs e)
         {
-            using (HBMContext db = new HBMContext())
-            {
-                var sig = db.Signals.Include(d => d.Values);
-                foreach (var s in sig)
-                {
-                    Console.WriteLine(s.Name);
-                   
-                        foreach (var val in s.Values)
-                        {
-                            Console.WriteLine("{0}\t{1}", val.dateTime, val.MeasuredValue);
-                        }
-                    
-                }
-            }
+           
         }
 
         private async void Btn3_Click(object sender, RoutedEventArgs e)
         {
-            //await SaveToBDAsync(session.deviceList);
+            await DataToDB.SaveDevicesAsync(devices);
             Btn1.IsEnabled = true;
         }
 
      
-        private void Btn4_Click(object sender, RoutedEventArgs e)
+        private async void Btn4_Click(object sender, RoutedEventArgs e)
         {
-            
-            foreach(Device dev in session.deviceList)
+            PrepareSignalList();
+            foreach (var dev in devices)
             {
-                //DaqSessions.Add(new DAQ(dev, DataToDB.SaveDAQMeasurments));
+                DaqSessions.Add(new DAQ(dev, DataToDB.SaveDAQMeasurments));
             }
             foreach (DAQ daq in DaqSessions)
             {
-                //daq.Start(3000, 1);
+               await daq.StartAsync(3000, 1);
             }
             Btn4.IsEnabled = false;
             Btn5.IsEnabled = true;
@@ -168,6 +156,17 @@ namespace HMB_Utility
             }
         }
 
+        private void PrepareSignalList()
+        {
+            foreach (var dev in devices)
+            {
+                dev.signalsToMeas.Clear();
+                foreach (var sig in dev.signals)
+                {
+                    if (TypeFilter.Check(sig)) dev.signalsToMeas.Add(sig);
+                }
+            }
+        }
         
     }
 }

@@ -28,30 +28,35 @@ namespace HMB_Utility
     
     public static class DataToDB
     {
-        static Mutex mutexObj = new Mutex();
         public static event EventHandler<Exception> exceptionEvent;
         public static event EventHandler<string> errorEvent;
 
-        private static void SaveDevices(FoundDevice dev)
+        private static void SaveDevices(List<FoundDevice> devices)
         {
             using (HBMContext db = new HBMContext())
             {
-                DeviceModel newDM = null;
+                DeviceModel oldDM;
+                DeviceModel newDM;
+                List<DeviceModel> devicesToAdd = new List<DeviceModel>();
                 List<SignalModel> signalsToAdd = new List<SignalModel>();
-                DeviceModel oldDM = db.Devices.FirstOrDefault(d => d.IpAddress == dev.IpAddress);  //checking if the device already exist in the DB
-                if (oldDM == null)
+                foreach (var dev in devices)
                 {
-                    newDM = new DeviceModel { Name = dev.Name, IpAddress = dev.IpAddress, Model = dev.Model, SerialNo = dev.SerialNo };
-                    foreach (Signal sig in dev.signals)
+                    oldDM = db.Devices.FirstOrDefault(d => d.IpAddress == dev.IpAddress);  //checking if the device already exist in the DB
+                    if (oldDM == null)
                     {
-                        signalsToAdd.Add(new SignalModel { Name = sig.Name, SampleRate = sig.SampleRate, UniqueId = sig.GetUniqueID(), Device = newDM });
+                        newDM = new DeviceModel { Name = dev.Name, IpAddress = dev.IpAddress, Model = dev.Model, SerialNo = dev.SerialNo };
+                        devicesToAdd.Add(newDM);
+                        foreach (Signal sig in dev.signals)
+                        {
+                            signalsToAdd.Add(new SignalModel { Name = sig.Name, SampleRate = sig.SampleRate, UniqueId = sig.GetUniqueID(), Device = newDM });
+                        }
                     }
                 }
                 using (var transaction = db.Database.BeginTransaction())
                 {
                     try
                     {
-                        db.Devices.Add(newDM);
+                        db.Devices.AddRange(devicesToAdd);
                         db.Signals.AddRange(signalsToAdd);
                         db.SaveChanges();
                         transaction.Commit();
@@ -65,9 +70,9 @@ namespace HMB_Utility
             }
         }
 
-        public static async Task SaveDevicesAsync(FoundDevice dev)
+        public static async Task SaveDevicesAsync(List<FoundDevice> devices)
         {
-            await Task.Run(() => SaveDevices(dev));
+            await Task.Run(() => SaveDevices(devices));
         }
 
 
@@ -115,7 +120,6 @@ namespace HMB_Utility
 
         public static void SaveDAQMeasurments(Signal sig)
         {
-            mutexObj.WaitOne();
             using (HBMContext db = new HBMContext())
             {
                 string sigName = sig.Name;
@@ -152,7 +156,6 @@ namespace HMB_Utility
                     }
                 }
             }
-            mutexObj.ReleaseMutex();
         }
     }
 }
