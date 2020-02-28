@@ -25,13 +25,31 @@ namespace HMB_Utility
     public class FoundDevice
     {
         public Device device { get; private set; }
-        public List<Signal> signals { get; private set; }
+        public string Name { get; private set; }
+        public string IpAddress { get; private set; }
+        public string Model { get; private set; }
+        public string SerialNo { get; private set; }
+        public List<Signal> signals
+        {
+            get
+            {
+                return device.GetAllSignals();
+            }
+            private set { }
+        }
         public List<Signal> signalsToMeas { get; set; }
 
-        public event EventHandler<Exception> exceptionEvent;
-        public event EventHandler<List<Problem>> problemEvent;
-        public event EventHandler<string> errorEvent;
+        public FoundDevice(Device dev)
+        {
+            device = dev;
+            Name = dev.Name;
+            IpAddress = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress;
+            Model = dev.Model;
+            SerialNo = dev.SerialNo;
+            signals = new List<Signal>();
+            signalsToMeas = new List<Signal>();
+        }
 
-
+        
     }
 }

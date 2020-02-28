@@ -35,14 +35,14 @@ namespace HMB_Utility
         List<Signal> signalsToMeasure = null;
 
 
-        public DAQ(Device dev, SaveDataFromDaq saveMethod)
+        public DAQ(FoundDevice dev, SaveDataFromDaq saveMethod)
         {
             daqPrepareProblems = new List<Problem>();
             daqSession = new DaqMeasurement();
-            signalsToMeasure = new List<Signal>();
+            signalsToMeasure = dev.signalsToMeas;
             dataFetchTimer = new System.Threading.Timer(FetchData, null, Timeout.Infinite, 0);
             saveDataMethod = saveMethod;
-            measDevice = dev;
+            measDevice = dev.device;
         }
 
         ~DAQ()
@@ -51,26 +51,25 @@ namespace HMB_Utility
         }
 
 
-        public void Start(int fetchPeriod = 500, decimal sampleRate = 2400)
+        private void Start(int fetchPeriod = 500, decimal sampleRate = 2400)
         {
-            List<Signal> AllSignals = measDevice.GetAllSignals();
-            foreach (Signal sig in AllSignals)
+            foreach (Signal sig in signalsToMeasure)
             {
-                if (TypeFilter.Check(sig)) //checking the signal type
+                if (sig.HasSampleRate)
                 {
-                    if (sig.HasSampleRate)
-                    {
-                        sig.SampleRate = sampleRate; //Hz
-                    }
-                    measDevice.AssignSignal(sig, out daqPrepareProblems);
-                    signalsToMeasure.Add(sig);
+                    sig.SampleRate = sampleRate; //Hz
                 }
+                measDevice.AssignSignal(sig, out daqPrepareProblems);
             }
             daqSession.AddSignals(measDevice, signalsToMeasure);
             daqSession.PrepareDaq();
             daqSession.StartDaq(DataAcquisitionMode.Unsynchronized);
             dataFetchTimer.Change(0, fetchPeriod);//starts every fetchPeriod ms
+        }
 
+        public async Task StartAsync (int fetchPeriod = 500, decimal sampleRate = 2400)
+        {
+           await Task.Run(() => Start(fetchPeriod, sampleRate));
         }
 
         public void Stop()

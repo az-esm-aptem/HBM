@@ -30,40 +30,28 @@ namespace HMB_Utility
     {
         static Mutex mutexObj = new Mutex();
         public static event EventHandler<Exception> exceptionEvent;
-        public static void SaveDevices(List<Device>devList)
+        public static event EventHandler<string> errorEvent;
+
+        private static void SaveDevices(FoundDevice dev)
         {
             using (HBMContext db = new HBMContext())
             {
-                List<DeviceModel> devicesToAdd = new List<DeviceModel>();
+                DeviceModel newDM = null;
                 List<SignalModel> signalsToAdd = new List<SignalModel>();
-                foreach (Device dev in devList)
+                DeviceModel oldDM = db.Devices.FirstOrDefault(d => d.IpAddress == dev.IpAddress);  //checking if the device already exist in the DB
+                if (oldDM == null)
                 {
-                    string ip = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress;
-
-                    DeviceModel oldDM = db.Devices.FirstOrDefault(d => d.IpAddress == ip);  //checking if the device already exist in the DB
-                    if (oldDM != null) continue; //if already exist - continue with next device
-
-                    //adding new device in the DB
-                    DeviceModel newDM = new DeviceModel { Name = dev.Name, IpAddress = ip, Model = dev.Model, SerialNo = dev.SerialNo };
-                    devicesToAdd.Add (newDM);
-
-                    List<Signal> allSignals = dev.GetAllSignals();
-                    
-
-                    //adding signals
-                    foreach (Signal sig in allSignals)
+                    newDM = new DeviceModel { Name = dev.Name, IpAddress = dev.IpAddress, Model = dev.Model, SerialNo = dev.SerialNo };
+                    foreach (Signal sig in dev.signals)
                     {
-                        if (TypeFilter.Check(sig) && sig.IsMeasurable)
-                        {
-                            signalsToAdd.Add(new SignalModel { Name = sig.Name, SampleRate = sig.SampleRate, UniqueId = sig.GetUniqueID(), Device = newDM });                           
-                        }
+                        signalsToAdd.Add(new SignalModel { Name = sig.Name, SampleRate = sig.SampleRate, UniqueId = sig.GetUniqueID(), Device = newDM });
                     }
                 }
                 using (var transaction = db.Database.BeginTransaction())
                 {
                     try
                     {
-                        db.Devices.AddRange(devicesToAdd);
+                        db.Devices.Add(newDM);
                         db.Signals.AddRange(signalsToAdd);
                         db.SaveChanges();
                         transaction.Commit();
@@ -74,9 +62,14 @@ namespace HMB_Utility
                         exceptionEvent?.Invoke(typeof(DataToDB), ex);
                     }
                 }
-                
             }
         }
+
+        public static async Task SaveDevicesAsync(FoundDevice dev)
+        {
+            await Task.Run(() => SaveDevices(dev));
+        }
+
 
         public static void SaveSingleMeasurments(Signal sig)
         {
@@ -110,8 +103,15 @@ namespace HMB_Utility
                         }
                     }
                 }
+                else
+                {
+                    errorEvent?.Invoke(typeof(DataToDB), String.Format("No signal {0} found in the data base", sig));
+                }
             }
         }
+
+
+
 
         public static void SaveDAQMeasurments(Signal sig)
         {

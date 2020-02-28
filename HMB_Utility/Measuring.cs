@@ -27,26 +27,21 @@ namespace HMB_Utility
     {
         
         public delegate void StoreSingleMeasurmentData(Signal sig);
-        public static void GetMeasurmentValue(List<Device> devices, StoreSingleMeasurmentData storeMethod)
+
+        public static void GetMeasurmentValue(FoundDevice dev, StoreSingleMeasurmentData storeMethod)
         {
             List<MeasurementValue> measurementValues = new List<MeasurementValue>();
-            foreach (Device dev in devices)
+            dev.device.ReadSingleMeasurementValue(dev.signalsToMeas);
+            foreach (Signal sig in dev.signalsToMeas)
             {
-                dev.ReadSingleMeasurementValueOfAllSignals();
-                List<Signal> AllSignals = dev.GetAllSignals();
-                foreach (Signal sig in AllSignals)
+                if (sig.IsMeasurable)
                 {
-                    if (TypeFilter.Check(sig) && sig.IsMeasurable) //checking the signal type
-                    {
-                        storeMethod(sig);
-                        measurementValues.Add(sig.GetSingleMeasurementValue());
-                    }
+                    storeMethod(sig);
+                    measurementValues.Add(sig.GetSingleMeasurementValue());
                 }
             }
-        } 
-
+        }
         
-
 
     }
 }

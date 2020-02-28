@@ -41,30 +41,18 @@ namespace HMB_Utility
     /// 
     public partial class MainWindow : Window
     {
-        HBM_Object logger;
-        List<DAQ> sessions;
+        HbmSession session;
+        List<DAQ> DaqSessions;
+        List<FoundDevice> devices;
         public MainWindow()
         {
             InitializeComponent();
-            logger = HBM_Object.GetInstance();
-            sessions = new List<DAQ>();
+            session = HbmSession.GetInstance();
+            DaqSessions = new List<DAQ>();
             Btn1.IsEnabled = false;
+            devices = new List<FoundDevice>();
         }
 
-        public async Task SearchAsync(int period = 2000, int searchTime = 30000)
-        {
-             await Task.Run(() => logger.SearchDevices(period, searchTime));
-        }
-
-        public async Task ConnectAsync(List<Device>devList)
-        {
-            await Task.Run(() => logger.ConnectToFoundDevices(devList));
-        }
-
-        public async Task SaveToBDAsync(List<Device> devList)
-        {
-            await Task.Run(() => DataToDB.SaveDevices(devList));
-        }
 
         public void ShowDevices()
         {
@@ -84,59 +72,49 @@ namespace HMB_Utility
 
         private async void SearchDeviceButton_Click(object sender, RoutedEventArgs e)
         {
+            devices.Clear();
             TB1.Clear();
             TB1.Text += "Searching...";
-
-            await SearchAsync();
-            await ConnectAsync(logger.deviceList);
-            TB1.Clear();
-            TB1.Text += "Devices";
-            foreach (Device dev in logger.deviceList)
+            await session.SearchAsync();
+            foreach (Device dev in session.deviceList)
             {
-                
+                devices.Add(new FoundDevice(dev));
+            }
+            TB1.Clear();
+            TB1.Text += "DEVICES";
+            foreach (FoundDevice dev in devices)
+            {
                 TB1.Text += Environment.NewLine + dev.Name;
-                List<Signal> signals = dev.GetAllSignals();
-                TB1.Text += Environment.NewLine + "Signals";
-                foreach (Signal sig in signals)
+            }
+        }
+
+
+        private async void Connect_btn_Click(object sender, RoutedEventArgs e)
+        {
+            TB1.Clear();
+            TB1.Text += "Connecting...";
+            if (await session.ConnectAsync(devices))
+            {
+                TB1.Clear();
+                TB1.Text += "DEVICES";
+                foreach (FoundDevice dev in devices)
                 {
-                    TB1.Text += Environment.NewLine + sig.Name;
+                    TB1.Text += Environment.NewLine + dev.Name;
+                    TB1.Text += Environment.NewLine + "Signals";
+                    foreach (Signal sig in dev.signals)
+                    {
+                        TB1.Text += Environment.NewLine + sig.Name;
+                    }
                 }
             }
-
-            
-            
-           
-
-
+            else
+            {
+                TB1.Text += Environment.NewLine + "Connection Error";
+            }
         }
 
         private void Btn1_Click(object sender, RoutedEventArgs e)
         {
-
-            HMB_Utility.Measuring.GetMeasurmentValue(logger.deviceList, DataToDB.SaveSingleMeasurments);
-
-
-            //ObservableCollection<Device> devices = new ObservableCollection<Device>(logger.deviceList);
-            //overviewTree.ItemsSource = logger.deviceList;
-
-
-
-
-            //ObservableCollection<DeviceToUI> devicesToUI = new ObservableCollection<DeviceToUI>();
-            //foreach (Device dev in logger.deviceList)
-            //{
-            //    DeviceToUI devUI = new DeviceToUI
-            //    {
-            //        Name = dev.Name,
-            //        IpAddress = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress,
-            //        Model = dev.Model,
-            //        SerialNo = dev.SerialNo,
-            //        Signals = new ObservableCollection<Signal>(dev.GetAllSignals())
-            //    };
-            //    devicesToUI.Add(devUI);
-            //}
-
-            //overviewTree.ItemsSource = devicesToUI;
 
         }
 
@@ -160,7 +138,7 @@ namespace HMB_Utility
 
         private async void Btn3_Click(object sender, RoutedEventArgs e)
         {
-            await SaveToBDAsync(logger.deviceList);
+            //await SaveToBDAsync(session.deviceList);
             Btn1.IsEnabled = true;
         }
 
@@ -168,13 +146,13 @@ namespace HMB_Utility
         private void Btn4_Click(object sender, RoutedEventArgs e)
         {
             
-            foreach(Device dev in logger.deviceList)
+            foreach(Device dev in session.deviceList)
             {
-                sessions.Add(new DAQ(dev, DataToDB.SaveDAQMeasurments));
+                //DaqSessions.Add(new DAQ(dev, DataToDB.SaveDAQMeasurments));
             }
-            foreach (DAQ daq in sessions)
+            foreach (DAQ daq in DaqSessions)
             {
-                daq.Start(3000, 1);
+                //daq.Start(3000, 1);
             }
             Btn4.IsEnabled = false;
             Btn5.IsEnabled = true;
@@ -182,12 +160,14 @@ namespace HMB_Utility
 
         private void Btn5_Click(object sender, RoutedEventArgs e)
         {
-            foreach (DAQ daq in sessions)
+            foreach (DAQ daq in DaqSessions)
             {
                 daq.Stop();
                 Btn5.IsEnabled = false;
                 Btn4.IsEnabled = true;
             }
         }
+
+        
     }
 }

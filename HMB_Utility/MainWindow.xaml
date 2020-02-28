@@ -53,6 +53,7 @@
         <Button x:Name="Btn3" Content="Create DB" Grid.Column="1" HorizontalAlignment="Left" Margin="241,35,0,0" VerticalAlignment="Top" Width="75" Click="Btn3_Click"/>
         <Button x:Name="Btn4" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="241,107,0,0" VerticalAlignment="Top" Width="75" Click="Btn4_Click"/>
         <Button x:Name="Btn5" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="241,160,0,0" VerticalAlignment="Top" Width="75" Click="Btn5_Click"/>
+        <Button x:Name="Connect_btn" Content="Connect" Grid.Column="1" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top" Width="75" Click="Connect_btn_Click"/>
         <!--<GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="3"
         HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowsPreview="True"/>-->
     </Grid>
