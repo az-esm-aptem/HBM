@@ -51,6 +51,7 @@ namespace HMB_Utility
             DaqSessions = new List<DAQ>();
             Btn1.IsEnabled = false;
             devices = new List<FoundDevice>();
+            
         }
 
 
@@ -111,6 +112,7 @@ namespace HMB_Utility
             {
                 TB1.Text += Environment.NewLine + "Connection Error";
             }
+            DataContext = new ApplicationViewModel(devices);
         }
 
         private async void Btn1_Click(object sender, RoutedEventArgs e)

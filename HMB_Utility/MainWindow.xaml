@@ -12,11 +12,13 @@
             <RowDefinition Height="Auto" MinHeight="150" MaxHeight="200"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" MaxWidth="500" MinWidth ="100"/>
+            <ColumnDefinition Width="163" MaxWidth="350"/>
+            <ColumnDefinition Width="187"/>
             <ColumnDefinition />
+
         </Grid.ColumnDefinitions>
-        <Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="102"
-                Click="SearchDeviceButton_Click" Grid.Column="1" Grid.Row="0" Height="20" />
+        <Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="39,10,0,0" VerticalAlignment="Top" Width="102"
+                Click="SearchDeviceButton_Click" Grid.Column="2" Grid.Row="0" Height="20" />
         <!--<TreeView x:Name="overviewTree" Margin="10" Grid.Column="0" >
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Path=Connectors}">
@@ -29,31 +31,40 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>-->
+        <ListBox Grid.Column="0" ItemsSource="{Binding devices}"
+                 SelectedItem="{Binding SelectedDevice}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="18" Text="{Binding Path=Name}" />
+                        <TextBlock Text="{Binding Path=IpAddress}" />
+                        <TextBlock Text="{Binding Path=Model}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Column="1" DataContext="{Binding SelectedDevice}">
+            <TextBlock Text="Выбранный элемент"/>
+            <TextBlock Text="Имя" />
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="IP адрес" />
+            <TextBox Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Модель" />
+            <TextBox Text="{Binding Model, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
 
-        <TreeView x:Name="overviewTree" Margin="10" Grid.Column="0" >
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Path=Connectors}">
-                    <TextBlock Text="{Binding Name}" />
-                    <HierarchicalDataTemplate.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </HierarchicalDataTemplate.ItemTemplate>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
-        
-        
-        <GridSplitter Grid.Row="0" ShowsPreview="True" Width="3" VerticalAlignment="Stretch"/>
-        <Button x:Name="Btn2" Content="Read Data" Grid.Column="1" HorizontalAlignment="Left" Margin="25,351,0,0" VerticalAlignment="Top" Width="291" Height="20" Click="Btn2_Click"/>
-        <Button x:Name="Btn1" Content="Start single measurment" Grid.Column="1" HorizontalAlignment="Left" Margin="25,308,0,0" VerticalAlignment="Top" Width="285" Height="20" Click="Btn1_Click"/>
-        <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+
+
+
+        <GridSplitter Grid.Row="0" ShowsPreview="True" Width="3" VerticalAlignment="Stretch" Grid.Column="1"/>
+        <Button x:Name="Btn1" Content="Get single measurment" Grid.Column="2" HorizontalAlignment="Left" Margin="153,301,0,0" VerticalAlignment="Top" Width="149" Height="20" Click="Btn1_Click"/>
+        <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
                  TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" Width="672"  />
-        <TextBox x:Name="TB1" Grid.Column="1" HorizontalAlignment="Left" Height="251" Margin="25,35,0,0" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Width="189"/>
-        <Button x:Name="Btn3" Content="Create DB" Grid.Column="1" HorizontalAlignment="Left" Margin="241,35,0,0" VerticalAlignment="Top" Width="75" Click="Btn3_Click"/>
-        <Button x:Name="Btn4" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="241,107,0,0" VerticalAlignment="Top" Width="75" Click="Btn4_Click"/>
-        <Button x:Name="Btn5" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="241,160,0,0" VerticalAlignment="Top" Width="75" Click="Btn5_Click"/>
-        <Button x:Name="Connect_btn" Content="Connect" Grid.Column="1" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top" Width="75" Click="Connect_btn_Click"/>
+        <TextBox x:Name="TB1" Grid.Column="2" HorizontalAlignment="Left" Height="251" Margin="39,35,0,0" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Width="189"/>
+        <Button x:Name="Btn3" Content="Create DB" Grid.Column="2" HorizontalAlignment="Left" Margin="233,35,0,0" VerticalAlignment="Top" Width="75" Click="Btn3_Click" Height="20"/>
+        <Button x:Name="Btn4" Content="Start DAQ" Grid.Column="2" HorizontalAlignment="Left" Margin="233,69,0,0" VerticalAlignment="Top" Width="75" Click="Btn4_Click" Height="20"/>
+        <Button x:Name="Btn5" Content="Stop DAQ" Grid.Column="2" HorizontalAlignment="Left" Margin="233,104,0,0" VerticalAlignment="Top" Width="75" Click="Btn5_Click" Height="20"/>
+        <Button x:Name="Connect_btn" Content="Connect" Grid.Column="2" HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Width="75" Click="Connect_btn_Click" Height="20"/>
         <!--<GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="3"
         HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowsPreview="True"/>-->
     </Grid>
