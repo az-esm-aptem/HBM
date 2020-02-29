@@ -10,12 +10,12 @@ using System.Collections.ObjectModel;
 
 namespace HMB_Utility
 {
-    class ApplicationViewModel : INotifyPropertyChanged
+    public class ApplicationViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-       
-        public ObservableCollection<FoundDevice> devices;
         private FoundDevice _selectedDevice;
+        private ObservableCollection<FoundDevice> _devs;
+        public ObservableCollection<FoundDevice> Devs { get; set; }
+        
         public FoundDevice SelectedDevice
         {
             get
@@ -29,14 +29,11 @@ namespace HMB_Utility
             }
         }
 
+       
         public ApplicationViewModel(List<FoundDevice>devList)
         {
-            devices = new ObservableCollection<FoundDevice>(devList);
+            Devs = new ObservableCollection<FoundDevice>(devList);
         }
 
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
     }
 }

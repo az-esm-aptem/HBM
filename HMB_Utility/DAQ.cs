@@ -26,8 +26,7 @@ namespace HMB_Utility
     public class DAQ
     {
         Device measDevice = null;
-        public delegate void SaveDataFromDaq(Signal sig); //delegate to the method that describe how to save the data from DAQ
-        SaveDataFromDaq saveDataMethod;
+        Action<Signal> saveDataMethod;
         public event EventHandler<string> warningEvent;
         System.Timers.Timer dataFetchTimer = null;
         DaqMeasurement daqSession = null;
@@ -35,13 +34,13 @@ namespace HMB_Utility
         List<Signal> signalsToMeasure = null;
 
 
-        public DAQ(FoundDevice dev, SaveDataFromDaq saveMethod)
+        public DAQ(FoundDevice dev, Action<Signal> saveMethod)
         {
             daqPrepareProblems = new List<Problem>();
             daqSession = new DaqMeasurement();
-            signalsToMeasure = dev.signalsToMeas;
+            signalsToMeasure = dev.SignalsToMeasure;
             saveDataMethod = saveMethod;
-            measDevice = dev.device;
+            measDevice = dev.HbmDevice;
         }
 
         ~DAQ()

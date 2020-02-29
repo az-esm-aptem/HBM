@@ -41,20 +41,26 @@ namespace HMB_Utility
     /// 
     public partial class MainWindow : Window
     {
-        HbmSession session;
-        List<DAQ> DaqSessions;
-        List<FoundDevice> devices;
+        //HbmSession session;
+        //List<DAQ> DaqSessions;
+        //List<FoundDevice> devices;
         public MainWindow()
         {
             InitializeComponent();
-            session = HbmSession.GetInstance();
-            DaqSessions = new List<DAQ>();
-            Btn1.IsEnabled = false;
-            devices = new List<FoundDevice>();
-            
+            //session = HbmSession.GetInstance();
+            //DaqSessions = new List<DAQ>();
+            //Btn1.IsEnabled = false;
+            //devices = new List<FoundDevice>();
+            DataContext = new MainWindowViewModel();
         }
 
+        
 
+
+
+
+
+        /*
         public void ShowDevices()
         {
             using (HBMContext db = new HBMContext())
@@ -73,20 +79,21 @@ namespace HMB_Utility
 
         private async void SearchDeviceButton_Click(object sender, RoutedEventArgs e)
         {
-            devices.Clear();
-            TB1.Clear();
-            TB1.Text += "Searching...";
-            await session.SearchAsync();
-            foreach (Device dev in session.deviceList)
-            {
-                devices.Add(new FoundDevice(dev));
-            }
-            TB1.Clear();
-            TB1.Text += "DEVICES";
-            foreach (FoundDevice dev in devices)
-            {
-                TB1.Text += Environment.NewLine + dev.Name;
-            }
+            //devices.Clear();
+            //TB1.Clear();
+            //TB1.Text += "Searching...";
+            //await session.SearchAsync();
+            //foreach (Device dev in session.deviceList)
+            //{
+            //    devices.Add(new FoundDevice(dev));
+            //}
+            //TB1.Clear();
+            //TB1.Text += "DEVICES";
+            //foreach (FoundDevice dev in devices)
+            //{
+            //    TB1.Text += Environment.NewLine + dev.Name;
+            //}
+            
         }
 
 
@@ -102,7 +109,7 @@ namespace HMB_Utility
                 {
                     TB1.Text += Environment.NewLine + dev.Name;
                     TB1.Text += Environment.NewLine + "Signals";
-                    foreach (Signal sig in dev.signals)
+                    foreach (Signal sig in dev.Signals)
                     {
                         TB1.Text += Environment.NewLine + sig.Name;
                     }
@@ -112,7 +119,7 @@ namespace HMB_Utility
             {
                 TB1.Text += Environment.NewLine + "Connection Error";
             }
-            DataContext = new ApplicationViewModel(devices);
+
         }
 
         private async void Btn1_Click(object sender, RoutedEventArgs e)
@@ -162,13 +169,14 @@ namespace HMB_Utility
         {
             foreach (var dev in devices)
             {
-                dev.signalsToMeas.Clear();
-                foreach (var sig in dev.signals)
+                dev.SignalsToMeasure.Clear();
+                foreach (var sig in dev.Signals)
                 {
-                    if (TypeFilter.Check(sig)) dev.signalsToMeas.Add(sig);
+                    if (TypeFilter.Check(sig)) dev.SignalsToMeasure.Add(sig);
                 }
             }
         }
         
+        */
     }
 }

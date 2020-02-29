@@ -46,7 +46,7 @@ namespace HMB_Utility
                     {
                         newDM = new DeviceModel { Name = dev.Name, IpAddress = dev.IpAddress, Model = dev.Model, SerialNo = dev.SerialNo };
                         devicesToAdd.Add(newDM);
-                        foreach (Signal sig in dev.signals)
+                        foreach (Signal sig in dev.Signals)
                         {
                             signalsToAdd.Add(new SignalModel { Name = sig.Name, SampleRate = sig.SampleRate, UniqueId = sig.GetUniqueID(), Device = newDM });
                         }

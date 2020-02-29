@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 using Hbm.Api.Common;
 using Hbm.Api.Common.Messaging;
@@ -24,24 +25,26 @@ using System.Runtime.CompilerServices;
 
 namespace HMB_Utility
 {
-    public class FoundDevice : INotifyPropertyChanged
+    public class FoundDevice : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         private Device _device;
         private string _name;
         private string _ipAddress;
         private string _model;
         private string _serialNo;
-        public Device device
+        private List<Signal> _signals;
+        private List<Signal> _signalsToMeasure;
+
+        public Device HbmDevice
         {
             get
             {
                 return _device;
             }
-            private set
+            set
             {
                 _device = value;
-                OnPropertyChanged("device");
+                OnPropertyChanged("Device");
             }
         }
         public string Name
@@ -50,7 +53,7 @@ namespace HMB_Utility
             {
                 return _name;
             }
-            private set
+            set
             {
                 _name = value;
                 OnPropertyChanged("Name");
@@ -62,7 +65,7 @@ namespace HMB_Utility
             {
                 return _ipAddress;
             }
-            private set
+            set
             {
                 _ipAddress = value;
                 OnPropertyChanged("IpAddress");
@@ -74,7 +77,7 @@ namespace HMB_Utility
             {
                 return _model;
             }
-            private set
+            set
             {
                 _model = value;
                 OnPropertyChanged("Model");
@@ -86,38 +89,56 @@ namespace HMB_Utility
             {
                 return _serialNo;
             }
-            private set
+            set
             {
                 _serialNo = value;
                 OnPropertyChanged("SerialMo");
             }
         }
-        public List<Signal> signals
+        public ObservableCollection<Signal> Signals
         {
             get
             {
-                return device.GetAllSignals();
+                _signals = HbmDevice.GetAllSignals();
+                return new ObservableCollection<Signal>(_signals);
             }
-            private set { }
-        }
-        public List<Signal> signalsToMeas { get; set; }
+            set
+            {
 
+            }
+        }
+        public List<Signal> SignalsToMeasure
+        {
+            get
+            {
+                return _signalsToMeasure;
+            }
+            set
+            {
+                _signalsToMeasure = value;
+            }
+        }
+   
         public FoundDevice(Device dev)
         {
-            device = dev;
+            HbmDevice = dev;
             Name = dev.Name;
             IpAddress = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress;
             Model = dev.Model;
             SerialNo = dev.SerialNo;
-            signals = new List<Signal>();
-            signalsToMeas = new List<Signal>();
+            SignalsToMeasure = new List<Signal>();
         }
 
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        //For testing!!!! TO DELETE
+        public FoundDevice()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            Name = "N1";
+            IpAddress = "ip1";
+            Model = "M1";
         }
-    }
+        
+
+}
 
     //public class FoundDevice
     //{

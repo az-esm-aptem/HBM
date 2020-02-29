@@ -60,7 +60,7 @@ namespace HMB_Utility
 
         //period - The time interval between invocations the scan method to waiting devices gathering
         //searchTime - The time interval for searching. If this time is up and no one device found - the method returns False, and device list is empty
-        private bool SearchDevices()  
+        private bool SearchDevices(object obj)  
         {
             int.TryParse(ConfigurationManager.AppSettings["searchPeriod"], out int period);
             int.TryParse(ConfigurationManager.AppSettings["searchTime"], out int searchTime);
@@ -96,9 +96,9 @@ namespace HMB_Utility
             else return false;
         }
 
-        public async Task SearchAsync()
+        public async Task<bool> SearchAsync(object obj)
         {
-            await Task.Run(() => SearchDevices());
+            return await Task.Run(() => SearchDevices(obj));
         }
 
 
@@ -108,7 +108,7 @@ namespace HMB_Utility
             List<Device> devToConnect = new List<Device>();
             foreach (var dev in devices)
             {
-                devToConnect.Add(dev.device);
+                devToConnect.Add(dev.HbmDevice);
             }
             if (_daqEnvironment.Connect(devToConnect, out connectToFoundDevicesProblemList))
             {
