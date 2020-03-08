@@ -75,15 +75,6 @@ namespace HMB_Utility
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (mainWindowViewModel.DevicesToConnect.Count>0)
-                if (mainWindowViewModel.DevicesToConnect[0].Signals.Count>0)
-            foreach(Signal s in mainWindowViewModel.DevicesToConnect[0].Signals)
-            {
-                Console.WriteLine(s.Name);
-            }
-        }
 
 
 

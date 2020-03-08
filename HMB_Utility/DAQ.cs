@@ -38,7 +38,7 @@ namespace HMB_Utility
         {
             daqPrepareProblems = new List<Problem>();
             daqSession = new DaqMeasurement();
-            signalsToMeasure = dev.SignalsToMeasure;
+            signalsToMeasure = dev.SignalsToMeasure.ToList();
             saveDataMethod = saveMethod;
             measDevice = dev.HbmDevice;
         }

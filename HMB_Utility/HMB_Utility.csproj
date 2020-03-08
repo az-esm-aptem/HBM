@@ -111,6 +111,7 @@
     </ApplicationDefinition>
     <Compile Include="DAQ.cs" />
     <Compile Include="FoundDevice.cs" />
+    <Compile Include="FoundSignal.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="UserCommandAsync.cs" />
     <Compile Include="TypeFilter.cs" />

@@ -85,13 +85,15 @@ namespace HMB_Utility
 
         private async Task<bool> connect (object obj)
         {
-            bool result = await session.ConnectAsync(DevicesToConnect.ToList());
-            foreach (var dev in DevicesToConnect)
-            {
-                dev.GetSignals();
-            }
+            bool result = await session.ConnectAsync(new List<FoundDevice> { SelectedDevice });
+            SelectedDevice.GetSignals(); //read signal list from device and make ObservableCollection<FoundSignal>
+            SelectedDevice.GetSingleSignalVals(); //read and save in FoundSignal the single measuring values
+            SelectedDevice.GetSignalChannel(); //find and save in FoundSignal the channel that the signal belongs
+            SelectedDevice.GetSignalConnector(); //find and save in FoundSignal the connector that the signal belongs
             return result;
         }
+
+        
 
 
 

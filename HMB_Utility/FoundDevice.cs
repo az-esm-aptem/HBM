@@ -28,26 +28,17 @@ namespace HMB_Utility
     public class FoundDevice : ViewModelBase
     {
         private Device _device;
-        private string _name;
-        private string _ipAddress;
-        private string _model;
-        private string _serialNo;
-        private ObservableCollection<Signal> _signals;
+        private ObservableCollection<FoundSignal> _signals;
         private ObservableCollection<Signal> _signalsToMeasure;
 
         private FoundDevice() { }
 
         public FoundDevice(Device dev)
         {
-            HbmDevice = dev;
-            Name = dev.Name;
-            IpAddress = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress;
-            Model = dev.Model;
-            SerialNo = dev.SerialNo;
-            SignalsToMeasure = new ObservableCollection<Signal>();
-            Signals = new ObservableCollection<Signal>();
-            _signals = new ObservableCollection<Signal>();
+            _device = dev;
+            _signals = new ObservableCollection<FoundSignal>();
             _signalsToMeasure = new ObservableCollection<Signal>();
+
         }
         
         public Device HbmDevice
@@ -56,21 +47,16 @@ namespace HMB_Utility
             {
                 return _device;
             }
-            set
-            {
-                _device = value;
-                OnPropertyChanged("Device");
-            }
         }
         public string Name
         {
             get
             {
-                return _name;
+                return _device.Name;
             }
             set
             {
-                _name = value;
+                _device.Name = value;
                 OnPropertyChanged("Name");
             }
         }
@@ -78,39 +64,24 @@ namespace HMB_Utility
         {
             get
             {
-                return _ipAddress;
-            }
-            set
-            {
-                _ipAddress = value;
-                OnPropertyChanged("IpAddress");
+                return (_device.ConnectionInfo as EthernetConnectionInfo).IpAddress;
             }
         }
         public string Model
         {
             get
             {
-                return _model;
-            }
-            set
-            {
-                _model = value;
-                OnPropertyChanged("Model");
+                return _device.Model;
             }
         }
         public string SerialNo
         {
             get
             {
-                return _serialNo;
-            }
-            set
-            {
-                _serialNo = value;
-                OnPropertyChanged("SerialMo");
+                return _device.SerialNo;
             }
         }
-        public ObservableCollection<Signal> Signals
+        public ObservableCollection<FoundSignal> Signals
         {
             get
             {
@@ -130,10 +101,35 @@ namespace HMB_Utility
         {
             foreach (var s in HbmDevice.GetAllSignals())
             {
-                if (!_signals.Contains(s))
-                _signals.Add(s);
+                if (_signals.Where(sig=>sig.HbmSignal == s).ToList().Count == 0)
+                _signals.Add(new FoundSignal(s));
             }
-            _signalsToMeasure = _signals;
+            
+        }
+
+        public void GetSingleSignalVals()
+        {
+            _device.ReadSingleMeasurementValueOfAllSignals();
+            foreach (var s in _signals)
+            {
+                s.GetSingleVals();
+            }
+        }
+
+        public void GetSignalChannel()
+        {
+            foreach (var s in _signals)
+            {
+                s.HbmChannel = _device.FindChannel(s.HbmSignal);
+            }
+        }
+
+        public void GetSignalConnector()
+        {
+            foreach (var s in _signals)
+            {
+                s.HbmConnector = _device.FindConnector(s.HbmSignal);
+            }
         }
 
 

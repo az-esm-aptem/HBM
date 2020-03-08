@@ -27,8 +27,9 @@ namespace HMB_Utility
     {
         public static event EventHandler<string> errorEvent;
 
-        private static void GetMeasurmentValue(FoundDevice dev, Action<Signal> storeMethod)
+        private static bool GetMeasurmentValue(FoundDevice dev, Action<Signal> storeMethod)
         {
+            bool result = false;
             if (dev.SignalsToMeasure.Count > 0)
             {
                 dev.HbmDevice.ReadSingleMeasurementValue(dev.SignalsToMeasure.ToList());
@@ -39,20 +40,22 @@ namespace HMB_Utility
                         storeMethod(sig);
                     }
                 }
+                result = true;
             }
             else
             {
                 errorEvent?.Invoke(typeof(Measuring), "No signals to measure!");
             }
+            return result;
         }
 
-        public static async Task GetMeasurmentValueAsync(FoundDevice dev, Action<Signal> storeMethod)
+        public static async Task<bool> GetMeasurmentValueAsync(FoundDevice dev, Action<Signal> storeMethod)
         {
-            await Task.Run(() => GetMeasurmentValue(dev, storeMethod));
+            return await Task.Run(() => GetMeasurmentValue(dev, storeMethod));
         }
 
 
-
+        
 
     }
 }
