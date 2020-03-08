@@ -33,7 +33,7 @@ namespace HMB_Utility
         private string _model;
         private string _serialNo;
         private ObservableCollection<Signal> _signals;
-        private List<Signal> _signalsToMeasure;
+        private ObservableCollection<Signal> _signalsToMeasure;
 
         private FoundDevice() { }
 
@@ -44,11 +44,12 @@ namespace HMB_Utility
             IpAddress = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress;
             Model = dev.Model;
             SerialNo = dev.SerialNo;
-            SignalsToMeasure = new List<Signal>();
+            SignalsToMeasure = new ObservableCollection<Signal>();
             Signals = new ObservableCollection<Signal>();
             _signals = new ObservableCollection<Signal>();
+            _signalsToMeasure = new ObservableCollection<Signal>();
         }
-
+        
         public Device HbmDevice
         {
             get
@@ -129,12 +130,14 @@ namespace HMB_Utility
         {
             foreach (var s in HbmDevice.GetAllSignals())
             {
+                if (!_signals.Contains(s))
                 _signals.Add(s);
             }
+            _signalsToMeasure = _signals;
         }
 
 
-        public List<Signal> SignalsToMeasure
+        public ObservableCollection<Signal> SignalsToMeasure
         {
             get
             {
