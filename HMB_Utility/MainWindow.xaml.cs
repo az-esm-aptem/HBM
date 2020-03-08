@@ -41,20 +41,51 @@ namespace HMB_Utility
     /// 
     public partial class MainWindow : Window
     {
-        //HbmSession session;
-        //List<DAQ> DaqSessions;
-        //List<FoundDevice> devices;
+        MainWindowViewModel mainWindowViewModel;
         public MainWindow()
         {
             InitializeComponent();
-            //session = HbmSession.GetInstance();
-            //DaqSessions = new List<DAQ>();
-            //Btn1.IsEnabled = false;
-            //devices = new List<FoundDevice>();
-            DataContext = new MainWindowViewModel();
+            mainWindowViewModel = new MainWindowViewModel();
+            DataContext = mainWindowViewModel;
         }
 
-        
+        private void DeviceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            mainWindowViewModel.DevicesToConnect.Clear();
+            foreach (FoundDevice dev in (sender as ListBox).SelectedItems)
+            {
+                mainWindowViewModel.DevicesToConnect.Add(dev);
+            }
+           
+            //List<FoundDevice> selDevs = new List<FoundDevice>();
+            //foreach (FoundDevice d in e.AddedItems)
+            //{
+            //    selDevs.Add(d);
+            //}
+            //foreach (FoundDevice d in e.RemovedItems)
+            //{
+            //    selDevs.Remove(d);
+            //}
+            //Binding bndg = new Binding();
+            //bndg.ElementName = "selDevs";
+        }
+
+        private void SignalListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (mainWindowViewModel.DevicesToConnect.Count>0)
+                if (mainWindowViewModel.DevicesToConnect[0].Signals.Count>0)
+            foreach(Signal s in mainWindowViewModel.DevicesToConnect[0].Signals)
+            {
+                Console.WriteLine(s.Name);
+            }
+        }
+
+
 
 
 

@@ -36,8 +36,20 @@ namespace HMB_Utility
         private UserCommandAsync searchCommand; //search button
         private UserCommandAsync connectCommand; //connect button
         private FoundDevice selectedDevice;
-        private List<FoundDevice> devicesToConnect; //choosen devices to connect
+        private ObservableCollection<FoundDevice> devicesToConnect; //choosen devices to connect
         public ObservableCollection<FoundDevice> AllDevices { get; set; }
+
+        public ObservableCollection<FoundDevice> DevicesToConnect
+        {
+            get
+            {
+                return devicesToConnect;
+            }
+            set
+            {
+                devicesToConnect = value;
+            }
+        }
         
        
 
@@ -67,13 +79,21 @@ namespace HMB_Utility
         {
             get
             {
-                return connectCommand ?? (connectCommand = new UserCommandAsync(obj => session.ConnectAsync((obj as List<FoundDevice>))));
-
+                return connectCommand ?? (connectCommand = new UserCommandAsync(connect));
             }
         }
 
+        private async Task<bool> connect (object obj)
+        {
+            bool result = await session.ConnectAsync(DevicesToConnect.ToList());
+            foreach (var dev in DevicesToConnect)
+            {
+                dev.GetSignals();
+            }
+            return result;
+        }
 
-      
+
 
         public FoundDevice SelectedDevice
         {
@@ -94,7 +114,7 @@ namespace HMB_Utility
             session = HbmSession.GetInstance();
             daqSessions = new List<DAQ>();
             AllDevices = new ObservableCollection<FoundDevice>();
-            devicesToConnect = new List<FoundDevice>();
+            devicesToConnect = new ObservableCollection<FoundDevice>();
 
         }
         

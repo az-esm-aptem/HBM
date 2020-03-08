@@ -32,8 +32,22 @@ namespace HMB_Utility
         private string _ipAddress;
         private string _model;
         private string _serialNo;
-        private List<Signal> _signals;
+        private ObservableCollection<Signal> _signals;
         private List<Signal> _signalsToMeasure;
+
+        private FoundDevice() { }
+
+        public FoundDevice(Device dev)
+        {
+            HbmDevice = dev;
+            Name = dev.Name;
+            IpAddress = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress;
+            Model = dev.Model;
+            SerialNo = dev.SerialNo;
+            SignalsToMeasure = new List<Signal>();
+            Signals = new ObservableCollection<Signal>();
+            _signals = new ObservableCollection<Signal>();
+        }
 
         public Device HbmDevice
         {
@@ -99,14 +113,27 @@ namespace HMB_Utility
         {
             get
             {
-                _signals = HbmDevice.GetAllSignals();
-                return new ObservableCollection<Signal>(_signals);
+                return _signals;
             }
             set
             {
-
+                foreach (var s in value)
+                {
+                    _signals.Add(s);
+                }
+                OnPropertyChanged("Signals");
             }
         }
+
+        public void GetSignals()
+        {
+            foreach (var s in HbmDevice.GetAllSignals())
+            {
+                _signals.Add(s);
+            }
+        }
+
+
         public List<Signal> SignalsToMeasure
         {
             get
@@ -119,24 +146,9 @@ namespace HMB_Utility
             }
         }
    
-        public FoundDevice(Device dev)
-        {
-            HbmDevice = dev;
-            Name = dev.Name;
-            IpAddress = (dev.ConnectionInfo as EthernetConnectionInfo).IpAddress;
-            Model = dev.Model;
-            SerialNo = dev.SerialNo;
-            SignalsToMeasure = new List<Signal>();
-        }
-
-        //For testing!!!! TO DELETE
-        public FoundDevice()
-        {
-            Name = "N1";
-            IpAddress = "ip1";
-            Model = "M1";
-        }
         
+
+          
 
 }
 

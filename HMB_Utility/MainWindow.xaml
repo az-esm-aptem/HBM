@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:HMB_Utility"
         mc:Ignorable="d"
         Title="HBM" Height="600" Width="700">
-    
-        
-    
 
-   
+
+
+
+
 
     <Grid x:Name="baseGrid" ShowGridLines="False">
         <Grid.RowDefinitions>
@@ -23,10 +23,11 @@
             <ColumnDefinition />
 
         </Grid.ColumnDefinitions>
-        
+
         <!--<Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="39,10,0,0" VerticalAlignment="Top" Width="102"
                 Click="SearchDeviceButton_Click" Grid.Column="2" Grid.Row="0" Height="20" />-->
         <Button x:Name="SearchDeviceButton" Command="{Binding SearchCommand}" Content="Search Devices" HorizontalAlignment="Left" Margin="39,10,0,0" VerticalAlignment="Top" Width="102" Grid.Column="2" Grid.Row="0" Height="20" />
+        <Button x:Name="Connect_btn" Command="{Binding ConnectCommand}" Content="Connect" Grid.Column="2" HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
 
         <!--<TreeView x:Name="treeView1" Width="150" Height="500" ItemsSource="{Binding AllDevices}" >
             <TreeView.ItemTemplate>
@@ -42,20 +43,20 @@
         </TreeView>-->
 
 
-        <ListBox Name="DeviceListBox" Grid.Column="0" ItemsSource="{Binding AllDevices}" SelectionMode="Extended"
-                 SelectedItem="{Binding SelectedDevice}" >
+        <ListBox Name="DeviceListBox" ItemsSource="{Binding AllDevices}" SelectionMode="Extended"
+                 SelectedItem="{Binding SelectedDevice}" SelectionChanged="DeviceListBox_SelectionChanged" Margin="0,0,0,266" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                        <StackPanel Margin="5">
-                            <TextBlock FontSize="18" Text="{Binding Path=Name}" />
-                            <TextBlock Text="{Binding Path=IpAddress}" />
-                            <TextBlock Text="{Binding Path=Model}" />
-                        </StackPanel>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="18" Text="{Binding Path=Name}" />
+                        <TextBlock Text="{Binding Path=IpAddress}" />
+                        <TextBlock Text="{Binding Path=Model}" />
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
-        <StackPanel Grid.Column="1" DataContext="{Binding SelectedDevice}">
+
+        <StackPanel Grid.Column="2" DataContext="{Binding SelectedDevice}" Margin="10,42,145,163">
             <TextBlock Text="Выбранный элемент"/>
             <TextBlock Text="Имя" />
             <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
@@ -72,11 +73,50 @@
         <Button x:Name="Btn1" Content="Get single measurment" Grid.Column="2" HorizontalAlignment="Left" Margin="153,301,0,0" VerticalAlignment="Top" Width="149" Height="20"/>
         <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
                  TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" Width="672"  />
-        <TextBox x:Name="TB1" Grid.Column="2" HorizontalAlignment="Left" Height="251" Margin="39,35,0,0" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Width="189"/>
         <Button x:Name="Btn3" Content="Create DB" Grid.Column="2" HorizontalAlignment="Left" Margin="233,35,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
         <Button x:Name="Btn4" Content="Start DAQ" Grid.Column="2" HorizontalAlignment="Left" Margin="233,69,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
         <Button x:Name="Btn5" Content="Stop DAQ" Grid.Column="2" HorizontalAlignment="Left" Margin="233,104,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
-        <Button x:Name="Connect_btn" Content="Connect" Grid.Column="2" HorizontalAlignment="Left" Margin="153,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
+
+        <!--<ListBox x:Name="SignalListBox" DataContext="{Binding SelectedDevice}" ItemsSource="{Binding Path = Signals}" SelectionMode="Extended"
+             Grid.Column="1" Margin="10,0,14,266" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="10" Text="{Binding Path = Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>-->
+
+        <ListBox x:Name="SignalListBox" DataContext="{Binding SelectedDevice}" ItemsSource="{Binding Path = Signals}" SelectionMode="Extended"
+             Grid.Column="1" Margin="10,0,14,266" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="10" Text="{Binding Path = Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+        <Button Content="Button" Grid.Column="2" HorizontalAlignment="Left" Margin="118,373,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+
+        <!--<TreeView x:Name="treeView1" Margin="0,158,0,0" ItemsSource="{Binding AllDevices}">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=Signals}">
+                    <TextBlock Text="{Binding Name}" />
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>-->
+
+
+
         <!--<GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="3"
         HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowsPreview="True"/>-->
     </Grid>
