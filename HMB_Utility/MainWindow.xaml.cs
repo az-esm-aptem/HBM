@@ -50,35 +50,27 @@ namespace HMB_Utility
 
         }
 
-        private void DeviceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        
+
+        
+
+
+        private void SignalListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            mainWindowViewModel.DevicesToConnect.Clear();
-            foreach (FoundDevice dev in (sender as ListBox).SelectedItems)
+            foreach (FoundSignal s in e.AddedItems)
             {
-                mainWindowViewModel.DevicesToConnect.Add(dev);
+                if (!mainWindowViewModel.SelectedDevice.SignalsToMeasure.Contains(s))
+                {
+                    mainWindowViewModel.SelectedDevice.SignalsToMeasure.Add(s);
+                }
             }
-           
-            //List<FoundDevice> selDevs = new List<FoundDevice>();
-            //foreach (FoundDevice d in e.AddedItems)
-            //{
-            //    selDevs.Add(d);
-            //}
-            //foreach (FoundDevice d in e.RemovedItems)
-            //{
-            //    selDevs.Remove(d);
-            //}
-            //Binding bndg = new Binding();
-            //bndg.ElementName = "selDevs";
-        }
-
-        private void SignalListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void RefreshSingleValButton_Click(object sender, RoutedEventArgs e)
-        {
-            //mainWindowViewModel.SelectedDevice.GetSingleSignalVals();
+            foreach (FoundSignal s in e.RemovedItems)
+            {
+                if (mainWindowViewModel.SelectedDevice.SignalsToMeasure.Contains(s))
+                {
+                    mainWindowViewModel.SelectedDevice.SignalsToMeasure.Remove(s);
+                }
+            }
         }
 
 

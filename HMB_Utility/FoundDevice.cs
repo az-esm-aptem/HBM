@@ -29,7 +29,7 @@ namespace HMB_Utility
     {
         private Device _device;
         private ObservableCollection<FoundSignal> _signals;
-        private ObservableCollection<Signal> _signalsToMeasure;
+        private ObservableCollection<FoundSignal> _signalsToMeasure;
         
 
         private FoundDevice() { }
@@ -38,7 +38,7 @@ namespace HMB_Utility
         {
             _device = dev;
             _signals = new ObservableCollection<FoundSignal>();
-            _signalsToMeasure = new ObservableCollection<Signal>();
+            _signalsToMeasure = new ObservableCollection<FoundSignal>();
 
         }
 
@@ -134,7 +134,7 @@ namespace HMB_Utility
         }
 
 
-        public ObservableCollection<Signal> SignalsToMeasure
+        public ObservableCollection<FoundSignal> SignalsToMeasure
         {
             get
             {

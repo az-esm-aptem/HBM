@@ -6,7 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:HMB_Utility"
         mc:Ignorable="d"
-        Title="HBM" Height="600" Width="700">
+        Title="HBM" Height="600" Width="800">
 
 
 
@@ -28,7 +28,7 @@
                 Click="SearchDeviceButton_Click" Grid.Column="2" Grid.Row="0" Height="20" />-->
         <Button x:Name="SearchDeviceButton" Command="{Binding SearchCommand}" Content="Search" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="136" Grid.Row="0" Height="20" />
         <Button x:Name="ConnectButton" Command="{Binding ConnectCommand}"  Content="Connect" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="65" Height="20"/>
-        <Button x:Name="RefreshSingleValButton" Command="{Binding RefreshCommand}"  Content="Refresh"  Grid.Column="1" HorizontalAlignment="Left" Margin="342,46,0,0" VerticalAlignment="Top" Width="44" Click="RefreshSingleValButton_Click"/>
+        <Button x:Name="RefreshSingleValButton" Command="{Binding RefreshCommand}"  Content="Refresh"  Grid.Column="1" HorizontalAlignment="Left" Margin="576,10,0,0" VerticalAlignment="Top" Width="44" Grid.Row="1"/>
         <Button x:Name="DisconnectButton" Command="{Binding DisconnectCommand}"  Content="Disconnect" HorizontalAlignment="Left" Margin="81,46,0,0" VerticalAlignment="Top" Width="65" Height="20"/>
 
         <!--<TreeView x:Name="treeView1" Width="150" Height="500" ItemsSource="{Binding AllDevices}" >
@@ -45,15 +45,14 @@
         </TreeView>-->
 
         <ListView Name="DeviceListBox" ItemsSource="{Binding AllDevices}" SelectionMode="Single"
-                 SelectedItem="{Binding SelectedDevice}" SelectionChanged="DeviceListBox_SelectionChanged" Margin="10,81,10,10">
-            
+                 SelectedItem="{Binding SelectedDevice}" Margin="10,103,10,10">
+
             <ListView.ItemTemplate>
-                
+
                 <DataTemplate>
-                    
+
                     <StackPanel>
-                        <ListViewItem>A ListView</ListViewItem>
-                        <TextBlock FontSize="16" Text="{Binding Path=Name}" />
+                        <TextBlock FontSize="16" Text="{Binding Path=Name}"  />
                         <TextBlock Text="{Binding Path=IpAddress}" />
                         <TextBlock Text="{Binding Path=Model}" />
                     </StackPanel>
@@ -92,8 +91,8 @@
 
         <GridSplitter Grid.Row="0" ShowsPreview="True" Width="3" VerticalAlignment="Stretch" Grid.Column="1"/>
         <Button x:Name="Btn1" Content="Get single measurment" Grid.Column="1" HorizontalAlignment="Left" Margin="314,10,0,0" VerticalAlignment="Top" Width="149" Height="20"/>
-        <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
-                 TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" Width="672"  />
+        <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                 TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" Width="705"  />
         <Button x:Name="Btn3" Content="Create DB" Grid.Column="1" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
         <Button x:Name="Btn4" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="147,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
         <Button x:Name="Btn5" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="234,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
@@ -119,18 +118,29 @@
             </ListBox.ItemTemplate>
         </ListView>-->
 
-        <ListView x:Name="SignalListBox"  DataContext="{Binding SelectedDevice}"  ItemsSource="{Binding Path= Signals}" SelectionMode="Extended" Margin="10,81,16,10" Grid.Column="1">
+        
+        
+
+        <ListView x:Name="SignalListBox"  DataContext="{Binding SelectedDevice}"  ItemsSource="{Binding Path= Signals}" SelectionMode="Extended" Margin="10,81,16,10" Grid.Column="1" SelectionChanged="SignalListBox_SelectionChanged_1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=HbmConnector.LocationHint}" Width="100">Connector</GridViewColumn>
+                    <GridViewColumn Width="20" Header="">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Tag="{Binding Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=HbmConnector.LocationHint}" Width="120">Connector</GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=HbmChannel.Name}" Width="100">Channel</GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">Signal</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=SingleValue}" Width="100">Value</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=SingleTimeStamp}" Width="100">Time Stamp</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=SingleState}" Width="50">State</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=SingleValue}" Width="80">Value</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=SingleTimeStamp}" Width="150">Time Stamp</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=SingleState}" Width="30">State</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Margin="56,81,0,0" FontSize="14" FontWeight="Bold"/>
 
 
         <!--<TreeView x:Name="treeView1" Margin="0,158,0,0" ItemsSource="{Binding AllDevices}">

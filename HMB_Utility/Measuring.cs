@@ -29,15 +29,16 @@ namespace HMB_Utility
 
         private static bool GetMeasurmentValue(FoundDevice dev, Action<Signal> storeMethod)
         {
+            
             bool result = false;
             if (dev.SignalsToMeasure.Count > 0)
             {
-                dev.HbmDevice.ReadSingleMeasurementValue(dev.SignalsToMeasure.ToList());
-                foreach (Signal sig in dev.SignalsToMeasure)
+                dev.HbmDevice.ReadSingleMeasurementValueOfAllSignals();
+                foreach (FoundSignal sig in dev.SignalsToMeasure)
                 {
-                    if (sig.IsMeasurable)
+                    if (sig.HbmSignal.IsMeasurable)
                     {
-                        storeMethod(sig);
+                        storeMethod(sig.HbmSignal);
                     }
                 }
                 result = true;

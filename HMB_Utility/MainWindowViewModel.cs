@@ -37,31 +37,29 @@ namespace HMB_Utility
         private UserCommandAsync connectCommand; //connect button
         private UserCommand refreshCommand; //refresh single values
         private UserCommand disconnectCommand; //disconnect the device
-        private FoundDevice selectedDevice;
-        private ObservableCollection<FoundDevice> devicesToConnect; //choosen devices to connect
+        private FoundDevice selectedDevice; //selected in UI
+        
         public ObservableCollection<FoundDevice> AllDevices { get; set; }
-
         public MainWindowViewModel()
         {
             session = HbmSession.GetInstance();
             daqSessions = new List<DAQ>();
             AllDevices = new ObservableCollection<FoundDevice>();
-            devicesToConnect = new ObservableCollection<FoundDevice>();
-
         }
-        public ObservableCollection<FoundDevice> DevicesToConnect
+
+        public FoundDevice SelectedDevice
         {
             get
             {
-                return devicesToConnect;
+                return selectedDevice;
             }
             set
             {
-                devicesToConnect = value;
+                selectedDevice = value;
+                OnPropertyChanged("SelectedDevice");
             }
         }
-        
-       
+
 
         //Push the Search button - searching devices and add it to List<FoundDevice>
         public UserCommandAsync SearchCommand
@@ -138,18 +136,10 @@ namespace HMB_Utility
             SelectedDevice.Signals.Clear();
         }
 
-        public FoundDevice SelectedDevice
-        {
-            get
-            {
-                return selectedDevice;
-            }
-            set
-            {
-                selectedDevice = value;
-                OnPropertyChanged("SelectedDevice");
-            }
-        }
+
+
+
+        
 
 
        

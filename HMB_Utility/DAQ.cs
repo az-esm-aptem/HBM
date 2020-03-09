@@ -31,7 +31,7 @@ namespace HMB_Utility
         System.Timers.Timer dataFetchTimer = null;
         DaqMeasurement daqSession = null;
         List<Problem> daqPrepareProblems = null;
-        List<Signal> signalsToMeasure = null;
+        List<FoundSignal> signalsToMeasure = null;
 
 
         public DAQ(FoundDevice dev, Action<Signal> saveMethod)
@@ -51,15 +51,16 @@ namespace HMB_Utility
 
         private void Start(int fetchPeriod = 500, decimal sampleRate = 2400)
         {
-            foreach (Signal sig in signalsToMeasure)
+            foreach (FoundSignal sig in signalsToMeasure)
             {
-                if (sig.HasSampleRate)
+                if (sig.HbmSignal.HasSampleRate)
                 {
-                    sig.SampleRate = sampleRate; //Hz
+                    sig.HbmSignal.SampleRate = sampleRate; //Hz
                 }
-                measDevice.AssignSignal(sig, out daqPrepareProblems);
+                measDevice.AssignSignal(sig.HbmSignal, out daqPrepareProblems);
+                daqSession.AddSignals(measDevice, sig.HbmSignal);
             }
-            daqSession.AddSignals(measDevice, signalsToMeasure);
+            
             daqSession.PrepareDaq();
             daqSession.StartDaq(DataAcquisitionMode.Unsynchronized);
             dataFetchTimer = new System.Timers.Timer(fetchPeriod); //starts every fetchPeriod ms
@@ -70,10 +71,10 @@ namespace HMB_Utility
                 if (daqSession.IsRunning)
                 {
                     daqSession.FillMeasurementValues();
-                    foreach (Signal sig in signalsToMeasure)
+                    foreach (FoundSignal sig in signalsToMeasure)
                     {
-                        if (sig.ContinuousMeasurementValues.BufferOverrunOccurred) warningEvent?.Invoke(typeof(DAQ), String.Format("{0} {1} buffer overrun", measDevice, sig));
-                        saveDataMethod(sig);
+                        if (sig.HbmSignal.ContinuousMeasurementValues.BufferOverrunOccurred) warningEvent?.Invoke(typeof(DAQ), String.Format("{0} {1} buffer overrun", measDevice.Name, sig.Name));
+                        saveDataMethod(sig.HbmSignal);
                     }
                 }
                 dataFetchTimer.Start();
