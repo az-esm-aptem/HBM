@@ -38,7 +38,11 @@ namespace HMB_Utility
         private UserCommand refreshCommand; //refresh single values
         private UserCommand disconnectCommand; //disconnect the device
         private FoundDevice selectedDevice; //selected in UI
-        
+        private UserCommandAsync createDBCommand; // create tables in data base
+        private UserCommand useFilterCommand; //filtering signals (see .cfg file)
+
+
+
         public ObservableCollection<FoundDevice> AllDevices { get; set; }
         public MainWindowViewModel()
         {
@@ -94,11 +98,16 @@ namespace HMB_Utility
         private async Task<bool> connect (object obj)
         {
             bool result = await session.ConnectAsync(new List<FoundDevice> { SelectedDevice });
+            FormSignalList();
+            return result;
+        }
+
+        private void FormSignalList()
+        {
             SelectedDevice.GetSignals(); //read signal list from device and make ObservableCollection<FoundSignal>
             SelectedDevice.GetSingleSignalVals(); //read and save in FoundSignal the single measuring values
             SelectedDevice.GetSignalChannel(); //find and save in FoundSignal the channel that the signal belongs
             SelectedDevice.GetSignalConnector(); //find and save in FoundSignal the connector that the signal belongs
-            return result;
         }
 
         public UserCommand RefreshCommand
@@ -137,13 +146,54 @@ namespace HMB_Utility
         }
 
 
+        public UserCommandAsync CreateDBCommand
+        {
+            get
+            {
+                return createDBCommand ?? (createDBCommand = new UserCommandAsync(CreateDB, (obj => SelectedDevice != null && SelectedDevice.HbmDevice.IsConnected)));
+            }
+        }
 
-
+        private async Task<bool> CreateDB(object obj)
+        {
+            bool result = await DataToDB.SaveDevicesAsync(new List<FoundDevice> { SelectedDevice });
+            return result;
+        }
         
+        public UserCommand UseFilterCommand
+        {
+            get
+            {
+                return useFilterCommand ?? (useFilterCommand = new UserCommand(obj=>UseSignalsFilter(obj)));
+            }
+        }
+
+        private void UseSignalsFilter(object obj)
+        {
+            bool isChecked = (bool)obj;
+            List<FoundSignal> filtered = new List<FoundSignal>();
+            if (isChecked)
+            {
+                foreach (var s in SelectedDevice.Signals)
+                {
+                    if (!TypeFilter.Check(s.HbmSignal))
+                    {
+                        filtered.Add(s);
+                    }
+                }
+                foreach (var s in filtered)
+                {
+                    SelectedDevice.Signals.Remove(s);
+                }
+            }
+            else
+            {
+                FormSignalList();
+            }
+        }
 
 
-       
-        
+
 
 
 

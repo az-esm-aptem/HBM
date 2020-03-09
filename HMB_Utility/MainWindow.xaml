@@ -30,6 +30,7 @@
         <Button x:Name="ConnectButton" Command="{Binding ConnectCommand}"  Content="Connect" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="65" Height="20"/>
         <Button x:Name="RefreshSingleValButton" Command="{Binding RefreshCommand}"  Content="Refresh"  Grid.Column="1" HorizontalAlignment="Left" Margin="576,10,0,0" VerticalAlignment="Top" Width="44" Grid.Row="1"/>
         <Button x:Name="DisconnectButton" Command="{Binding DisconnectCommand}"  Content="Disconnect" HorizontalAlignment="Left" Margin="81,46,0,0" VerticalAlignment="Top" Width="65" Height="20"/>
+        <Button x:Name="CreateDBButton" Command="{Binding CreateDBCommand}" Content="Add to DB" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
 
         <!--<TreeView x:Name="treeView1" Width="150" Height="500" ItemsSource="{Binding AllDevices}" >
             <TreeView.ItemTemplate>
@@ -93,7 +94,6 @@
         <Button x:Name="Btn1" Content="Get single measurment" Grid.Column="1" HorizontalAlignment="Left" Margin="314,10,0,0" VerticalAlignment="Top" Width="149" Height="20"/>
         <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
                  TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" Width="705"  />
-        <Button x:Name="Btn3" Content="Create DB" Grid.Column="1" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
         <Button x:Name="Btn4" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="147,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
         <Button x:Name="Btn5" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="234,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
 
@@ -141,6 +141,7 @@
             </ListView.View>
         </ListView>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Margin="56,81,0,0" FontSize="14" FontWeight="Bold"/>
+        <CheckBox Content="Filter" Command="{Binding UseFilterCommand}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Grid.Column="1" HorizontalAlignment="Left" Margin="20,51,0,0" VerticalAlignment="Top"/>
 
 
         <!--<TreeView x:Name="treeView1" Margin="0,158,0,0" ItemsSource="{Binding AllDevices}">

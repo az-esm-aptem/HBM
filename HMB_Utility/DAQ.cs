@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Configuration;
 
 using Hbm.Api.Common;
 using Hbm.Api.Common.Messaging;
@@ -49,8 +50,13 @@ namespace HMB_Utility
         }
 
 
-        private void Start(int fetchPeriod = 500, decimal sampleRate = 2400)
+        private void Start()
         {
+            int fetchPeriod;
+            decimal sampleRate;
+
+            int.TryParse(ConfigurationManager.AppSettings["fetchPeriod"], out fetchPeriod);
+            decimal.TryParse(ConfigurationManager.AppSettings["sampleRate"], out sampleRate);
             foreach (FoundSignal sig in signalsToMeasure)
             {
                 if (sig.HbmSignal.HasSampleRate)
@@ -82,9 +88,9 @@ namespace HMB_Utility
             dataFetchTimer.Start();
         }
 
-        public async Task StartAsync (int fetchPeriod = 500, decimal sampleRate = 2400)
+        public async Task StartAsync ()
         {
-           await Task.Run(() => Start(fetchPeriod, sampleRate));
+           await Task.Run(() => Start());
         }
 
         public void Stop()

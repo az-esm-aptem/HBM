@@ -31,12 +31,14 @@ namespace HMB_Utility
         public static event EventHandler<Exception> exceptionEvent;
         public static event EventHandler<string> errorEvent;
 
-        private static void SaveDevices(List<FoundDevice> devices)
+        private static bool SaveDevices(List<FoundDevice> devices)
         {
+            bool result = false;
             using (HBMContext db = new HBMContext())
             {
                 DeviceModel oldDM;
                 DeviceModel newDM;
+                SignalModel oldSM;
                 List<DeviceModel> devicesToAdd = new List<DeviceModel>();
                 List<SignalModel> signalsToAdd = new List<SignalModel>();
                 foreach (var dev in devices)
@@ -51,6 +53,19 @@ namespace HMB_Utility
                             signalsToAdd.Add(new SignalModel { Name = sig.HbmSignal.Name, SampleRate = sig.HbmSignal.SampleRate, UniqueId = sig.HbmSignal.GetUniqueID(), Device = newDM });
                         }
                     }
+                    else
+                    {
+                        foreach (FoundSignal sig in dev.Signals)
+                        {
+                            oldSM = db.Signals.FirstOrDefault(s=>s.Name == sig.Name);
+                            if (oldSM == null)
+                            {
+                                signalsToAdd.Add(new SignalModel { Name = sig.HbmSignal.Name, SampleRate = sig.HbmSignal.SampleRate, UniqueId = sig.HbmSignal.GetUniqueID(), Device = oldDM });
+                            }
+                            
+                        }
+
+                    }
                 }
                 using (var transaction = db.Database.BeginTransaction())
                 {
@@ -60,6 +75,7 @@ namespace HMB_Utility
                         db.Signals.AddRange(signalsToAdd);
                         db.SaveChanges();
                         transaction.Commit();
+                        result = true;
                     }
                     catch (Exception ex)
                     {
@@ -68,11 +84,12 @@ namespace HMB_Utility
                     }
                 }
             }
+            return result;
         }
 
-        public static async Task SaveDevicesAsync(List<FoundDevice> devices)
+        public static async Task<bool> SaveDevicesAsync(List<FoundDevice> devices)
         {
-            await Task.Run(() => SaveDevices(devices));
+           return await Task.Run(() => SaveDevices(devices));
         }
 
 
@@ -140,11 +157,13 @@ namespace HMB_Utility
                             Signal = signalInDB
                         }); ;
                     }
+                    signalInDB.SampleRate = sig.SampleRate;
                 }
                 using (var transaction = db.Database.BeginTransaction())
                 {
                     try
                     {
+                        
                         db.Values.AddRange(valuesToAdd);
                         db.SaveChanges();
                         transaction.Commit();
