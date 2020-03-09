@@ -35,10 +35,20 @@ namespace HMB_Utility
         private List<DAQ> daqSessions;
         private UserCommandAsync searchCommand; //search button
         private UserCommandAsync connectCommand; //connect button
+        private UserCommand refreshCommand; //refresh single values
+        private UserCommand disconnectCommand; //disconnect the device
         private FoundDevice selectedDevice;
         private ObservableCollection<FoundDevice> devicesToConnect; //choosen devices to connect
         public ObservableCollection<FoundDevice> AllDevices { get; set; }
 
+        public MainWindowViewModel()
+        {
+            session = HbmSession.GetInstance();
+            daqSessions = new List<DAQ>();
+            AllDevices = new ObservableCollection<FoundDevice>();
+            devicesToConnect = new ObservableCollection<FoundDevice>();
+
+        }
         public ObservableCollection<FoundDevice> DevicesToConnect
         {
             get
@@ -79,7 +89,7 @@ namespace HMB_Utility
         {
             get
             {
-                return connectCommand ?? (connectCommand = new UserCommandAsync(connect));
+                return connectCommand ?? (connectCommand = new UserCommandAsync(connect, (obj => SelectedDevice != null && !SelectedDevice.HbmDevice.IsConnected)));
             }
         }
 
@@ -93,9 +103,40 @@ namespace HMB_Utility
             return result;
         }
 
+        public UserCommand RefreshCommand
+        {
+            get
+            {
+                return refreshCommand ?? (refreshCommand = new UserCommand(RefreshSingleVals, (obj =>
+                {
+                    bool result = false;
+                    if (SelectedDevice != null)
+                        if (SelectedDevice.Signals.Count > 0)
+                            result = true;
+                    return result;
+                }
+                )));
+            }
+        }
+
+        private void RefreshSingleVals(object obj)
+        {
+            SelectedDevice.GetSingleSignalVals();
+        }
         
+        public UserCommand DisconnectCommand
+        {
+            get
+            {
+                return disconnectCommand ?? (disconnectCommand = new UserCommand(Disconnect, (obj => SelectedDevice != null && SelectedDevice.HbmDevice.IsConnected)));
+            }
+        }
 
-
+        private void Disconnect(object obj)
+        {
+            session.DisconnectDevice(SelectedDevice);
+            SelectedDevice.Signals.Clear();
+        }
 
         public FoundDevice SelectedDevice
         {
@@ -111,14 +152,7 @@ namespace HMB_Utility
         }
 
 
-        public MainWindowViewModel()
-        {
-            session = HbmSession.GetInstance();
-            daqSessions = new List<DAQ>();
-            AllDevices = new ObservableCollection<FoundDevice>();
-            devicesToConnect = new ObservableCollection<FoundDevice>();
-
-        }
+       
         
 
 

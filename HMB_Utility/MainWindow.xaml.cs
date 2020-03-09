@@ -47,6 +47,7 @@ namespace HMB_Utility
             InitializeComponent();
             mainWindowViewModel = new MainWindowViewModel();
             DataContext = mainWindowViewModel;
+
         }
 
         private void DeviceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -73,6 +74,11 @@ namespace HMB_Utility
         private void SignalListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void RefreshSingleValButton_Click(object sender, RoutedEventArgs e)
+        {
+            //mainWindowViewModel.SelectedDevice.GetSingleSignalVals();
         }
 
 

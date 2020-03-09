@@ -32,7 +32,7 @@ namespace HMB_Utility
     public class HbmSession
     {
         private static HbmSession instance;
-        public static DaqEnvironment _daqEnvironment = null; //main object to work 
+        public static DaqEnvironment daqEnvironment = null; //main object to work 
         public List<Device> deviceList { get; private set; } // devices found by the scan
         public event EventHandler<Exception> exceptionEvent;
         public event EventHandler<List<Problem>> problemEvent;
@@ -40,7 +40,7 @@ namespace HMB_Utility
         private System.Timers.Timer searchTimer = null; 
         private HbmSession() 
         {
-            _daqEnvironment = DaqEnvironment.GetInstance();
+            daqEnvironment = DaqEnvironment.GetInstance();
         }
 
         public static HbmSession GetInstance()
@@ -55,7 +55,7 @@ namespace HMB_Utility
 
         ~HbmSession()
         {
-            if (_daqEnvironment != null) _daqEnvironment.Dispose();
+            if (daqEnvironment != null) daqEnvironment.Dispose();
         }
 
         //period - The time interval between invocations the scan method to waiting devices gathering
@@ -73,7 +73,7 @@ namespace HMB_Utility
                 searchTimer.Stop();
                 try
                 {
-                    deviceList = _daqEnvironment.Scan();
+                    deviceList = daqEnvironment.Scan();
                 }
                 catch (Hbm.Api.Scan.Entities.ScanFailedException ex)
                 {
@@ -90,7 +90,7 @@ namespace HMB_Utility
 
             if (deviceList.Count > 0)
             {
-                deviceList.OrderBy(d => d.Name);
+                deviceList.OrderBy(d => (d.ConnectionInfo as EthernetConnectionInfo).IpAddress);
                 return true;
             }
             else return false;
@@ -110,7 +110,7 @@ namespace HMB_Utility
             {
                 devToConnect.Add(dev.HbmDevice);
             }
-            if (_daqEnvironment.Connect(devToConnect, out connectToFoundDevicesProblemList))
+            if (daqEnvironment.Connect(devToConnect, out connectToFoundDevicesProblemList))
             {
                 return true;
             }
@@ -158,6 +158,11 @@ namespace HMB_Utility
                     errorEvent?.Invoke(this, "Wrong family");
                     break;
             }
+        }
+
+        public void DisconnectDevice(FoundDevice dev)
+        {
+            daqEnvironment.Disconnect(dev.HbmDevice);
         }
     }
 }

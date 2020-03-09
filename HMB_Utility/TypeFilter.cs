@@ -6,7 +6,7 @@ namespace HMB_Utility
 {
     public static class TypeFilter
     {
-        public static bool Check(Hbm.Api.Common.Entities.Signals.Signal sig)
+        public static bool Check(Signal sig)
         {
             switch (ConfigurationManager.AppSettings["SignalsType"])
             {

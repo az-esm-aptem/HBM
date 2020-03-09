@@ -113,6 +113,7 @@
     <Compile Include="FoundDevice.cs" />
     <Compile Include="FoundSignal.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="UserCommand.cs" />
     <Compile Include="UserCommandAsync.cs" />
     <Compile Include="TypeFilter.cs" />
     <Compile Include="ViewModelBase.cs" />

@@ -63,6 +63,7 @@ namespace HMB_Utility
         }
         public double SingleValue => _value;
         public double SingleTimeStamp => _timeStamp;
+        
         public double SingleState => _state;
         public string Name
         {
@@ -75,9 +76,10 @@ namespace HMB_Utility
 
         public void GetSingleVals()
         {
-            _value = _signal.GetSingleMeasurementValue().Value;
-            _timeStamp = _signal.GetSingleMeasurementValue().Timestamp;
-            _state = (int)_signal.GetSingleMeasurementValue().State;
+            MeasurementValue measVal = _signal.GetSingleMeasurementValue();
+            _value = measVal.Value;
+            _timeStamp = measVal.Timestamp;
+            _state = (int)measVal.State;
         }
         
     }

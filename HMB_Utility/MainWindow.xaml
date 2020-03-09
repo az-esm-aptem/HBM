@@ -26,8 +26,10 @@
 
         <!--<Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="39,10,0,0" VerticalAlignment="Top" Width="102"
                 Click="SearchDeviceButton_Click" Grid.Column="2" Grid.Row="0" Height="20" />-->
-        <Button x:Name="SearchDeviceButton" Command="{Binding SearchCommand}" Content="Search Devices" HorizontalAlignment="Left" Margin="9,10,0,0" VerticalAlignment="Top" Width="102" Grid.Row="0" Height="20" />
-        <Button x:Name="Connect_btn" Command="{Binding ConnectCommand}" Content="Connect" HorizontalAlignment="Left" Margin="123,10,0,0" VerticalAlignment="Top" Width="75" Height="20" Grid.ColumnSpan="2"/>
+        <Button x:Name="SearchDeviceButton" Command="{Binding SearchCommand}" Content="Search" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="136" Grid.Row="0" Height="20" />
+        <Button x:Name="ConnectButton" Command="{Binding ConnectCommand}"  Content="Connect" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="65" Height="20"/>
+        <Button x:Name="RefreshSingleValButton" Command="{Binding RefreshCommand}"  Content="Refresh"  Grid.Column="1" HorizontalAlignment="Left" Margin="342,46,0,0" VerticalAlignment="Top" Width="44" Click="RefreshSingleValButton_Click"/>
+        <Button x:Name="DisconnectButton" Command="{Binding DisconnectCommand}"  Content="Disconnect" HorizontalAlignment="Left" Margin="81,46,0,0" VerticalAlignment="Top" Width="65" Height="20"/>
 
         <!--<TreeView x:Name="treeView1" Width="150" Height="500" ItemsSource="{Binding AllDevices}" >
             <TreeView.ItemTemplate>
@@ -42,28 +44,38 @@
             </TreeView.ItemTemplate>
         </TreeView>-->
 
-
-        <ListBox Name="DeviceListBox" ItemsSource="{Binding AllDevices}" SelectionMode="Extended"
-                 SelectedItem="{Binding SelectedDevice}" SelectionChanged="DeviceListBox_SelectionChanged" Margin="10,81,10,10" >
-            <!--<i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction 
-                Command="{Binding ConnectCommand}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>-->
-            <ListBox.ItemTemplate>
-
+        <ListView Name="DeviceListBox" ItemsSource="{Binding AllDevices}" SelectionMode="Single"
+                 SelectedItem="{Binding SelectedDevice}" SelectionChanged="DeviceListBox_SelectionChanged" Margin="10,81,10,10">
+            
+            <ListView.ItemTemplate>
+                
                 <DataTemplate>
-
-                    <StackPanel Margin="5">
-                        <TextBlock FontSize="18" Text="{Binding Path=Name}" />
+                    
+                    <StackPanel>
+                        <ListViewItem>A ListView</ListViewItem>
+                        <TextBlock FontSize="16" Text="{Binding Path=Name}" />
                         <TextBlock Text="{Binding Path=IpAddress}" />
                         <TextBlock Text="{Binding Path=Model}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
+
+
+
+        <!--<ListBox Name="DeviceListBox" ItemsSource="{Binding AllDevices}" SelectionMode="Single"
+                 SelectedItem="{Binding SelectedDevice}" SelectionChanged="DeviceListBox_SelectionChanged" Margin="10,81,10,10">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock FontSize="16" Text="{Binding Path=Name}" />
+                        <TextBlock Text="{Binding Path=IpAddress}" />
+                        <TextBlock Text="{Binding Path=Model}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
+        </ListBox>-->
 
         <!--<StackPanel Grid.Column="2" DataContext="{Binding SelectedDevice}" Margin="10,42,145,163">
             <TextBlock Text="Выбранный элемент"/>
