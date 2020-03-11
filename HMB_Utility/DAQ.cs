@@ -34,6 +34,9 @@ namespace HMB_Utility
         List<Problem> daqPrepareProblems = null;
         List<FoundSignal> signalsToMeasure = null;
 
+        public FoundDevice MeasDevice { get; }
+      
+
 
         public DAQ(FoundDevice dev, Action<Signal> saveMethod)
         {
@@ -41,7 +44,8 @@ namespace HMB_Utility
             daqSession = new DaqMeasurement();
             signalsToMeasure = dev.SignalsToMeasure.ToList();
             saveDataMethod = saveMethod;
-            measDevice = dev.HbmDevice;
+            MeasDevice = dev;
+            measDevice = MeasDevice.HbmDevice;
         }
 
         ~DAQ()
@@ -52,25 +56,27 @@ namespace HMB_Utility
 
         private void Start()
         {
+            
             int fetchPeriod;
             decimal sampleRate;
 
             int.TryParse(ConfigurationManager.AppSettings["fetchPeriod"], out fetchPeriod);
             decimal.TryParse(ConfigurationManager.AppSettings["sampleRate"], out sampleRate);
+            
             foreach (FoundSignal sig in signalsToMeasure)
             {
-                if (sig.HbmSignal.HasSampleRate)
+                if (sig.HbmSignal.IsMeasurable && sig.HbmSignal.HasSampleRate)
                 {
                     sig.HbmSignal.SampleRate = sampleRate; //Hz
                 }
                 measDevice.AssignSignal(sig.HbmSignal, out daqPrepareProblems);
                 daqSession.AddSignals(measDevice, sig.HbmSignal);
             }
-            
             daqSession.PrepareDaq();
             daqSession.StartDaq(DataAcquisitionMode.Unsynchronized);
             dataFetchTimer = new System.Timers.Timer(fetchPeriod); //starts every fetchPeriod ms
             dataFetchTimer.AutoReset = true;
+            dataFetchTimer.Enabled = true;
             dataFetchTimer.Elapsed += (o, s) =>
             {
                 dataFetchTimer.Stop();
@@ -90,14 +96,17 @@ namespace HMB_Utility
 
         public async Task StartAsync ()
         {
-           await Task.Run(() => Start());
+            if (!daqSession.IsRunning)
+                await Task.Run(() => Start());
+            else warningEvent?.Invoke(this, "The DAQ session is already running!");
         }
 
         public void Stop()
         {
             dataFetchTimer.Stop();
             dataFetchTimer.Dispose();
-            daqSession.StopDaq();
+            if (daqSession.IsRunning)
+                daqSession.StopDaq();
         }
     }
 }

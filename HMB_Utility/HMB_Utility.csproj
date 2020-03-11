@@ -110,12 +110,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAQ.cs" />
+    <Compile Include="Filter.cs" />
     <Compile Include="FoundDevice.cs" />
     <Compile Include="FoundSignal.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="SignalType.cs" />
     <Compile Include="UserCommand.cs" />
     <Compile Include="UserCommandAsync.cs" />
-    <Compile Include="TypeFilter.cs" />
+    <Compile Include="UserCommandAsyncVoid.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

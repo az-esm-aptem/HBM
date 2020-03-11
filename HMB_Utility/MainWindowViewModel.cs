@@ -40,8 +40,11 @@ namespace HMB_Utility
         private FoundDevice selectedDevice; //selected in UI
         private UserCommandAsync createDBCommand; // create tables in data base
         private UserCommand useFilterCommand; //filtering signals (see .cfg file)
+        private UserCommandAsyncVoid startDaqCommand;
+        private UserCommand stopDaqCommand;
 
-
+        public Filter SigFilter { get; set; }
+       
 
         public ObservableCollection<FoundDevice> AllDevices { get; set; }
         public MainWindowViewModel()
@@ -49,7 +52,9 @@ namespace HMB_Utility
             session = HbmSession.GetInstance();
             daqSessions = new List<DAQ>();
             AllDevices = new ObservableCollection<FoundDevice>();
+            SigFilter = new Filter();
         }
+
 
         public FoundDevice SelectedDevice
         {
@@ -164,19 +169,17 @@ namespace HMB_Utility
         {
             get
             {
-                return useFilterCommand ?? (useFilterCommand = new UserCommand(obj=>UseSignalsFilter(obj)));
+                return useFilterCommand ?? (useFilterCommand = new UserCommand(obj=>UseSignalsFilter(obj), (obj => SelectedDevice != null && SelectedDevice.HbmDevice.IsConnected)));
             }
         }
 
         private void UseSignalsFilter(object obj)
         {
-            bool isChecked = (bool)obj;
+            FormSignalList();
             List<FoundSignal> filtered = new List<FoundSignal>();
-            if (isChecked)
-            {
                 foreach (var s in SelectedDevice.Signals)
                 {
-                    if (!TypeFilter.Check(s.HbmSignal))
+                    if (!SigFilter.Check(s))
                     {
                         filtered.Add(s);
                     }
@@ -185,18 +188,46 @@ namespace HMB_Utility
                 {
                     SelectedDevice.Signals.Remove(s);
                 }
-            }
-            else
-            {
-                FormSignalList();
-            }
         }
 
 
+        public UserCommandAsyncVoid StartDaqCommand
+        {
+            get
+            {
+                return startDaqCommand ?? (startDaqCommand = new UserCommandAsyncVoid(StartDaq, (obj => SelectedDevice != null && SelectedDevice.HbmDevice.IsConnected && SelectedDevice.SignalsToMeasure.Count>0 && SigFilter.SelectedType.Name == "Can be measured by DAQ")));
+            }
+        }
 
+        private async Task StartDaq(object obj)
+        {
+            DAQ daqSession = daqSessions.FirstOrDefault(s => s.MeasDevice == SelectedDevice);
+            if (daqSession == null)
+            {
+                daqSession = new DAQ(SelectedDevice, DataToDB.SaveDAQMeasurments);
+                daqSessions.Add(daqSession);
+            }
+            
+            await daqSession.StartAsync();
+        }
 
+        public UserCommand StopDaqCommand
+        {
+            get
+            {
+                return stopDaqCommand ?? (stopDaqCommand = new UserCommand(StopDaq, (obj => daqSessions.FirstOrDefault(s => s.MeasDevice == SelectedDevice)!=null)));
+            }
+        }
 
-
+        private void StopDaq(object obj)
+        {
+            DAQ daqSession = daqSessions.FirstOrDefault(s => s.MeasDevice == SelectedDevice);
+            if (daqSession != null)
+            {
+                daqSession.Stop();
+                daqSessions.Remove(daqSession);
+            }
+        }
 
 
     }

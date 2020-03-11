@@ -50,12 +50,7 @@ namespace HMB_Utility
 
         }
 
-        
-
-        
-
-
-        private void SignalListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        private void SignalList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (FoundSignal s in e.AddedItems)
             {
@@ -73,6 +68,16 @@ namespace HMB_Utility
             }
         }
 
+        private void RefreshSingleValButton_Click(object sender, RoutedEventArgs e)
+        {
+            SignalList.Items.Refresh();
+        }
+
+     
+
+      
+
+        
 
 
 
