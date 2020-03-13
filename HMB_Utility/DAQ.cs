@@ -28,7 +28,7 @@ namespace HMB_Utility
     {
         Device measDevice = null;
         Action<Signal> saveDataMethod;
-        public event EventHandler<string> warningEvent;
+        public event EventHandler<ProtocolEventArg> eventToProtocol;
         System.Timers.Timer dataFetchTimer = null;
         DaqMeasurement daqSession = null;
         List<Problem> daqPrepareProblems = null;
@@ -48,6 +48,14 @@ namespace HMB_Utility
             measDevice = MeasDevice.HbmDevice;
         }
 
+        public bool isRunning
+        {
+            get
+            {
+                return daqSession.IsRunning;
+            }
+        }
+
         ~DAQ()
         {
             daqSession.Dispose();
@@ -56,57 +64,82 @@ namespace HMB_Utility
 
         private void Start()
         {
-            
+           
             int fetchPeriod;
             decimal sampleRate;
 
-            int.TryParse(ConfigurationManager.AppSettings["fetchPeriod"], out fetchPeriod);
-            decimal.TryParse(ConfigurationManager.AppSettings["sampleRate"], out sampleRate);
-            
-            foreach (FoundSignal sig in signalsToMeasure)
+            if (!int.TryParse(ConfigurationManager.AppSettings["fetchPeriod"], out fetchPeriod))
             {
-                if (sig.HbmSignal.IsMeasurable && sig.HbmSignal.HasSampleRate)
-                {
-                    sig.HbmSignal.SampleRate = sampleRate; //Hz
-                }
-                measDevice.AssignSignal(sig.HbmSignal, out daqPrepareProblems);
-                daqSession.AddSignals(measDevice, sig.HbmSignal);
+                eventToProtocol?.Invoke(this, new ProtocolEventArg("Invalid fetch period"));
             }
-            daqSession.PrepareDaq();
-            daqSession.StartDaq(DataAcquisitionMode.Unsynchronized);
-            dataFetchTimer = new System.Timers.Timer(fetchPeriod); //starts every fetchPeriod ms
-            dataFetchTimer.AutoReset = true;
-            dataFetchTimer.Enabled = true;
-            dataFetchTimer.Elapsed += (o, s) =>
+            
+            if(!decimal.TryParse(ConfigurationManager.AppSettings["sampleRate"], out sampleRate))
             {
-                dataFetchTimer.Stop();
-                if (daqSession.IsRunning)
+                eventToProtocol?.Invoke(this, new ProtocolEventArg("Invalid sample rate"));
+            }
+
+            try
+            {
+                foreach (FoundSignal sig in signalsToMeasure)
                 {
-                    daqSession.FillMeasurementValues();
-                    foreach (FoundSignal sig in signalsToMeasure)
+                    if (sig.HbmSignal.IsMeasurable && sig.HbmSignal.HasSampleRate)
                     {
-                        if (sig.HbmSignal.ContinuousMeasurementValues.BufferOverrunOccurred) warningEvent?.Invoke(typeof(DAQ), String.Format("{0} {1} buffer overrun", measDevice.Name, sig.Name));
-                        saveDataMethod(sig.HbmSignal);
+                        sig.HbmSignal.SampleRate = sampleRate; //Hz
                     }
+                    measDevice.AssignSignal(sig.HbmSignal, out daqPrepareProblems);
+                    daqSession.AddSignals(measDevice, sig.HbmSignal);
                 }
+                daqSession.PrepareDaq();
+                daqSession.StartDaq(DataAcquisitionMode.Unsynchronized);
+                eventToProtocol?.Invoke(this, new ProtocolEventArg("DAQ started"));
+                dataFetchTimer = new System.Timers.Timer(fetchPeriod); //starts every fetchPeriod ms
+                dataFetchTimer.AutoReset = true;
+                dataFetchTimer.Enabled = true;
+                dataFetchTimer.Elapsed += (o, s) =>
+                {
+                    dataFetchTimer.Stop();
+                    if (daqSession.IsRunning)
+                    {
+                        daqSession.FillMeasurementValues();
+                        foreach (FoundSignal sig in signalsToMeasure)
+                        {
+                            if (sig.HbmSignal.ContinuousMeasurementValues.BufferOverrunOccurred) eventToProtocol?.Invoke(this, new ProtocolEventArg(string.Format("Signal: {0} Buffer overrun", sig.Name)));
+                            saveDataMethod(sig.HbmSignal);
+                        }
+                    }
+                    dataFetchTimer.Start();
+                };
                 dataFetchTimer.Start();
-            };
-            dataFetchTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                eventToProtocol?.Invoke(this, new ProtocolEventArg(ex));
+            }
+            
         }
 
         public async Task StartAsync ()
         {
             if (!daqSession.IsRunning)
                 await Task.Run(() => Start());
-            else warningEvent?.Invoke(this, "The DAQ session is already running!");
+            else eventToProtocol?.Invoke(this, new ProtocolEventArg("The DAQ session is already running!"));
         }
 
         public void Stop()
         {
-            dataFetchTimer.Stop();
-            dataFetchTimer.Dispose();
-            if (daqSession.IsRunning)
-                daqSession.StopDaq();
+            try
+            {
+                dataFetchTimer.Stop();
+                dataFetchTimer.Dispose();
+                if (daqSession.IsRunning)
+                    daqSession.StopDaq();
+                eventToProtocol?.Invoke(this, new ProtocolEventArg("DAQ stopped"));
+            }
+            catch (Exception ex)
+            {
+                eventToProtocol?.Invoke(this, new ProtocolEventArg(ex));
+            }
+            
         }
     }
 }

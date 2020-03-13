@@ -34,9 +34,7 @@ namespace HMB_Utility
         private static HbmSession instance;
         public static DaqEnvironment daqEnvironment = null; //main object to work 
         public List<Device> deviceList { get; private set; } // devices found by the scan
-        public event EventHandler<Exception> exceptionEvent;
-        public event EventHandler<List<Problem>> problemEvent;
-        public event EventHandler<string> errorEvent;
+        public event EventHandler<ProtocolEventArg> eventToProtocol;
         private System.Timers.Timer searchTimer = null; 
         private HbmSession() 
         {
@@ -62,31 +60,40 @@ namespace HMB_Utility
         //searchTime - The time interval for searching. If this time is up and no one device found - the method returns False, and device list is empty
         private bool SearchDevices(object obj)  
         {
-            int.TryParse(ConfigurationManager.AppSettings["searchPeriod"], out int period);
-            int.TryParse(ConfigurationManager.AppSettings["searchTime"], out int searchTime);
-            int time = 0;
-            searchTimer = new System.Timers.Timer(period);
-            searchTimer.AutoReset = true;
-            searchTimer.Elapsed += (s, o) =>
+            eventToProtocol?.Invoke(this, new ProtocolEventArg("Search started"));
+            if(!int.TryParse(ConfigurationManager.AppSettings["searchPeriod"], out int period))
             {
-                time+=period;
-                searchTimer.Stop();
-                try
+                eventToProtocol?.Invoke(this, new ProtocolEventArg("Invalid search period"));
+            }
+            if (!int.TryParse(ConfigurationManager.AppSettings["searchTime"], out int searchTime))
+            {
+                eventToProtocol?.Invoke(this, new ProtocolEventArg("Invalid search time"));
+            }
+            int time = 0;
+            try
+            {
+                searchTimer = new System.Timers.Timer(period);
+                searchTimer.AutoReset = true;
+                searchTimer.Elapsed += (s, o) =>
                 {
+                    time += period;
+                    searchTimer.Stop();
                     deviceList = daqEnvironment.Scan();
-                }
-                catch (Hbm.Api.Scan.Entities.ScanFailedException ex)
-                {
-                    exceptionEvent?.Invoke(this, ex);
-                }
+                    searchTimer.Start();
+                };
                 searchTimer.Start();
-            };
-            searchTimer.Start();
 
-            while (time < searchTime) { };
+                while (time < searchTime) { };
 
-            searchTimer.Stop();
-            searchTimer.Dispose();
+                searchTimer.Stop();
+                searchTimer.Dispose();
+            }
+            catch (Hbm.Api.Scan.Entities.ScanFailedException ex)
+            {
+                eventToProtocol?.Invoke(this, new ProtocolEventArg(ex));
+            }
+
+            eventToProtocol?.Invoke(this, new ProtocolEventArg("Search ended"));
 
             if (deviceList.Count > 0)
             {
@@ -104,21 +111,32 @@ namespace HMB_Utility
 
         private bool ConnectToDevice(List<FoundDevice> devices)
         {
+            bool result = false;
             List<Problem> connectToFoundDevicesProblemList = new List<Problem>();
             List<Device> devToConnect = new List<Device>();
             foreach (var dev in devices)
             {
                 devToConnect.Add(dev.HbmDevice);
             }
-            if (daqEnvironment.Connect(devToConnect, out connectToFoundDevicesProblemList))
+            try
             {
-                return true;
+                daqEnvironment.Connect(devToConnect, out connectToFoundDevicesProblemList);
+            }
+            catch (Exception ex)
+            {
+                eventToProtocol?.Invoke(this, new ProtocolEventArg(ex));
+            }
+            
+            if (connectToFoundDevicesProblemList.Count>0)
+            {
+                eventToProtocol?.Invoke(this, new ProtocolEventArg(connectToFoundDevicesProblemList));
+                result = false;
             }
             else
             {
-                problemEvent?.Invoke(this, connectToFoundDevicesProblemList);
-                return false;
+                result = true;
             }
+            return result;
         }
 
         public async Task<bool> ConnectAsync(List<FoundDevice> devices)
@@ -155,14 +173,22 @@ namespace HMB_Utility
                         deviceList.Add(new MgcDevice(ip, port));
                     break;
                 default:
-                    errorEvent?.Invoke(this, "Wrong family");
+                    eventToProtocol?.Invoke(this, new ProtocolEventArg("Wrong family"));
                     break;
             }
         }
 
         public void DisconnectDevice(FoundDevice dev)
         {
-            daqEnvironment.Disconnect(dev.HbmDevice);
+            try
+            {
+                daqEnvironment.Disconnect(dev.HbmDevice);
+            }
+            catch (Exception ex)
+            {
+                eventToProtocol?.Invoke(this, new ProtocolEventArg(ex));
+            }
+            
         }
     }
 }

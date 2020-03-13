@@ -42,9 +42,22 @@ namespace HMB_Utility
         private UserCommand useFilterCommand; //filtering signals (see .cfg file)
         private UserCommandAsyncVoid startDaqCommand;
         private UserCommand stopDaqCommand;
-
+        public Logger Logs { get; set; }
         public Filter SigFilter { get; set; }
-       
+        private Protocol eventProtocoling;
+        public Protocol EventProtocoling
+        {
+            get
+            {
+                return eventProtocoling;
+            }
+         
+        }
+
+
+        
+
+
 
         public ObservableCollection<FoundDevice> AllDevices { get; set; }
         public MainWindowViewModel()
@@ -53,8 +66,18 @@ namespace HMB_Utility
             daqSessions = new List<DAQ>();
             AllDevices = new ObservableCollection<FoundDevice>();
             SigFilter = new Filter();
+            Logs = new Logger();
+            eventProtocoling = Protocol.GetInstance();
+            subscribeProtocol();
         }
 
+        private void subscribeProtocol()
+        {
+            session.eventToProtocol += eventProtocoling.Add;
+            DataToDB.eventToProtocol += eventProtocoling.Add;
+
+        }
+         
 
         public FoundDevice SelectedDevice
         {
@@ -146,6 +169,11 @@ namespace HMB_Utility
 
         private void Disconnect(object obj)
         {
+            DAQ daqSession = daqSessions.FirstOrDefault(s => s.MeasDevice == SelectedDevice);
+            if (daqSession!=null && daqSession.isRunning)
+            {
+                StopDaq(null);
+            }
             session.DisconnectDevice(SelectedDevice);
             SelectedDevice.Signals.Clear();
         }
@@ -206,6 +234,7 @@ namespace HMB_Utility
             {
                 daqSession = new DAQ(SelectedDevice, DataToDB.SaveDAQMeasurments);
                 daqSessions.Add(daqSession);
+                daqSession.eventToProtocol += eventProtocoling.Add;
             }
             
             await daqSession.StartAsync();
@@ -225,6 +254,7 @@ namespace HMB_Utility
             if (daqSession != null)
             {
                 daqSession.Stop();
+                daqSession.eventToProtocol -= eventProtocoling.Add;
                 daqSessions.Remove(daqSession);
             }
         }

@@ -28,8 +28,8 @@ namespace HMB_Utility
     
     public static class DataToDB
     {
-        public static event EventHandler<Exception> exceptionEvent;
-        public static event EventHandler<string> errorEvent;
+        public static event EventHandler<ProtocolEventArg> eventToProtocol;
+
 
         private static bool SaveDevices(List<FoundDevice> devices)
         {
@@ -80,7 +80,7 @@ namespace HMB_Utility
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        exceptionEvent?.Invoke(typeof(DataToDB), ex);
+                        eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(ex));
                     }
                 }
             }
@@ -121,13 +121,13 @@ namespace HMB_Utility
                         catch (Exception ex)
                         {
                             transaction.Rollback();
-                            exceptionEvent?.Invoke(typeof(DataToDB), ex);
+                            eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(ex));
                         }
                     }
                 }
                 else
                 {
-                    errorEvent?.Invoke(typeof(DataToDB), String.Format("No signal {0} found in the data base", sig));
+                    eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format("No signal {0} found in the data base", sig)));
                 }
             }
         }
@@ -171,7 +171,7 @@ namespace HMB_Utility
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        exceptionEvent?.Invoke(typeof(DataToDB), ex);
+                        eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(ex));
                     }
                 }
             }
