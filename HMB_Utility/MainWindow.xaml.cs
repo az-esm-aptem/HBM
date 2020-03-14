@@ -47,8 +47,8 @@ namespace HMB_Utility
             InitializeComponent();
             mainWindowViewModel = new MainWindowViewModel();
             DataContext = mainWindowViewModel;
-
         }
+
 
         private void SignalList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

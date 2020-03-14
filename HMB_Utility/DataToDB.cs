@@ -33,6 +33,7 @@ namespace HMB_Utility
 
         private static bool SaveDevices(List<FoundDevice> devices)
         {
+            eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.dbPreparation)));
             bool result = false;
             using (HBMContext db = new HBMContext())
             {
@@ -52,6 +53,7 @@ namespace HMB_Utility
                         foreach (FoundSignal sig in dev.Signals)
                         {
                             signalsToAdd.Add(new SignalModel { Name = sig.HbmSignal.Name, SampleRate = sig.HbmSignal.SampleRate, UniqueId = sig.HbmSignal.GetUniqueID(), Device = newDM });
+                            eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.signalWillBeAdded, sig.Name)));
                         }
                     }
                     else
@@ -91,7 +93,7 @@ namespace HMB_Utility
                     }
                 }
             }
-            eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.dbPreparingComplete)));
+            eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.dbPreparationComplete)));
             return result;
         }
 

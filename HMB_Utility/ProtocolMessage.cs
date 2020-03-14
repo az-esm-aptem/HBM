@@ -24,8 +24,12 @@ namespace HMB_Utility
         public static string signalWillBeAdded = "Signal {0} will be added to the database";
         public static string deviceAlreadyInDb = "Device {0} already in the database";
         public static string signalAlreadyInDb = "Signal {0} already in the database";
-        public static string dbPreparingComplete = "The database preparing comlete";
+        public static string dbPreparationComplete = "The database preparation comlete";
         public static string logPath = "Log file path: {0}";
+        public static string writeProtocolFileError = "Write protocol file fail. Path: {0}";
+        public static string protocolFilePath = "Protocol file path: {0}";
+        public static string dbPreparation = "The database preparation";
+
 
 
     }

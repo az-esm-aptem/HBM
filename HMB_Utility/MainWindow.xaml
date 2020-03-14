@@ -28,11 +28,11 @@
                 Click="SearchDeviceButton_Click" Grid.Column="2" Grid.Row="0" Height="20" />-->
         <Button x:Name="SearchDeviceButton" Command="{Binding SearchCommand}" Content="Search" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="136" Grid.Row="0" Height="20" />
         <Button x:Name="ConnectButton" Command="{Binding ConnectCommand}"  Content="Connect" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="65" Height="20"/>
-        <Button x:Name="RefreshSingleValButton" Command="{Binding RefreshCommand}"  Content="Refresh values"  Grid.Column="1" HorizontalAlignment="Left" Margin="520,10,0,0" VerticalAlignment="Top" Width="84" Click="RefreshSingleValButton_Click"/>
+        <Button x:Name="RefreshSingleValButton" Command="{Binding RefreshCommand}"  Content="Refresh values"  Grid.Column="1" HorizontalAlignment="Left" Margin="636,10,0,0" VerticalAlignment="Top" Width="84" Click="RefreshSingleValButton_Click"/>
         <Button x:Name="DisconnectButton" Command="{Binding DisconnectCommand}"  Content="Disconnect" HorizontalAlignment="Left" Margin="81,46,0,0" VerticalAlignment="Top" Width="65" Height="20"/>
         <Button x:Name="CreateDBButton" Command="{Binding CreateDBCommand}" Content="Add to DB" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
-        <Button x:Name="StartDaqButton" Command="{Binding StartDaqCommand}" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="147,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
-        <Button x:Name="StopDaqButton" Command="{Binding StopDaqCommand}" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="234,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
+        <Button x:Name="StartDaqButton" Command="{Binding StartDaqCommand}" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
+        <Button x:Name="StopDaqButton" Command="{Binding StopDaqCommand}" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
 
         <!--<TreeView x:Name="treeView1" Width="150" Height="500" ItemsSource="{Binding AllDevices}" >
             <TreeView.ItemTemplate>
@@ -104,8 +104,6 @@
 
 
         <GridSplitter Grid.Row="0" ShowsPreview="True" Width="3" VerticalAlignment="Stretch" Grid.Column="1"/>
-        <TextBox Name ="ProtocolBox"  Text="" HorizontalAlignment="Left" Height="130" Margin="585,10,0,0" Grid.Row="1" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="135" IsReadOnly="True" IsReadOnlyCaretVisible="True" Grid.Column="1"/>
 
         <!--<ItemsControl ItemsSource="{Binding Path=.}">
             <ItemsControl.ItemTemplate>
@@ -141,7 +139,8 @@
 
 
 
-        <ListView x:Name="SignalList"  DataContext="{Binding SelectedDevice}"  ItemsSource="{Binding Path= Signals}"  SelectionMode="Extended" Margin="10,81,16,10" Grid.Column="1" SelectionChanged="SignalList_SelectionChanged">
+        <ListView x:Name="SignalList"  DataContext="{Binding SelectedDevice}"  ItemsSource="{Binding Path= Signals}"  SelectionMode="Extended" Margin="10,81,16,10" Grid.Column="1" 
+                  SelectionChanged="SignalList_SelectionChanged" VirtualizingPanel.ScrollUnit="Item">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Background" Value="LightSteelBlue"/>
@@ -176,7 +175,7 @@
         </ListView>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Margin="56,81,0,0" FontSize="14" FontWeight="Bold"/>
 
-        <ComboBox ItemsSource="{Binding SigFilter.SignalTypes}" SelectedItem="{Binding SigFilter.SelectedType, Mode=TwoWay}"  Grid.Column="1" HorizontalAlignment="Left" Margin="397,54,0,0" VerticalAlignment="Top" Width="150">
+        <ComboBox ItemsSource="{Binding SigFilter.SignalTypes}" SelectedItem="{Binding SigFilter.SelectedType, Mode=TwoWay}"  Grid.Column="1" HorizontalAlignment="Left" Margin="412,10,0,0" VerticalAlignment="Top" Width="150">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction
@@ -191,16 +190,9 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        
-        <Border BorderThickness="1" BorderBrush="Black" Margin="10,10,656,10" Grid.Row="1" Grid.ColumnSpan="2">
-            <TextBlock HorizontalAlignment="Left" LineHeight="3" Text="" Margin="9,9,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="206" Height="112">
 
-            </TextBlock>
-        </Border>
-        <Button Content="Opel log file" Grid.Column="1" HorizontalAlignment="Left" Margin="645,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1.338,0.183"/>
+        <ListView x:Name="Protocol" ItemsSource="{Binding Path=MessagesToProtocol}" SelectionMode="Single" Margin="10,10,16,10" Grid.Row="1" Grid.Column="1" VirtualizingPanel.ScrollUnit="Item">
 
-        <ListView x:Name="Protocol" ItemsSource="{Binding Path=MessagesToProtocol}" SelectionMode="Single" Margin="86,10,167,10" Grid.Column="1" Grid.Row="1">
-            
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

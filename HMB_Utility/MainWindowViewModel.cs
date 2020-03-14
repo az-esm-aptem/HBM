@@ -45,6 +45,8 @@ namespace HMB_Utility
         private Logger Logs { get; set; }
         public Filter SigFilter { get; set; }
         private Protocol eventProtocoling;
+        private ProtocolSaveMethod saveMethod;
+
         public ObservableCollection<string> MessagesToProtocol
         {
             get
@@ -62,17 +64,20 @@ namespace HMB_Utility
             AllDevices = new ObservableCollection<FoundDevice>();
             SigFilter = new Filter();
             Logs = new Logger();
-            eventProtocoling = Protocol.GetInstance();
+            saveMethod = new ProtocolSaveMethod();
+            eventProtocoling = Protocol.GetInstance(saveMethod.Save);
             subscribeProtocol();
             
         }
 
         private void subscribeProtocol()
         {
-            session.eventToProtocol += eventProtocoling.Add;
-            DataToDB.eventToProtocol += eventProtocoling.Add;
+            saveMethod.eventToProtocol += eventProtocoling.Add;
+            saveMethod.Created();
             Logs.eventToProtocol += eventProtocoling.Add;
             Logs.Created();
+            session.eventToProtocol += eventProtocoling.Add;
+            DataToDB.eventToProtocol += eventProtocoling.Add;
             AppSettings.eventToProtocol += eventProtocoling.Add;
         }
          
@@ -176,7 +181,7 @@ namespace HMB_Utility
             selectedDevice.Signals.Clear();
         }
 
-
+        //if the CreateDB button is needed
         public UserCommandAsync CreateDBCommand
         {
             get
@@ -227,6 +232,7 @@ namespace HMB_Utility
 
         private async Task StartDaq(object obj)
         {
+            bool result = await CreateDB(new object());
             DAQ daqSession = daqSessions.FirstOrDefault(s => s.MeasDevice == selectedDevice);
             if (daqSession == null)
             {
@@ -256,6 +262,8 @@ namespace HMB_Utility
                 daqSessions.Remove(daqSession);
             }
         }
+
+
 
 
     }

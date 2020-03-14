@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -14,38 +15,45 @@ namespace HMB_Utility
     //Singleton
     public class Protocol
     {
-        private ObservableCollection<string> messages = new ObservableCollection<string>();
+        private ObservableCollection<string> messages;
         private static Protocol instance;
         private HbmMessages hbmMessages;
-        private string msgWithDate;
+        
+        private Action<string> saveProtocolMethod;
 
-        private Protocol()
+
+
+        private Protocol(Action<string> saveProtocolMethod)
         {
+            this.saveProtocolMethod = saveProtocolMethod;
+            messages = new ObservableCollection<string>();
             hbmMessages = new HbmMessages(this.Add);
             BindingOperations.EnableCollectionSynchronization(Messages, new object());
         }
 
 
-        public static Protocol GetInstance()
+        public static Protocol GetInstance(Action<string> saveProtocolMethod)
         {
             if (instance == null)
             {
-                instance = new Protocol();
+                instance = new Protocol(saveProtocolMethod);
             }
             return instance;
         }
 
-        private void AddDate(string s)
+        private string AddDate(string s)
         {
-            msgWithDate = $"{DateTime.Now}   {s}";
+            return $"{DateTime.Now}   {s}";
         }
 
         public void Add(object obj, ProtocolEventArg arg)
         {
-            foreach (var m in arg.Messages)
+            string msgWithDate;
+            foreach (string m in arg.Messages)
             {
-                AddDate(m);
+                msgWithDate = AddDate(m);
                 messages.Add(msgWithDate);
+                saveProtocolMethod(msgWithDate);
             }
         }
 
@@ -58,11 +66,9 @@ namespace HMB_Utility
             }
         }
 
-        public async void SaveToFile()
-        {
-            
-        }
+        
 
+       
 
 
     }

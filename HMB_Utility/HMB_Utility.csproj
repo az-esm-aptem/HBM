@@ -120,6 +120,7 @@
     <Compile Include="Protocol.cs" />
     <Compile Include="ProtocolEventArg.cs" />
     <Compile Include="ProtocolMessage.cs" />
+    <Compile Include="ProtocolSaveMethod.cs" />
     <Compile Include="SignalType.cs" />
     <Compile Include="UserCommand.cs" />
     <Compile Include="UserCommandAsync.cs" />
