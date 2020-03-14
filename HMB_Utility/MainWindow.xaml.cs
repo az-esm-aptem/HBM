@@ -73,10 +73,7 @@ namespace HMB_Utility
             SignalList.Items.Refresh();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            mainWindowViewModel.Logs.OpenLogFile();
-        }
+        
 
 
 

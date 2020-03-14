@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace HMB_Utility
 {
-    public class Logger : ViewModelBase
+    public class Logger
     {
         private ILogger hbmLogger;
         private LogContext logContextMeasuring;
         private LogContext logContextProblems;
         private int logNumberDummy = 0;
+        public event EventHandler<ProtocolEventArg> eventToProtocol;
+
 
         public Logger()
         {
-            
             prepareHbmLogger();
             createLogEntries();
-            
         }
 
         private void prepareHbmLogger()
@@ -32,9 +32,14 @@ namespace HMB_Utility
             hbmLogger = LogManager.CreateLogger("Logger");
             logContextMeasuring = new LogContext("Measurement");
             logContextProblems = new LogContext("Problems");
-            
         }
-         private void createLogEntries()
+
+        public void Created()
+        {
+            eventToProtocol?.Invoke(this, new ProtocolEventArg(string.Format(ProtocolMessage.logPath, LogManager.LogFolder)));
+        }
+
+        private void createLogEntries()
         {
             hbmLogger.ErrorFormat(logContextMeasuring, "Error: Log entry number {0} for measurement context", logNumberDummy++);
             hbmLogger.DebugFormat(logContextMeasuring, "Debug: Log entry number {0} for measurement context", logNumberDummy++);

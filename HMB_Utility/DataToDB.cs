@@ -48,6 +48,7 @@ namespace HMB_Utility
                     {
                         newDM = new DeviceModel { Name = dev.Name, IpAddress = dev.IpAddress, Model = dev.Model, SerialNo = dev.SerialNo };
                         devicesToAdd.Add(newDM);
+                        eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.deviceWillBeAdded, dev.Name)));
                         foreach (FoundSignal sig in dev.Signals)
                         {
                             signalsToAdd.Add(new SignalModel { Name = sig.HbmSignal.Name, SampleRate = sig.HbmSignal.SampleRate, UniqueId = sig.HbmSignal.GetUniqueID(), Device = newDM });
@@ -55,14 +56,20 @@ namespace HMB_Utility
                     }
                     else
                     {
+                        eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.deviceAlreadyInDb, dev.Name)));
                         foreach (FoundSignal sig in dev.Signals)
                         {
                             oldSM = db.Signals.FirstOrDefault(s=>s.Name == sig.Name);
                             if (oldSM == null)
                             {
                                 signalsToAdd.Add(new SignalModel { Name = sig.HbmSignal.Name, SampleRate = sig.HbmSignal.SampleRate, UniqueId = sig.HbmSignal.GetUniqueID(), Device = oldDM });
+                                eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.signalWillBeAdded, sig.Name)));
                             }
-                            
+                            else
+                            {
+                                eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.signalAlreadyInDb, sig.Name)));
+                            }
+
                         }
 
                     }
@@ -84,6 +91,7 @@ namespace HMB_Utility
                     }
                 }
             }
+            eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.dbPreparingComplete)));
             return result;
         }
 
@@ -127,7 +135,7 @@ namespace HMB_Utility
                 }
                 else
                 {
-                    eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format("No signal {0} found in the data base", sig)));
+                    eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.noSignalInDb, sig.Name)));
                 }
             }
         }
@@ -141,24 +149,32 @@ namespace HMB_Utility
             {
                 string sigName = sig.Name;
                 List<ValuesModel> valuesToAdd = new List<ValuesModel>();
-                var signalInDB = db.Signals.Where(s => s.Name == sigName).FirstOrDefault();
-                int count = sig.ContinuousMeasurementValues.UpdatedValueCount;
-
-                if (signalInDB != null)
+                try
                 {
-                    for(int i = 0; i<count; i++)
+                    var signalInDB = db.Signals.Where(s => s.Name == sigName).FirstOrDefault();
+                    int count = sig.ContinuousMeasurementValues.UpdatedValueCount;
+
+                    if (signalInDB != null)
                     {
-                        valuesToAdd.Add(new ValuesModel
+                        for (int i = 0; i < count; i++)
                         {
-                            dateTime = DateTime.Now,
-                            MeasuredValue = sig.ContinuousMeasurementValues.Values[i],
-                            TimeStamp = sig.ContinuousMeasurementValues.Timestamps[0]+i*(double)sig.SampleRate,
-                            State = (int)sig.ContinuousMeasurementValues.States[0],
-                            Signal = signalInDB
-                        }); ;
+                            valuesToAdd.Add(new ValuesModel
+                            {
+                                dateTime = DateTime.Now,
+                                MeasuredValue = sig.ContinuousMeasurementValues.Values[i],
+                                TimeStamp = sig.ContinuousMeasurementValues.Timestamps[0] + i * (double)sig.SampleRate,
+                                State = (int)sig.ContinuousMeasurementValues.States[0],
+                                Signal = signalInDB
+                            }); ;
+                        }
+                        signalInDB.SampleRate = sig.SampleRate;
                     }
-                    signalInDB.SampleRate = sig.SampleRate;
                 }
+                catch (Exception ex)
+                {
+                    eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(ex));
+                }
+
                 using (var transaction = db.Database.BeginTransaction())
                 {
                     try

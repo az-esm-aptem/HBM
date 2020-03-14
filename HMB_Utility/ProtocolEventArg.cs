@@ -23,7 +23,7 @@ namespace HMB_Utility
                 message = (obj as string);
                 Messages.Add(message);
             }
-            if (obj is List<Problem>)
+            else if (obj is List<Problem>)
             {
                 ploblemList = (obj as List<Problem>);
                 foreach (var pr in ploblemList)
@@ -31,7 +31,7 @@ namespace HMB_Utility
                     Messages.Add(String.Format("{0} {1} {2}", pr.Message, pr.PropertyName, pr.Position));
                 }
             }
-            if (obj is Exception)
+            else if (obj is Exception)
             {
                 ex = (obj as Exception);
                 Messages.Add(ex.Message);

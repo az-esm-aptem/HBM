@@ -60,16 +60,11 @@ namespace HMB_Utility
         //searchTime - The time interval for searching. If this time is up and no one device found - the method returns False, and device list is empty
         private bool SearchDevices(object obj)  
         {
-            eventToProtocol?.Invoke(this, new ProtocolEventArg("Search started"));
-            if(!int.TryParse(ConfigurationManager.AppSettings["searchPeriod"], out int period))
-            {
-                eventToProtocol?.Invoke(this, new ProtocolEventArg("Invalid search period"));
-            }
-            if (!int.TryParse(ConfigurationManager.AppSettings["searchTime"], out int searchTime))
-            {
-                eventToProtocol?.Invoke(this, new ProtocolEventArg("Invalid search time"));
-            }
+            eventToProtocol?.Invoke(this, new ProtocolEventArg(ProtocolMessage.searchStart));
+
             int time = 0;
+            int period = AppSettings.SearchPeriod;
+            int searchTime = AppSettings.SearchTime;
             try
             {
                 searchTimer = new System.Timers.Timer(period);
@@ -93,7 +88,7 @@ namespace HMB_Utility
                 eventToProtocol?.Invoke(this, new ProtocolEventArg(ex));
             }
 
-            eventToProtocol?.Invoke(this, new ProtocolEventArg("Search ended"));
+            eventToProtocol?.Invoke(this, new ProtocolEventArg(ProtocolMessage.searchEnd));
 
             if (deviceList.Count > 0)
             {
@@ -173,7 +168,7 @@ namespace HMB_Utility
                         deviceList.Add(new MgcDevice(ip, port));
                     break;
                 default:
-                    eventToProtocol?.Invoke(this, new ProtocolEventArg("Wrong family"));
+                    eventToProtocol?.Invoke(this, new ProtocolEventArg(ProtocolMessage.wrongFamily));
                     break;
             }
         }

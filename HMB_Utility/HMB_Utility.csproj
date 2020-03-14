@@ -109,14 +109,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="DAQ.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="FoundDevice.cs" />
     <Compile Include="FoundSignal.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="HbmMessages.cs" />
     <Compile Include="Protocol.cs" />
     <Compile Include="ProtocolEventArg.cs" />
+    <Compile Include="ProtocolMessage.cs" />
     <Compile Include="SignalType.cs" />
     <Compile Include="UserCommand.cs" />
     <Compile Include="UserCommandAsync.cs" />

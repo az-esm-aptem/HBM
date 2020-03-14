@@ -104,8 +104,8 @@
 
 
         <GridSplitter Grid.Row="0" ShowsPreview="True" Width="3" VerticalAlignment="Stretch" Grid.Column="1"/>
-        <TextBox Name ="ProtocolBox"  Text="" HorizontalAlignment="Left" Height="130" Margin="291,10,0,0" Grid.Row="1" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="429" IsReadOnly="True" IsReadOnlyCaretVisible="True" Grid.Column="1"/>
+        <TextBox Name ="ProtocolBox"  Text="" HorizontalAlignment="Left" Height="130" Margin="585,10,0,0" Grid.Row="1" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="135" IsReadOnly="True" IsReadOnlyCaretVisible="True" Grid.Column="1"/>
 
         <!--<ItemsControl ItemsSource="{Binding Path=.}">
             <ItemsControl.ItemTemplate>
@@ -191,12 +191,24 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+        
         <Border BorderThickness="1" BorderBrush="Black" Margin="10,10,656,10" Grid.Row="1" Grid.ColumnSpan="2">
             <TextBlock HorizontalAlignment="Left" LineHeight="3" Text="" Margin="9,9,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="206" Height="112">
 
             </TextBlock>
         </Border>
-        <Button Content="Opel log file" Grid.Column="1" HorizontalAlignment="Left" Margin="645,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" RenderTransformOrigin="1.338,0.183"/>
+        <Button Content="Opel log file" Grid.Column="1" HorizontalAlignment="Left" Margin="645,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1.338,0.183"/>
+
+        <ListView x:Name="Protocol" ItemsSource="{Binding Path=MessagesToProtocol}" SelectionMode="Single" Margin="86,10,167,10" Grid.Column="1" Grid.Row="1">
+            
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
 
         <!--<TreeView x:Name="treeView1" Margin="0,158,0,0" ItemsSource="{Binding AllDevices}">
