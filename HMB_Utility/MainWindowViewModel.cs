@@ -31,6 +31,7 @@ namespace HMB_Utility
 {
     public class MainWindowViewModel: ViewModelBase
     {
+        public event EventHandler<ProtocolEventArg> eventToProtocol;
         private HbmSession session;
         private List<DAQ> daqSessions;
         private UserCommandAsync searchCommand; //search button
@@ -43,6 +44,7 @@ namespace HMB_Utility
         private UserCommandAsyncVoid startDaqCommand;
         private UserCommand stopDaqCommand;
         private UserCommand addDeviceByIpCommand;
+        private ObservableCollection<FoundDevice> allDevices;
         private Logger Logs { get; set; }
         public Filter SigFilter { get; set; }
         private Protocol eventProtocoling;
@@ -59,7 +61,18 @@ namespace HMB_Utility
         }
 
 
-        public ObservableCollection<FoundDevice> AllDevices { get; set; }
+        public ObservableCollection<FoundDevice> AllDevices
+        {
+            get
+            {
+                return allDevices;
+            }
+            set
+            {
+                allDevices = value;
+                OnPropertyChanged("AllDevices");
+            }
+        }
         public MainWindowViewModel()
         {
             session = HbmSession.GetInstance();
@@ -83,6 +96,7 @@ namespace HMB_Utility
             session.eventToProtocol += eventProtocoling.Add;
             DataToDB.eventToProtocol += eventProtocoling.Add;
             AppSettings.eventToProtocol += eventProtocoling.Add;
+            this.eventToProtocol += eventProtocoling.Add;
         }
 
 
@@ -150,6 +164,7 @@ namespace HMB_Utility
         private async Task<bool> connect (object obj)
         {
             bool result = await session.ConnectAsync(new List<FoundDevice> { SelectedDevice });
+            SelectedDevice.OnPropertyChanged("Name");
             FormSignalList();
             return result;
         }
@@ -261,7 +276,8 @@ namespace HMB_Utility
                 daqSessions.Add(daqSession);
                 daqSession.eventToProtocol += eventProtocoling.Add;
             }
-            
+            eventToProtocol?.Invoke(this, new ProtocolEventArg(String.Format(ProtocolMessage.selectedSignals, SelectedDevice.SignalsToMeasure.Count)));
+
             await daqSession.StartAsync();
         }
 

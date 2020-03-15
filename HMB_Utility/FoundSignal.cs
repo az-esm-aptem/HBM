@@ -30,15 +30,27 @@ namespace HMB_Utility
         private double _value;
         private double _timeStamp;
         private int _state; //0 - valid,  1 - overflow
+        private string _name;
 
         public FoundSignal(Signal sig)
         {
-            _signal = sig;
+            HbmSignal = sig;
+            Name = sig.Name;
         }
 
         private FoundSignal() { }
 
-        public Signal HbmSignal => _signal;
+        public Signal HbmSignal
+        {
+            get
+            {
+                return _signal;
+            }
+            set
+            {
+                _signal = value;
+            }
+        }
         public Connector HbmConnector
         {
             get
@@ -59,27 +71,73 @@ namespace HMB_Utility
             set
             {
                 _channel = value;
+                OnPropertyChanged("HbmChannel");
+
             }
         }
-        public double SingleValue => _value;
-        public double SingleTimeStamp => _timeStamp;
+        public double SingleValue
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                OnPropertyChanged("SingleValue");
+
+            }
+        }
+
+        public double SingleTimeStamp
+        {
+            get
+            {
+                return _timeStamp;
+            }
+            set
+            {
+                _timeStamp = value;
+                OnPropertyChanged("SingleTimeStamp");
+
+            }
+        }
+
         
-        public double SingleState => _state;
+        public int SingleState
+        {
+            get
+            {
+                return _state;
+            }
+            set
+            {
+                _state = value;
+                OnPropertyChanged("SingleState");
+            }
+        }
+
         public string Name
         {
             get
             {
-                return _signal.Name;
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                OnPropertyChanged("Name");
+
             }
         }
 
 
         public void GetSingleVals()
         {
-            MeasurementValue measVal = _signal.GetSingleMeasurementValue();
-            _value = measVal.Value;
-            _timeStamp = measVal.Timestamp;
-            _state = (int)measVal.State;
+            MeasurementValue measVal = HbmSignal.GetSingleMeasurementValue();
+            SingleValue = measVal.Value;
+            SingleTimeStamp = measVal.Timestamp;
+            SingleState = (int)measVal.State;
         }
         
     }

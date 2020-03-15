@@ -141,7 +141,6 @@
                 </TextBox.Text>
             </TextBox>
         </Canvas>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="80,71,0,0" VerticalAlignment="Top" Width="76" Click="Button_Click"/>
 
     </Grid>
 </Window>

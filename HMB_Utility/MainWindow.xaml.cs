@@ -68,18 +68,9 @@ namespace HMB_Utility
             }
         }
 
-        private void RefreshSingleValButton_Click(object sender, RoutedEventArgs e)
-        {
-            SignalList.Items.Refresh();
-        }
+        
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            DeviceList.Items.Refresh();
-            SignalList.Items.Refresh();
-            foreach(FoundSignal s in mainWindowViewModel.SelectedDevice.Signals)
-            Console.WriteLine(s.Name);
-        }
+        
 
 
 

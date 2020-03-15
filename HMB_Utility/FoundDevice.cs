@@ -30,16 +30,18 @@ namespace HMB_Utility
         private Device _device;
         private ObservableCollection<FoundSignal> _signals;
         private ObservableCollection<FoundSignal> _signalsToMeasure;
-        
+        private string _ipAddress;
+        private string _model;
+        private string _serialNo;
+        private string _name;
 
         private FoundDevice() { }
 
         public FoundDevice(Device dev)
         {
-            _device = dev;
-            _signals = new ObservableCollection<FoundSignal>();
-            _signalsToMeasure = new ObservableCollection<FoundSignal>();
-
+            HbmDevice = dev;
+            Signals = new ObservableCollection<FoundSignal>();
+            SignalsToMeasure = new ObservableCollection<FoundSignal>();
         }
 
         public Device HbmDevice
@@ -48,16 +50,22 @@ namespace HMB_Utility
             {
                 return _device;
             }
+            set
+            {
+                _device = value;
+                OnPropertyChanged("HbmDevice");
+
+            }
         }
         public string Name
         {
             get
             {
-                return _device.Name;
+                return _name = HbmDevice.Name;  
             }
             set
             {
-                _device.Name = value;
+                _name = value;
                 OnPropertyChanged("Name");
             }
         }
@@ -65,21 +73,38 @@ namespace HMB_Utility
         {
             get
             {
-                return (_device.ConnectionInfo as EthernetConnectionInfo).IpAddress;
+                return _ipAddress = (HbmDevice.ConnectionInfo as EthernetConnectionInfo).IpAddress;
             }
+            set
+            {
+                _ipAddress = value;
+                OnPropertyChanged("IpAddress");
+            }
+
         }
         public string Model
         {
             get
             {
-                return _device.FamilyName;
+                return _model = HbmDevice.FamilyName;
+            }
+            set
+            {
+                _model = value;
+                OnPropertyChanged("Model");
             }
         }
         public string SerialNo
         {
             get
             {
-                return _device.SerialNo;
+                return _serialNo = HbmDevice.SerialNo;
+            }
+            set
+            {
+                _serialNo = value;
+                OnPropertyChanged("SerialNo");
+
             }
         }
         public ObservableCollection<FoundSignal> Signals
@@ -90,10 +115,7 @@ namespace HMB_Utility
             }
             set
             {
-                foreach (var s in value)
-                {
-                    _signals.Add(s);
-                }
+                _signals = value;
                 OnPropertyChanged("Signals");
             }
         }
@@ -102,16 +124,16 @@ namespace HMB_Utility
         {
             foreach (var s in HbmDevice.GetAllSignals())
             {
-                if (_signals.Where(sig=>sig.HbmSignal == s).ToList().Count == 0)
-                _signals.Add(new FoundSignal(s));
+                if (Signals.Where(sig=>sig.HbmSignal == s).ToList().Count == 0)
+                    Signals.Add(new FoundSignal(s));
             }
             
         }
 
         public void GetSingleSignalVals()
         {
-            _device.ReadSingleMeasurementValueOfAllSignals();
-            foreach (var s in _signals)
+            HbmDevice.ReadSingleMeasurementValueOfAllSignals();
+            foreach (var s in Signals)
             {
                 s.GetSingleVals();
             }
@@ -119,17 +141,17 @@ namespace HMB_Utility
 
         public void GetSignalChannel()
         {
-            foreach (var s in _signals)
+            foreach (var s in Signals)
             {
-                s.HbmChannel = _device.FindChannel(s.HbmSignal);
+                s.HbmChannel = HbmDevice.FindChannel(s.HbmSignal);
             }
         }
 
         public void GetSignalConnector()
         {
-            foreach (var s in _signals)
+            foreach (var s in Signals)
             {
-                s.HbmConnector = _device.FindConnector(s.HbmSignal);
+                s.HbmConnector = HbmDevice.FindConnector(s.HbmSignal);
             }
         }
 
@@ -143,6 +165,8 @@ namespace HMB_Utility
             set
             {
                 _signalsToMeasure = value;
+                OnPropertyChanged("SignalsToMeasure");
+
             }
         }
 
