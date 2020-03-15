@@ -29,7 +29,7 @@ namespace HMB_Utility
 {
    
     
-    public class HbmSession
+    public class HbmSession 
     {
         private static HbmSession instance;
         public static DaqEnvironment daqEnvironment = null; //main object to work 
@@ -39,6 +39,7 @@ namespace HMB_Utility
         private HbmSession() 
         {
             daqEnvironment = DaqEnvironment.GetInstance();
+            deviceList = new List<Device>();
         }
 
         public static HbmSession GetInstance()
@@ -116,6 +117,7 @@ namespace HMB_Utility
             try
             {
                 daqEnvironment.Connect(devToConnect, out connectToFoundDevicesProblemList);
+
             }
             catch (Exception ex)
             {
@@ -140,37 +142,26 @@ namespace HMB_Utility
         }
 
 
-        public void AddDeviceByIP(HBMFamily.family family, string ip, int port = -1) 
+        public void AddDeviceByIP(HBMFamily family, string ip) 
         {
-            List<Problem> ConnectToDeviceByIPProblemList = new List<Problem>();
-            int.TryParse(ConfigurationManager.AppSettings["PMXPort"], out int PMXPort);
-            int.TryParse(ConfigurationManager.AppSettings["QuantumXPort"], out int QuantumXPort);
-            int.TryParse(ConfigurationManager.AppSettings["MGCPort"], out int MGCPort);
 
-            switch (family)
+            if(family.Name == AppSettings.PmxName)
             {
-                case (HBMFamily.family.PMX):
-                    if (port <= 0)
-                        deviceList.Add(new PmxDevice(ip, PMXPort));
-                    else
-                        deviceList.Add(new PmxDevice(ip, port));
-                    break;
-                case (HBMFamily.family.QuantumX):
-                    if (port <= 0)
-                        deviceList.Add(new QuantumXDevice(ip, QuantumXPort));
-                    else
-                        deviceList.Add(new QuantumXDevice(ip, port));
-                    break;
-                case (HBMFamily.family.MGC):
-                    if (port <= 0)
-                        deviceList.Add(new MgcDevice(ip, MGCPort));
-                    else
-                        deviceList.Add(new MgcDevice(ip, port));
-                    break;
-                default:
-                    eventToProtocol?.Invoke(this, new ProtocolEventArg(ProtocolMessage.wrongFamily));
-                    break;
+                deviceList.Add(new PmxDevice(ip, family.Port));
             }
+            else if (family.Name == AppSettings.QuantumxName)
+            {
+                deviceList.Add(new QuantumXDevice(ip, family.Port));
+            }
+            else if (family.Name == AppSettings.MgcName)
+            {
+                deviceList.Add(new MgcDevice(ip, family.Port));
+            }
+            else
+            {
+                eventToProtocol?.Invoke(this, new ProtocolEventArg(ProtocolMessage.wrongFamily));
+            }
+            
         }
 
         public void DisconnectDevice(FoundDevice dev)

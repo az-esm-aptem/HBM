@@ -11,7 +11,6 @@ namespace HMB_Utility
     {
         public event EventHandler<ProtocolEventArg> eventToProtocol;
 
-        //private static string writePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\HBM_Protocol";
         private string writePath;
         string writeFullPath;
 

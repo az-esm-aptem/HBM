@@ -111,9 +111,11 @@
     </ApplicationDefinition>
     <Compile Include="AppSettings.cs" />
     <Compile Include="DAQ.cs" />
+    <Compile Include="Family.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="FoundDevice.cs" />
     <Compile Include="FoundSignal.cs" />
+    <Compile Include="IpAddress.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="HbmMessages.cs" />

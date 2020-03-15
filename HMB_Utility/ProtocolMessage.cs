@@ -29,7 +29,8 @@ namespace HMB_Utility
         public static string writeProtocolFileError = "Write protocol file fail. Path: {0}";
         public static string protocolFilePath = "Protocol file path: {0}";
         public static string dbPreparation = "The database preparation";
-
+        public static string invalidPortNumber = "Invalid port number";
+        public static string invalidIp = "Invalid IP address";
 
 
     }

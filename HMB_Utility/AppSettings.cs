@@ -83,10 +83,71 @@ namespace HMB_Utility
             }
         }
 
-        
+        private static int pmxPort;
+        public static int PmxPort
+        {
+            get
+            {
+                if (int.TryParse(ConfigurationManager.AppSettings["PMXPort"], out int port) && port > 0)
+                {
+                    pmxPort = port;
+                }
+                else
+                {
+                    eventToProtocol?.Invoke(typeof(AppSettings), new ProtocolEventArg(ProtocolMessage.invalidPortNumber));
+                    throw new Exception(ProtocolMessage.invalidPortNumber);
+                }
+                return pmxPort;
+            }
+        }
+
+        private static int quantumXPort;
+        public static int QuantumXPort
+        {
+            get
+            {
+                if (int.TryParse(ConfigurationManager.AppSettings["QuantumXPort"], out int port) && port > 0)
+                {
+                    quantumXPort = port;
+                }
+                else
+                {
+                    eventToProtocol?.Invoke(typeof(AppSettings), new ProtocolEventArg(ProtocolMessage.invalidPortNumber));
+                    throw new Exception(ProtocolMessage.invalidPortNumber);
+                }
+                return quantumXPort;
+            }
+        }
+
+        private static int mgcPort;
+        public static int MgcPort
+        {
+            get
+            {
+                if (int.TryParse(ConfigurationManager.AppSettings["MGCPort"], out int port) && port > 0)
+                {
+                    mgcPort = port;
+                }
+                else
+                {
+                    eventToProtocol?.Invoke(typeof(AppSettings), new ProtocolEventArg(ProtocolMessage.invalidPortNumber));
+                    throw new Exception(ProtocolMessage.invalidPortNumber);
+                }
+                return mgcPort;
+            }
+        }
+
+        public static string PmxName = "PMX";
+        public static string QuantumxName = "QuantumX";
+        public static string MgcName = "QuantumX";
+        public static string signalTypeAnalogIn = "Analog Input";
+        public static string signalTypeDigital = "Digital Signals";
+        public static string signalTypeAll = "All Signals";
+        public static string signalTypeCanBeMeasByDAQ = "Can be measured by DAQ";
+        public static string ipAddressDefault = "0.0.0.0";
 
 
 
 
-}
+    }
 }

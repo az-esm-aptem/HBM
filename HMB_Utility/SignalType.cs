@@ -15,7 +15,6 @@ namespace HMB_Utility
             Name = name;
         }
         public string Name { get; set; }
-        private Type Type { get; set; }
         
     }
 }

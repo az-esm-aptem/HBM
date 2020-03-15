@@ -42,11 +42,14 @@ namespace HMB_Utility
         private UserCommand useFilterCommand; //filtering signals (see .cfg file)
         private UserCommandAsyncVoid startDaqCommand;
         private UserCommand stopDaqCommand;
+        private UserCommand addDeviceByIpCommand;
         private Logger Logs { get; set; }
         public Filter SigFilter { get; set; }
         private Protocol eventProtocoling;
         private ProtocolSaveMethod saveMethod;
-
+        public Family AvailableFamily { get; set; }
+        public IpAddress IpToConnect { get; set; }
+      
         public ObservableCollection<string> MessagesToProtocol
         {
             get
@@ -66,8 +69,9 @@ namespace HMB_Utility
             Logs = new Logger();
             saveMethod = new ProtocolSaveMethod();
             eventProtocoling = Protocol.GetInstance(saveMethod.Save);
+            AvailableFamily = new Family();
             subscribeProtocol();
-            
+            IpToConnect = new IpAddress(AppSettings.ipAddressDefault);
         }
 
         private void subscribeProtocol()
@@ -80,7 +84,7 @@ namespace HMB_Utility
             DataToDB.eventToProtocol += eventProtocoling.Add;
             AppSettings.eventToProtocol += eventProtocoling.Add;
         }
-         
+
 
         public FoundDevice SelectedDevice
         {
@@ -96,24 +100,41 @@ namespace HMB_Utility
         }
 
 
-        //Push the Search button - searching devices and add it to List<FoundDevice>
+        //Push the Search button - searching devices and add them to List<FoundDevice>
         public UserCommandAsync SearchCommand
         {
             get
             {
-                return searchCommand ?? (searchCommand = new UserCommandAsync(FormDeviceList));
+                return searchCommand ?? (searchCommand = new UserCommandAsync(Search));
             }
         }
         
-        private  async Task<bool> FormDeviceList(object obj)
+        private  async Task<bool> Search(object obj)
         {
             bool result = await session.SearchAsync(obj);
-            AllDevices.Clear();
-            foreach (var dev in session.deviceList)
-            {
-                AllDevices.Add(new FoundDevice(dev));
-            }
+            FormDeviceList();
             return result;
+        }
+
+        private void FormDeviceList()
+        {
+            bool isEqual;
+            foreach (Device dev in session.deviceList)
+            {
+                isEqual = false;
+                foreach (FoundDevice foundDev in AllDevices)
+                {
+                    if (isEqual = foundDev.Equals(dev))
+                    {
+                        break;
+                    }
+                }
+                if (!isEqual)
+                {
+                    AllDevices.Add(new FoundDevice(dev));
+                }
+            }
+
         }
 
 
@@ -122,23 +143,23 @@ namespace HMB_Utility
         {
             get
             {
-                return connectCommand ?? (connectCommand = new UserCommandAsync(connect, (obj => selectedDevice != null && !selectedDevice.HbmDevice.IsConnected)));
+                return connectCommand ?? (connectCommand = new UserCommandAsync(connect, (obj => SelectedDevice != null && !SelectedDevice.HbmDevice.IsConnected)));
             }
         }
 
         private async Task<bool> connect (object obj)
         {
-            bool result = await session.ConnectAsync(new List<FoundDevice> { selectedDevice });
+            bool result = await session.ConnectAsync(new List<FoundDevice> { SelectedDevice });
             FormSignalList();
             return result;
         }
 
         private void FormSignalList()
         {
-            selectedDevice.GetSignals(); //read signal list from device and make ObservableCollection<FoundSignal>
-            selectedDevice.GetSingleSignalVals(); //read and save in FoundSignal the single measuring values
-            selectedDevice.GetSignalChannel(); //find and save in FoundSignal the channel that the signal belongs
-            selectedDevice.GetSignalConnector(); //find and save in FoundSignal the connector that the signal belongs
+            SelectedDevice.GetSignals(); //read signal list from device and make ObservableCollection<FoundSignal>
+            SelectedDevice.GetSingleSignalVals(); //read and save in FoundSignal the single measuring values
+            SelectedDevice.GetSignalChannel(); //find and save in FoundSignal the channel that the signal belongs
+            SelectedDevice.GetSignalConnector(); //find and save in FoundSignal the connector that the signal belongs
         }
 
         public UserCommand RefreshCommand
@@ -148,8 +169,8 @@ namespace HMB_Utility
                 return refreshCommand ?? (refreshCommand = new UserCommand(RefreshSingleVals, (obj =>
                 {
                     bool result = false;
-                    if (selectedDevice != null)
-                        if (selectedDevice.Signals.Count > 0)
+                    if (SelectedDevice != null)
+                        if (SelectedDevice.Signals.Count > 0)
                             result = true;
                     return result;
                 }
@@ -159,26 +180,26 @@ namespace HMB_Utility
 
         private void RefreshSingleVals(object obj)
         {
-            selectedDevice.GetSingleSignalVals();
+            SelectedDevice.GetSingleSignalVals();
         }
         
         public UserCommand DisconnectCommand
         {
             get
             {
-                return disconnectCommand ?? (disconnectCommand = new UserCommand(Disconnect, (obj => selectedDevice != null && selectedDevice.HbmDevice.IsConnected)));
+                return disconnectCommand ?? (disconnectCommand = new UserCommand(Disconnect, (obj => SelectedDevice != null && SelectedDevice.HbmDevice.IsConnected)));
             }
         }
 
         private void Disconnect(object obj)
         {
-            DAQ daqSession = daqSessions.FirstOrDefault(s => s.MeasDevice == selectedDevice);
+            DAQ daqSession = daqSessions.FirstOrDefault(s => s.MeasDevice == SelectedDevice);
             if (daqSession!=null && daqSession.isRunning)
             {
                 StopDaq(null);
             }
-            session.DisconnectDevice(selectedDevice);
-            selectedDevice.Signals.Clear();
+            session.DisconnectDevice(SelectedDevice);
+            SelectedDevice.Signals.Clear();
         }
 
         //if the CreateDB button is needed
@@ -186,13 +207,13 @@ namespace HMB_Utility
         {
             get
             {
-                return createDBCommand ?? (createDBCommand = new UserCommandAsync(CreateDB, (obj => selectedDevice != null && selectedDevice.HbmDevice.IsConnected)));
+                return createDBCommand ?? (createDBCommand = new UserCommandAsync(CreateDB, (obj => SelectedDevice != null && SelectedDevice.HbmDevice.IsConnected)));
             }
         }
 
         private async Task<bool> CreateDB(object obj)
         {
-            bool result = await DataToDB.SaveDevicesAsync(new List<FoundDevice> { selectedDevice });
+            bool result = await DataToDB.SaveDevicesAsync(new List<FoundDevice> { SelectedDevice });
             return result;
         }
         
@@ -200,7 +221,7 @@ namespace HMB_Utility
         {
             get
             {
-                return useFilterCommand ?? (useFilterCommand = new UserCommand(obj=>UseSignalsFilter(obj), (obj => selectedDevice != null && selectedDevice.HbmDevice.IsConnected)));
+                return useFilterCommand ?? (useFilterCommand = new UserCommand(obj=>UseSignalsFilter(obj), (obj => SelectedDevice != null && SelectedDevice.HbmDevice.IsConnected)));
             }
         }
 
@@ -208,7 +229,7 @@ namespace HMB_Utility
         {
             FormSignalList();
             List<FoundSignal> filtered = new List<FoundSignal>();
-                foreach (var s in selectedDevice.Signals)
+                foreach (var s in SelectedDevice.Signals)
                 {
                     if (!SigFilter.Check(s))
                     {
@@ -217,7 +238,7 @@ namespace HMB_Utility
                 }
                 foreach (var s in filtered)
                 {
-                    selectedDevice.Signals.Remove(s);
+                    SelectedDevice.Signals.Remove(s);
                 }
         }
 
@@ -226,17 +247,17 @@ namespace HMB_Utility
         {
             get
             {
-                return startDaqCommand ?? (startDaqCommand = new UserCommandAsyncVoid(StartDaq, (obj => selectedDevice != null && selectedDevice.HbmDevice.IsConnected && selectedDevice.SignalsToMeasure.Count>0 && SigFilter.SelectedType.Name == "Can be measured by DAQ")));
+                return startDaqCommand ?? (startDaqCommand = new UserCommandAsyncVoid(StartDaq, (obj => SelectedDevice != null && SelectedDevice.HbmDevice.IsConnected && SelectedDevice.SignalsToMeasure.Count>0 && SigFilter.SelectedType.Name == "Can be measured by DAQ")));
             }
         }
 
         private async Task StartDaq(object obj)
         {
             bool result = await CreateDB(new object());
-            DAQ daqSession = daqSessions.FirstOrDefault(s => s.MeasDevice == selectedDevice);
+            DAQ daqSession = daqSessions.FirstOrDefault(s => s.MeasDevice == SelectedDevice);
             if (daqSession == null)
             {
-                daqSession = new DAQ(selectedDevice, DataToDB.SaveDAQMeasurments);
+                daqSession = new DAQ(SelectedDevice, DataToDB.SaveDAQMeasurments);
                 daqSessions.Add(daqSession);
                 daqSession.eventToProtocol += eventProtocoling.Add;
             }
@@ -248,13 +269,13 @@ namespace HMB_Utility
         {
             get
             {
-                return stopDaqCommand ?? (stopDaqCommand = new UserCommand(StopDaq, (obj => daqSessions.FirstOrDefault(s => s.MeasDevice == selectedDevice)!=null)));
+                return stopDaqCommand ?? (stopDaqCommand = new UserCommand(StopDaq, (obj => daqSessions.FirstOrDefault(s => s.MeasDevice == SelectedDevice)!=null)));
             }
         }
 
         private void StopDaq(object obj)
         {
-            DAQ daqSession = daqSessions.FirstOrDefault(s => s.MeasDevice == selectedDevice);
+            DAQ daqSession = daqSessions.FirstOrDefault(s => s.MeasDevice == SelectedDevice);
             if (daqSession != null)
             {
                 daqSession.Stop();
@@ -263,8 +284,18 @@ namespace HMB_Utility
             }
         }
 
+        public UserCommand AddDeviceByIpCommand
+        {
+            get
+            {
+                return addDeviceByIpCommand ?? (addDeviceByIpCommand = new UserCommand(AddDeviceByIp, (obj => AvailableFamily.SelectedFamily!=null && IpToConnect.IsValidIp)));
+            }
+        }
 
-
-
+        private void AddDeviceByIp(object obj)
+        {
+            session.AddDeviceByIP(AvailableFamily.SelectedFamily, IpToConnect.IP);
+            FormDeviceList();
+        }
     }
 }
