@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace HMB_Utility
 {
@@ -145,6 +146,12 @@ namespace HMB_Utility
         public static string signalTypeAll = "All Signals";
         public static string signalTypeCanBeMeasByDAQ = "Can be measured by DAQ";
         public static string ipAddressDefault = "0.0.0.0";
+        public static double deviceConnectedFontSize = 14;
+        public static double deviceDisconnectedFontSize = 12;
+        public static FontWeight deviceConnectedFontWeight = FontWeights.Bold;
+        public static FontWeight deviceDisconnectedFontWeight = FontWeights.Normal;
+
+
 
 
 

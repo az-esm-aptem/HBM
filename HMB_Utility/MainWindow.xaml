@@ -7,6 +7,17 @@
         xmlns:local="clr-namespace:HMB_Utility"
         mc:Ignorable="d"
         Title="HBM" Height="600" Width="900">
+    <!--Converters-->
+    <Window.Resources>
+        <local:DeviceInfoConverter x:Key="DeviceInfoConverter" />
+        <local:IsConnectedToFontSizeConverter x:Key="IsConnectedToFontSizeConverter" />
+        <local:isConnectedToFontWeightConverter x:Key="isConnectedToFontWeightConverter" />
+        <Style x:Key="DGridCentAl" TargetType="DataGridColumnHeader">
+            <Setter Property="Thumb.HorizontalContentAlignment" Value="Center" />
+            <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
+
 
     <Grid x:Name="baseGrid" ShowGridLines="False">
         <Grid.RowDefinitions>
@@ -17,99 +28,102 @@
             <ColumnDefinition Width="170" />
             <ColumnDefinition Width="730"/>
         </Grid.ColumnDefinitions>
+        <!--Buttons-->
 
-        <Button x:Name="SearchDeviceButton" Command="{Binding SearchCommand}" Content="Search" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Grid.Row="0" Height="20" />
-        <Button x:Name="ConnectButton" Command="{Binding ConnectCommand}"  Content="Connect" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="65" Height="20"/>
-        <Button x:Name="RefreshSingleValButton" Command="{Binding RefreshCommand}"  Content="Refresh values"  Grid.Column="1" HorizontalAlignment="Left" Margin="613,10,0,0" VerticalAlignment="Top" Width="84" Click="RefreshSingleValButton_Click"/>
-        <Button x:Name="DisconnectButton" Command="{Binding DisconnectCommand}"  Content="Disconnect" HorizontalAlignment="Left" Margin="95,46,0,0" VerticalAlignment="Top" Width="65" Height="20"/>
-        <!--<Button x:Name="CreateDBButton" Command="{Binding CreateDBCommand}" Content="Add to DB" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>-->
-        <Button x:Name="StartDaqButton" Command="{Binding StartDaqCommand}" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
-        <Button x:Name="StopDaqButton" Command="{Binding StopDaqCommand}" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
+        <Canvas Margin="10" Grid.Row="0" Grid.Column="0">
+            <Button x:Name="SearchDeviceButton" Command="{Binding SearchCommand}" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Grid.Row="0" Height="20" />
+            <Button x:Name="ConnectButton" Command="{Binding ConnectCommand}"  Content="Connect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Height="20" Canvas.Top="31"/>
+            <Button x:Name="DisconnectButton" Command="{Binding DisconnectCommand}"  Content="Disconnect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Height="20" Canvas.Left="85" Canvas.Top="31"/>
+            <!--Device List-->
+            <ListView x:Name="DeviceList"   ItemsSource="{Binding AllDevices}"  SelectionMode="Single"  Width="150"
+                  SelectedItem="{Binding SelectedDevice}" Canvas.Top="72" Height="358">
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="TextBlock.FontWeight" Value="Bold"></Setter>
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Width="150"  Header="Devices">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontSize="{Binding Path=IsConnected, Converter={StaticResource IsConnectedToFontSizeConverter}}" 
+                                           FontWeight="{Binding Path=IsConnected, Converter={StaticResource isConnectedToFontWeightConverter}}">
+                                        <TextBlock.Text>
+                                            <MultiBinding Converter="{StaticResource DeviceInfoConverter}" ConverterParameter="">
+                                                <Binding Path="Name" />
+                                                <Binding Path="IpAddress" />
+                                                <Binding Path="Model" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Canvas>
 
-        
-        <ListView Name="DeviceList" ItemsSource="{Binding AllDevices}" SelectionMode="Single"
-                 SelectedItem="{Binding SelectedDevice}" Margin="10,103,10,10">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Background" Value="LightSteelBlue"/>
-                    <Setter Property="Margin" Value="2"/>
-                    <Setter Property="Padding" Value="2"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderThickness" Value="3"/>
-                            <Setter Property="BorderBrush" Value="Black"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock FontSize="16" Text="{Binding Path=Name}"/>
-                        <TextBlock Text="{Binding Path=IpAddress}" />
-                        <TextBlock Text="{Binding Path=Model}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-      
-        <!--DataContext="{Binding SelectedDevice}"-->
-
-
-        <ListView x:Name="SignalList"  DataContext="{Binding SelectedDevice}"  ItemsSource="{Binding Path=Signals}"  SelectionMode="Extended" Margin="10,81,18,10" Grid.Column="1" 
-                  SelectionChanged="SignalList_SelectionChanged" >
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Background" Value="LightSteelBlue"/>
-                    <Setter Property="Margin" Value="2"/>
-                    <Setter Property="Padding" Value="2"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderThickness" Value="1"/>
-                            <Setter Property="BorderBrush" Value="Black"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="40" Header="">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox Tag="{Binding Name}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=HbmConnector.LocationHint}" Width="150">Connector</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=HbmChannel.Name}" Width="100">Channel</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">Signal</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=SingleValue}" Width="80">Value</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=SingleTimeStamp}" Width="150">Time Stamp</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=SingleState}" Width="30">State</GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Margin="56,81,0,0" FontSize="14" FontWeight="Bold"/>
-
-        <ComboBox ItemsSource="{Binding SigFilter.SignalTypes}" SelectedItem="{Binding SigFilter.SelectedType, Mode=TwoWay}"  Grid.Column="1" HorizontalAlignment="Left" Margin="90,46,0,0" VerticalAlignment="Top" Width="155">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction
+        <Canvas Grid.Column="1" Grid.Row="0" Margin="10">
+            <Button x:Name="RefreshSingleValButton"  Command="{Binding RefreshCommand}"  Content="Refresh values"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Canvas.Left="418" Canvas.Top="42"/>
+            <!--<Button x:Name="CreateDBButton" Command="{Binding CreateDBCommand}" Content="Add to DB" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>-->
+            <Button x:Name="StartDaqButton" Command="{Binding StartDaqCommand}" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="20" Canvas.Left="79"/>
+            <Button x:Name="StopDaqButton" Command="{Binding StopDaqCommand}" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="20" Canvas.Left="164"/>
+            <!--Signal types filter-->
+            <ComboBox ItemsSource="{Binding SigFilter.SignalTypes}" SelectedItem="{Binding SigFilter.SelectedType, Mode=TwoWay}"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Canvas.Left="79" Canvas.Top="40">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction
                             Command="{Binding UseFilterCommand}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=Name}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <!--Signal List-->
+            <DataGrid Grid.Column="1" IsReadOnly="False" ColumnHeaderStyle="{StaticResource DGridCentAl}" HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="702" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+    RowBackground="LightGray" AlternatingRowBackground="White" DataContext="{Binding SelectedDevice, Mode=OneWay}" ItemsSource="{Binding Path=Signals}" SelectionMode="Extended" SelectionChanged="DataGrid_SelectionChanged"
+                      Canvas.Top="73"  >
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell" >
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="SeaGreen"/>
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Select">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridCell}}, Path=IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Connector" Binding="{Binding Path=HbmConnector.LocationHint}" Width="120" />
+                    <DataGridTextColumn Header="Channel" Binding="{Binding Path=HbmChannel.Name}" Width="120" />
+                    <DataGridTextColumn Header="Signal" Binding="{Binding Path=Name}" Width="120" />
+                    <DataGridTextColumn Header="Value" Binding="{Binding Path=SingleValue}" Width="120" />
+                    <DataGridTextColumn Header="Time Stamp" Binding="{Binding Path=SingleTimeStamp}" Width="120" />
+                    <DataGridTextColumn Header="State" Binding="{Binding Path=SingleState}" Width="50" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Canvas>
 
+
+
+
+
+
+        <!--Protocol messages-->
         <ListView x:Name="Protocol" ItemsSource="{Binding Path=MessagesToProtocol}" SelectionMode="Single" Margin="10,10,18,41" Grid.Row="1" Grid.Column="1" VirtualizingPanel.ScrollUnit="Item">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -119,6 +133,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <!--Adding devices using IP-->
         <Canvas  Grid.Column="0" Grid.Row="1" Margin="10,0,10,41" >
             <Button Content="Add" Command="{Binding AddDeviceByIpCommand}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="104" Height="22" Canvas.Left="24" Canvas.Top="82"/>
             <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Connect using IP" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Canvas.Left="29"/>
@@ -141,6 +157,5 @@
                 </TextBox.Text>
             </TextBox>
         </Canvas>
-
     </Grid>
 </Window>

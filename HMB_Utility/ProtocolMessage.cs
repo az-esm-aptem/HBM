@@ -32,6 +32,8 @@ namespace HMB_Utility
         public static string invalidPortNumber = "Invalid port number";
         public static string invalidIp = "Invalid IP address";
         public static string selectedSignals = "{0} signals selected to DAQ";
+        public static string signalAddedToDaq = "Signal {0} added to DAQ";
+
 
 
     }

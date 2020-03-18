@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace HMB_Utility
@@ -13,6 +14,7 @@ namespace HMB_Utility
 
         private string writePath;
         string writeFullPath;
+        static Mutex mutexObj = new Mutex();
 
         public ProtocolSaveMethod()
         {
@@ -24,6 +26,7 @@ namespace HMB_Utility
 
         public async void Save(string message)
         {
+            mutexObj.WaitOne();
             try
             {
                 using (StreamWriter streamWriter = new StreamWriter(new FileStream(writeFullPath, FileMode.Append, FileAccess.Write)))
@@ -35,7 +38,9 @@ namespace HMB_Utility
             {
                 eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(ex));
                 eventToProtocol?.Invoke(typeof(DataToDB), new ProtocolEventArg(String.Format(ProtocolMessage.writeProtocolFileError, writePath)));
+                mutexObj.ReleaseMutex();
             }
+            mutexObj.ReleaseMutex();
         }
 
 

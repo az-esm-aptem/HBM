@@ -34,6 +34,7 @@ namespace HMB_Utility
         private string _model;
         private string _serialNo;
         private string _name;
+        private bool _isConnected;
 
         private FoundDevice() { }
 
@@ -43,6 +44,21 @@ namespace HMB_Utility
             Signals = new ObservableCollection<FoundSignal>();
             SignalsToMeasure = new ObservableCollection<FoundSignal>();
         }
+
+        public bool IsConnected
+        {
+            get
+            {
+                return _isConnected = HbmDevice.IsConnected;
+            }
+            set
+            {
+                _isConnected = value;
+                OnPropertyChanged("IsConnected");
+            }
+        }
+
+        
 
         public Device HbmDevice
         {
@@ -54,7 +70,6 @@ namespace HMB_Utility
             {
                 _device = value;
                 OnPropertyChanged("HbmDevice");
-
             }
         }
         public string Name

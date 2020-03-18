@@ -25,7 +25,7 @@ using Hbm.Api.QuantumX;
 using Hbm.Api.Mgc;
 
 using DB;
-
+using System.Windows.Data;
 
 namespace HMB_Utility
 {
@@ -57,6 +57,11 @@ namespace HMB_Utility
             get
             {
                 return eventProtocoling.Messages;
+            }
+            set
+            {
+                eventProtocoling.Messages = value;
+                OnPropertyChanged("MessagesToProtocol");
             }
         }
 
@@ -165,6 +170,7 @@ namespace HMB_Utility
         {
             bool result = await session.ConnectAsync(new List<FoundDevice> { SelectedDevice });
             SelectedDevice.OnPropertyChanged("Name");
+            SelectedDevice.OnPropertyChanged("IsConnected");
             FormSignalList();
             return result;
         }
@@ -214,6 +220,7 @@ namespace HMB_Utility
                 StopDaq(null);
             }
             session.DisconnectDevice(SelectedDevice);
+            SelectedDevice.OnPropertyChanged("IsConnected");
             SelectedDevice.Signals.Clear();
         }
 

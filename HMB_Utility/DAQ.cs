@@ -77,6 +77,8 @@ namespace HMB_Utility
                     }
                     measDevice.AssignSignal(sig.HbmSignal, out daqPrepareProblems);
                     daqSession.AddSignals(measDevice, sig.HbmSignal);
+                    eventToProtocol?.Invoke(this, new ProtocolEventArg(string.Format(ProtocolMessage.signalAddedToDaq, sig.Name)));
+
                 }
                 daqSession.PrepareDaq();
                 daqSession.StartDaq(DataAcquisitionMode.Unsynchronized);

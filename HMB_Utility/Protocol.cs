@@ -13,14 +13,13 @@ using System.Windows.Data;
 namespace HMB_Utility
 {
     //Singleton
-    public class Protocol
+    public class Protocol : ViewModelBase
     {
         private ObservableCollection<string> messages;
         private static Protocol instance;
         private HbmMessages hbmMessages;
         
         private Action<string> saveProtocolMethod;
-
 
 
         private Protocol(Action<string> saveProtocolMethod)
@@ -52,7 +51,7 @@ namespace HMB_Utility
             foreach (string m in arg.Messages)
             {
                 msgWithDate = AddDate(m);
-                messages.Add(msgWithDate);
+                Messages.Add(msgWithDate);
                 saveProtocolMethod(msgWithDate);
             }
         }
@@ -63,6 +62,11 @@ namespace HMB_Utility
             get
             {
                 return messages;
+            }
+            set
+            {
+                messages = value;
+                OnPropertyChanged("Messages");
             }
         }
 
