@@ -80,10 +80,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\HBM.TEDS.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -102,8 +110,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DAQ.cs" />
-    <Compile Include="TypeFilter.cs" />
+    <Compile Include="AppSettings\AppSettings.cs" />
+    <Compile Include="HbmApi\DAQ.cs" />
+    <Compile Include="Converters\DeviceInfoConverter.cs" />
+    <Compile Include="ConnectingViaIp\Family.cs" />
+    <Compile Include="SignalFiltering\Filter.cs" />
+    <Compile Include="FoundModel\FoundDevice.cs" />
+    <Compile Include="FoundModel\FoundSignal.cs" />
+    <Compile Include="ConnectingViaIp\IpAddress.cs" />
+    <Compile Include="Converters\IsConnectedToFontSizeConverter.cs" />
+    <Compile Include="Converters\isConnectedToFontWeightConverter.cs" />
+    <Compile Include="Protocol\Logger.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="Protocol\HbmMessages.cs" />
+    <Compile Include="Protocol\Protocol.cs" />
+    <Compile Include="Protocol\ProtocolEventArg.cs" />
+    <Compile Include="Protocol\ProtocolMessage.cs" />
+    <Compile Include="Protocol\ProtocolSaveMethod.cs" />
+    <Compile Include="SignalFiltering\SignalType.cs" />
+    <Compile Include="Commands\UserCommand.cs" />
+    <Compile Include="Commands\UserCommandAsync.cs" />
+    <Compile Include="Commands\UserCommandAsyncVoid.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -112,16 +140,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataToDB.cs" />
-    <Compile Include="HBMFamily.cs" />
-    <Compile Include="HBM_Object.cs" />
+    <Compile Include="SavingDataToDB\DataToDB.cs" />
+    <Compile Include="ConnectingViaIp\HBMFamily.cs" />
+    <Compile Include="HbmApi\HbmSession.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Measuring.cs" />
+    <Compile Include="HbmApi\Measuring.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -146,7 +174,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="AppSettings\App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DB\DB.csproj">
@@ -154,6 +182,7 @@
       <Name>DB</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

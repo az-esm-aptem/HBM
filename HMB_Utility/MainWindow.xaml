@@ -3,57 +3,167 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:HMB_Utility"
         mc:Ignorable="d"
-        Title="HBM" Height="600" Width="700">
+        Title="HBM" Height="620" Width="950">
+    <!--Converters-->
+    <Window.Resources>
+        <local:DeviceInfoConverter x:Key="DeviceInfoConverter" />
+        <local:IsConnectedToFontSizeConverter x:Key="IsConnectedToFontSizeConverter" />
+        <local:isConnectedToFontWeightConverter x:Key="isConnectedToFontWeightConverter" />
+        <Style x:Key="DGridCentAl" TargetType="DataGridColumnHeader">
+            <Setter Property="Thumb.HorizontalContentAlignment" Value="Center" />
+            <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
+
+
     <Grid x:Name="baseGrid" ShowGridLines="False">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="Auto" MinHeight="150" MaxHeight="200"></RowDefinition>
+            <RowDefinition Height="450"/>
+            <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" MaxWidth="500" MinWidth ="100"/>
-            <ColumnDefinition />
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="722"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="SearchDeviceButton" Content="Search Devices" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="102"
-                Click="SearchDeviceButton_Click" Grid.Column="1" Grid.Row="0" Height="20" />
-        <!--<TreeView x:Name="overviewTree" Margin="10" Grid.Column="0" >
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Path=Connectors}">
-                    <TextBlock Text="{Binding Name}" />
-                    <HierarchicalDataTemplate.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding ShortLocationHint}" />
-                        </DataTemplate>
-                    </HierarchicalDataTemplate.ItemTemplate>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>-->
+        <Canvas Margin="10" Grid.Row="0" Grid.Column="0">
+            <Button x:Name="SearchDeviceButton" Command="{Binding SearchCommand}" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Grid.Row="0" Height="30" />
+            <Button x:Name="ConnectButton" Command="{Binding ConnectCommand}"  Content="Connect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Height="30" Canvas.Top="38"/>
+            <Button x:Name="DisconnectButton" Command="{Binding DisconnectCommand}"  Content="Disconnect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="30" Canvas.Left="110" Canvas.Top="38"/>
 
-        <TreeView x:Name="overviewTree" Margin="10" Grid.Column="0" >
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Path=Connectors}">
-                    <TextBlock Text="{Binding Name}" />
-                    <HierarchicalDataTemplate.ItemTemplate>
-                        <DataTemplate>
+            <!--Device List-->
+            <DataGrid x:Name="DeviceList" Grid.Column="0" IsReadOnly="False" ColumnHeaderStyle="{StaticResource DGridCentAl}" HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="200" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+    RowBackground="LightGray" AlternatingRowBackground="White" ItemsSource="{Binding AllDevices}" SelectionMode="Single" SelectedItem="{Binding SelectedDevice}" Canvas.Top="73" GridLinesVisibility="All"  >
+
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell" >
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="SeaGreen"/>
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="*" Width="30">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <RadioButton VerticalAlignment="Center" HorizontalAlignment="Center"
+                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridCell}}, Path=IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Device" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="{Binding Path=IsConnected, Converter={StaticResource IsConnectedToFontSizeConverter}}" 
+                                           FontWeight="{Binding Path=IsConnected, Converter={StaticResource isConnectedToFontWeightConverter}}">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource DeviceInfoConverter}" ConverterParameter="">
+                                            <Binding Path="Name" />
+                                            <Binding Path="IpAddress" />
+                                            <Binding Path="Model" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Canvas>
+
+        <Canvas Grid.Column="1" Grid.Row="0" Margin="10">
+            <Button x:Name="RefreshSingleValButton"  Command="{Binding RefreshCommand}"  Content="Refresh values"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Canvas.Left="430" Canvas.Top="38" Height="30"/>
+            <!--<Button x:Name="CreateDBButton" Command="{Binding CreateDBCommand}" Content="Add to DB" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>-->
+            <Button x:Name="StartDaqButton" Command="{Binding StartDaqCommand}" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="30" Canvas.Left="79"/>
+            <Button x:Name="StopDaqButton" Command="{Binding StopDaqCommand}" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="30" Canvas.Left="164"/>
+            <!--Signal types filter-->
+            <ComboBox ItemsSource="{Binding SigFilter.SignalTypes}" SelectedItem="{Binding SigFilter.SelectedType, Mode=TwoWay}"  
+                      Grid.Column="1" Width="161" Canvas.Left="79" Canvas.Top="40" Height="28" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction
+                            Command="{Binding UseFilterCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Name}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <!--Signal List-->
+            <DataGrid x:Name="SignalList" Grid.Column="1" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DGridCentAl}" HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="692" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+    RowBackground="LightGray" AlternatingRowBackground="White" DataContext="{Binding SelectedDevice, Mode=OneWay}" ItemsSource="{Binding Path=Signals}" SelectionMode="Extended" SelectionChanged="SignalList_SelectionChanged"
+                      Canvas.Top="73"  GridLinesVisibility="All">
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell" >
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="SeaGreen"/>
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Select">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridCell}}, Path=IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Connector" Binding="{Binding Path=HbmConnector.LocationHint}" Width="120" />
+                    <DataGridTextColumn Header="Channel" Binding="{Binding Path=HbmChannel.Name}" Width="120" />
+                    <DataGridTextColumn Header="Signal" Binding="{Binding Path=Name}" Width="120" />
+                    <DataGridTextColumn Header="Value" Binding="{Binding Path=SingleValue}" Width="120" />
+                    <DataGridTextColumn Header="Time Stamp" Binding="{Binding Path=SingleTimeStamp}" Width="120" />
+                    <DataGridTextColumn Header="State" Binding="{Binding Path=SingleState}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Canvas>
+
+        <!--Protocol messages-->
+        <ListView x:Name="Protocol" ItemsSource="{Binding Path=MessagesToProtocol}" SelectionMode="Single" Margin="10,10,20,39" Grid.Row="1" Grid.Column="1" VirtualizingPanel.ScrollUnit="Item">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!--Adding devices using IP-->
+        <Canvas  Grid.Column="0" Grid.Row="1" Margin="10,0,10,21" >
+            <Button Content="Add" Command="{Binding AddDeviceByIpCommand}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="90" Height="30" Canvas.Left="55" Canvas.Top="79"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Connect using IP" TextAlignment="Center" VerticalAlignment="Center"  FontSize="12" FontWeight="Bold" Width="200"/>
+            <ComboBox ItemsSource="{Binding AvailableFamily.Families}" SelectedItem="{Binding AvailableFamily.SelectedFamily, Mode=TwoWay}"
+                      HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Canvas.Left="10" Canvas.Top="21" HorizontalContentAlignment="Center">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </HierarchicalDataTemplate.ItemTemplate>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
-        
-        
-        <GridSplitter Grid.Row="0" ShowsPreview="True" Width="3" VerticalAlignment="Stretch"/>
-        <Button x:Name="Btn2" Content="Read Data" Grid.Column="1" HorizontalAlignment="Left" Margin="25,351,0,0" VerticalAlignment="Top" Width="291" Height="20" Click="Btn2_Click"/>
-        <Button x:Name="Btn1" Content="Start single measurment" Grid.Column="1" HorizontalAlignment="Left" Margin="25,308,0,0" VerticalAlignment="Top" Width="285" Height="20" Click="Btn1_Click"/>
-        <TextBox Name ="LogBox" HorizontalAlignment="Left" Height="130" Margin="10,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
-                 TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" Width="672"  />
-        <TextBox x:Name="TB1" Grid.Column="1" HorizontalAlignment="Left" Height="251" Margin="25,35,0,0" TextWrapping="Wrap" Text="Devices" VerticalAlignment="Top" Width="189"/>
-        <Button x:Name="Btn3" Content="Create DB" Grid.Column="1" HorizontalAlignment="Left" Margin="241,35,0,0" VerticalAlignment="Top" Width="75" Click="Btn3_Click"/>
-        <Button x:Name="Btn4" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="241,107,0,0" VerticalAlignment="Top" Width="75" Click="Btn4_Click"/>
-        <Button x:Name="Btn5" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" Margin="241,160,0,0" VerticalAlignment="Top" Width="75" Click="Btn5_Click"/>
-        <!--<GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="3"
-        HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowsPreview="True"/>-->
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBox Height="23" Canvas.Left="10" TextWrapping="NoWrap" Canvas.Top="48" Width="180" MaxLength="15" TextAlignment="Center" FontSize="12">
+                <TextBox.Text>
+                    <Binding Path="IpToConnect.IP" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Canvas>
     </Grid>
 </Window>
