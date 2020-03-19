@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace HMB_Utility
@@ -140,7 +136,7 @@ namespace HMB_Utility
 
         public static string PmxName = "PMX";
         public static string QuantumxName = "QuantumX";
-        public static string MgcName = "QuantumX";
+        public static string MgcName = "MGC";
         public static string signalTypeAnalogIn = "Analog Input";
         public static string signalTypeDigital = "Digital Signals";
         public static string signalTypeAll = "All Signals";

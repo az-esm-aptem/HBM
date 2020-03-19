@@ -24,7 +24,7 @@ namespace HMB_Utility
             ((INotifyCollectionChanged)Protocol.Items).CollectionChanged += ListView_CollectionChanged;
         }
 
-
+        //autoscroll the protocol list
         private void ListView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
@@ -52,25 +52,12 @@ namespace HMB_Utility
             }
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            foreach (FoundSignal s in e.AddedItems)
-            {
-                if (!mainWindowViewModel.SelectedDevice.SignalsToMeasure.Contains(s))
-                {
-                    mainWindowViewModel.SelectedDevice.SignalsToMeasure.Add(s);
-                }
-            }
-            foreach (FoundSignal s in e.RemovedItems)
-            {
-                if (mainWindowViewModel.SelectedDevice.SignalsToMeasure.Contains(s))
-                {
-                    mainWindowViewModel.SelectedDevice.SignalsToMeasure.Remove(s);
-                }
-            }
-        }
+       
 
-      
+
+
+
+
 
 
 

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using Hbm.Api.Common.Entities.Signals;
 
 namespace HMB_Utility
 {
-    public class Filter
+    public class Filter : ViewModelBase 
     {
         private ObservableCollection<SignalType> signalTypes;
+        private SignalType selectedType;
         public ObservableCollection<SignalType> SignalTypes
         {
             get
@@ -18,7 +14,18 @@ namespace HMB_Utility
                 return signalTypes;
             }
         }
-        public SignalType SelectedType { get; set; }
+        public SignalType SelectedType
+        {
+            get
+            {
+                return selectedType;
+            }
+            set
+            {
+                selectedType = value;
+                OnPropertyChanged("SelectedType");
+            }
+        }
 
         public Filter()
         {
