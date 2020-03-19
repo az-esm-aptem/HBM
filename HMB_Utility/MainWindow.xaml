@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:HMB_Utility"
         mc:Ignorable="d"
         Title="HBM" Height="620" Width="950">
-    <!--Converters-->
+    <!--Converters and styles-->
     <Window.Resources>
         <local:DeviceInfoConverter x:Key="DeviceInfoConverter" />
         <local:IsConnectedToFontSizeConverter x:Key="IsConnectedToFontSizeConverter" />
@@ -17,7 +17,6 @@
             <Setter Property="TextBlock.FontWeight" Value="Bold"/>
         </Style>
     </Window.Resources>
-
 
     <Grid x:Name="baseGrid" ShowGridLines="False">
         <Grid.RowDefinitions>
@@ -36,7 +35,11 @@
             <!--Device List-->
             <DataGrid x:Name="DeviceList" Grid.Column="0" IsReadOnly="False" ColumnHeaderStyle="{StaticResource DGridCentAl}" HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="200" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
     RowBackground="LightGray" AlternatingRowBackground="White" ItemsSource="{Binding AllDevices}" SelectionMode="Single" SelectedItem="{Binding SelectedDevice}" Canvas.Top="73" GridLinesVisibility="All"  >
-
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Delete" Command="{Binding DeleteFromDeviceListCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell" >
                         <Style.Triggers>

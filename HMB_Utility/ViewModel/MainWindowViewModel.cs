@@ -22,6 +22,7 @@ namespace HMB_Utility
         private UserCommandAsyncVoid startDaqCommand;
         private UserCommand stopDaqCommand;
         private UserCommand addDeviceByIpCommand;
+        private UserCommand deleteFromDeviceListCommand;
         private ObservableCollection<FoundDevice> allDevices;
         private Logger Logs { get; set; }
         public Filter SigFilter { get; set; }
@@ -297,6 +298,20 @@ namespace HMB_Utility
         {
             session.AddDeviceByIP(AvailableFamily.SelectedFamily, IpToConnect.IP);
             FormDeviceList();
+        }
+
+        public UserCommand DeleteFromDeviceListCommand
+        {
+            get
+            {
+                return deleteFromDeviceListCommand ?? (deleteFromDeviceListCommand = new UserCommand(DeleteFromDeviceList, obj=> SelectedDevice!=null));
+            }
+        }
+
+        private void DeleteFromDeviceList(object obj)
+        {
+            Disconnect(null);
+            AllDevices.Remove(SelectedDevice);
         }
     }
 }

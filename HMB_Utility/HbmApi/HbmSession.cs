@@ -155,6 +155,7 @@ namespace HMB_Utility
         {
             try
             {
+                if (dev.IsConnected)
                 daqEnvironment.Disconnect(dev.HbmDevice);
             }
             catch (Exception ex)
