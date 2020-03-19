@@ -146,6 +146,7 @@ namespace HMB_Utility
         public static double deviceDisconnectedFontSize = 12;
         public static FontWeight deviceConnectedFontWeight = FontWeights.Bold;
         public static FontWeight deviceDisconnectedFontWeight = FontWeights.Normal;
+        public static string trayText = "HBM utility";
 
 
 

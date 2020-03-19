@@ -9,6 +9,12 @@
         Title="HBM" Height="620" Width="950">
     <!--Converters and styles-->
     <Window.Resources>
+        <ContextMenu x:Key="TrayMenu">
+            <MenuItem Header="Hide" Click="ShowHideMainWindow" />
+            <Separator />
+            <MenuItem Header="Exit" Click="MenuExitClick" />
+        </ContextMenu>
+
         <local:DeviceInfoConverter x:Key="DeviceInfoConverter" />
         <local:IsConnectedToFontSizeConverter x:Key="IsConnectedToFontSizeConverter" />
         <local:isConnectedToFontWeightConverter x:Key="isConnectedToFontWeightConverter" />
@@ -16,9 +22,83 @@
             <Setter Property="Thumb.HorizontalContentAlignment" Value="Center" />
             <Setter Property="TextBlock.FontWeight" Value="Bold"/>
         </Style>
+
+        <!--All simple button style-->
+        <Style TargetType="Button" x:Key="Buttons">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Background" Value="MediumAquamarine" />
+            <Setter Property="Foreground" Value="MediumBlue" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="ButtonWithImageBackgroundContentPresenter" 
+                                          Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="Green"/>
+                    <Setter Property="Foreground" Value="DeepPink"/>
+                    <Setter Property="Opacity" Value="0.3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Storyboard x:Key="collapseStoryboard">
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" 
+        To="0.5" Duration="0:0:0.1" />
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" 
+        To="0.5" Duration="0:0:0.1" />
+        </Storyboard>
+
+        <Storyboard x:Key="expandStoryboard">
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" 
+        To="1" Duration="0:0:0.1" />
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" 
+        To="1" Duration="0:0:0.1" />
+        </Storyboard>
+
+        <!--Button with image style-->
+        <Style TargetType="Button" x:Key="ButtonWithImageBackground">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="ButtonWithImageBackgroundContentPresenter" 
+                                          Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.3"/>
+                </Trigger>
+                <EventTrigger RoutedEvent="PreviewMouseDown">
+                    <BeginStoryboard Storyboard="{StaticResource collapseStoryboard}"/>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="PreviewMouseUp">
+                    <BeginStoryboard Storyboard="{StaticResource expandStoryboard}"/>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+
+
     </Window.Resources>
 
-    <Grid x:Name="baseGrid" ShowGridLines="False">
+
+
+    <Grid x:Name="baseGrid" ShowGridLines="False" Background="AntiqueWhite">
         <Grid.RowDefinitions>
             <RowDefinition Height="450"/>
             <RowDefinition Height="150"/>
@@ -28,16 +108,65 @@
             <ColumnDefinition Width="722"/>
         </Grid.ColumnDefinitions>
         <Canvas Margin="10" Grid.Row="0" Grid.Column="0">
-            <Button x:Name="SearchDeviceButton" Command="{Binding SearchCommand}" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Grid.Row="0" Height="30" />
-            <Button x:Name="ConnectButton" Command="{Binding ConnectCommand}"  Content="Connect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Height="30" Canvas.Top="38"/>
-            <Button x:Name="DisconnectButton" Command="{Binding DisconnectCommand}"  Content="Disconnect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Height="30" Canvas.Left="110" Canvas.Top="38"/>
+            <Button x:Name="SearchDeviceButton" Command="{Binding SearchCommand}" Width="55" Grid.Row="0" Height="55" Canvas.Left="68" Canvas.Top="10"
+                    Style="{StaticResource ButtonWithImageBackground}" ToolTipService.ShowOnDisabled="True">
+                <Button.RenderTransform>
+                    <ScaleTransform CenterX="27" CenterY="27" ScaleX="1" ScaleY="1" />
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="Icons/SearchImage.png" Stretch="Uniform"/>
+                </Button.Background>
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Search devices"/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="ConnectButton" Command="{Binding ConnectCommand}" Width="55" Height="55" Canvas.Top="10"
+                    Style="{StaticResource ButtonWithImageBackground}" ToolTipService.ShowOnDisabled="True">
+                <Button.RenderTransform>
+                    <ScaleTransform CenterX="27" CenterY="27" ScaleX="1" ScaleY="1" />
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="Icons/ConnectImage.png" Stretch="Uniform"/>
+                </Button.Background>
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Connect to selected device"/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="DisconnectButton" Command="{Binding DisconnectCommand}" Width="55" Height="55" Canvas.Left="135" Canvas.Top="10"
+                    Style="{StaticResource ButtonWithImageBackground}" ToolTipService.ShowOnDisabled="True">
+                <Button.RenderTransform>
+                    <ScaleTransform CenterX="27" CenterY="27" ScaleX="1" ScaleY="1" />
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="Icons/DisconnectImage.png" Stretch="Uniform"/>
+                </Button.Background>
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Disconnect from selected device"/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
 
             <!--Device List-->
             <DataGrid x:Name="DeviceList" Grid.Column="0" IsReadOnly="False" ColumnHeaderStyle="{StaticResource DGridCentAl}" HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="200" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
     RowBackground="LightGray" AlternatingRowBackground="White" ItemsSource="{Binding AllDevices}" SelectionMode="Single" SelectedItem="{Binding SelectedDevice}" Canvas.Top="73" GridLinesVisibility="All"  >
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Delete" Command="{Binding DeleteFromDeviceListCommand}"/>
+                        <MenuItem Header="Delete" Command="{Binding DeleteFromDeviceListCommand}">
+                            <MenuItem.Icon>
+                                <Image Source="Icons/DeleteImage.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.CellStyle>
@@ -80,13 +209,59 @@
         </Canvas>
 
         <Canvas Grid.Column="1" Grid.Row="0" Margin="10">
-            <Button x:Name="RefreshSingleValButton"  Command="{Binding RefreshCommand}"  Content="Refresh values"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Canvas.Left="430" Canvas.Top="38" Height="30"/>
+            <Button x:Name="RefreshSingleValButton"  Command="{Binding RefreshCommand}"  Width="56" Canvas.Left="636" Canvas.Top="10" Height="55"
+                     Style="{StaticResource ButtonWithImageBackground}" ToolTipService.ShowOnDisabled="True">
+                <Button.RenderTransform>
+                    <ScaleTransform CenterX="27" CenterY="27" ScaleX="1" ScaleY="1" />
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="Icons/RefreshImage.png" Stretch="Uniform"/>
+                </Button.Background>
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Refresh values"/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
             <!--<Button x:Name="CreateDBButton" Command="{Binding CreateDBCommand}" Content="Add to DB" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="20"/>-->
-            <Button x:Name="StartDaqButton" Command="{Binding StartDaqCommand}" Content="Start DAQ" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="30" Canvas.Left="79"/>
-            <Button x:Name="StopDaqButton" Command="{Binding StopDaqCommand}" Content="Stop DAQ" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="30" Canvas.Left="164"/>
+            <Button x:Name="StartDaqButton" Command="{Binding StartDaqCommand}" Width="55" Height="55" Canvas.Left="189"
+                    Style="{StaticResource ButtonWithImageBackground}" ToolTipService.ShowOnDisabled="True" Canvas.Top="10">
+                <Button.RenderTransform>
+                    <ScaleTransform CenterX="27" CenterY="27" ScaleX="1" ScaleY="1" />
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="Icons/StartDaqImage.png" Stretch="Uniform"/>
+                </Button.Background>
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Start DAQ"/>
+                            <TextBlock Text="Use the signal filter first"/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="StopDaqButton" Command="{Binding StopDaqCommand}" Width="55" Height="55" Canvas.Left="258" Canvas.Top="10"
+                    Style="{StaticResource ButtonWithImageBackground}" ToolTipService.ShowOnDisabled="True">
+                <Button.RenderTransform>
+                    <ScaleTransform CenterX="27" CenterY="27" ScaleX="1" ScaleY="1" />
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="Icons/StopDaqImage.png" Stretch="Uniform"/>
+                </Button.Background>
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Stop DAQ"/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
             <!--Signal types filter-->
             <ComboBox ItemsSource="{Binding SigFilter.SignalTypes}" SelectedItem="{Binding SigFilter.SelectedType, Mode=TwoWay}"  
-                      Grid.Column="1" Width="161" Canvas.Left="79" Canvas.Top="40" Height="28" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
+                      Grid.Column="1" Width="161" Canvas.Left="10" Canvas.Top="28" Height="28" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction
@@ -138,7 +313,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding}" />
+                        <TextBlock Text="{Binding}" FontSize="10" FontWeight="Normal" FontStyle="Normal"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -146,7 +321,22 @@
 
         <!--Adding devices using IP-->
         <Canvas  Grid.Column="0" Grid.Row="1" Margin="10,0,10,21" >
-            <Button Content="Add" Command="{Binding AddDeviceByIpCommand}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="90" Height="30" Canvas.Left="55" Canvas.Top="79"/>
+            <Button Command="{Binding AddDeviceByIpCommand}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Height="50" Canvas.Left="74" Canvas.Top="74"
+                    Style="{StaticResource ButtonWithImageBackground}" ToolTipService.ShowOnDisabled="True">
+                <Button.RenderTransform>
+                    <ScaleTransform CenterX="25" CenterY="25" ScaleX="1" ScaleY="1" />
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="Icons/AddImage.png" Stretch="Uniform"/>
+                </Button.Background>
+                <Button.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Add device"/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
             <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Connect using IP" TextAlignment="Center" VerticalAlignment="Center"  FontSize="12" FontWeight="Bold" Width="200"/>
             <ComboBox ItemsSource="{Binding AvailableFamily.Families}" SelectedItem="{Binding AvailableFamily.SelectedFamily, Mode=TwoWay}"
                       HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Canvas.Left="10" Canvas.Top="21" HorizontalContentAlignment="Center">
