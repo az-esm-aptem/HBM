@@ -29,6 +29,10 @@ namespace HMB_Utility
             exitWindow.ExitButton.PreviewMouseUp += MenuExitClick;
         }
 
+        
+
+        
+
 
 
         //autoscroll the protocol list
