@@ -147,6 +147,8 @@ namespace HMB_Utility
         public static FontWeight deviceConnectedFontWeight = FontWeights.Bold;
         public static FontWeight deviceDisconnectedFontWeight = FontWeights.Normal;
         public static string trayText = "HBM utility";
+        public static string invalidIp = "Invalid IP address format";
+
 
 
 

@@ -23,6 +23,7 @@ namespace HMB_Utility
         private UserCommand stopDaqCommand;
         private UserCommand addDeviceByIpCommand;
         private UserCommand deleteFromDeviceListCommand;
+        private UserCommand closeAppCommand;
         private ObservableCollection<FoundDevice> allDevices;
         private Logger Logs { get; set; }
         public Filter SigFilter { get; set; }
@@ -135,8 +136,6 @@ namespace HMB_Utility
 
         }
 
-
-
         public UserCommandAsync ConnectCommand
         {
             get
@@ -199,8 +198,8 @@ namespace HMB_Utility
                 StopDaq(null);
             }
             session.DisconnectDevice(SelectedDevice);
-            SelectedDevice.OnPropertyChanged("IsConnected");
-            SelectedDevice.Signals.Clear();
+            SelectedDevice?.OnPropertyChanged("IsConnected");
+            SelectedDevice?.Signals.Clear();
         }
 
         //if the CreateDB button is needed
@@ -313,5 +312,14 @@ namespace HMB_Utility
             Disconnect(null);
             AllDevices.Remove(SelectedDevice);
         }
+
+        public UserCommand CloseAppCommand
+        {
+            get
+            {
+                return closeAppCommand ?? (closeAppCommand = DisconnectCommand);
+            }
+        }
+
     }
 }

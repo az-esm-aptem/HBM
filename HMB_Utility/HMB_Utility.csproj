@@ -116,6 +116,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppSettings\AppSettings.cs" />
+    <Compile Include="ExitWindow.xaml.cs">
+      <DependentUpon>ExitWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HbmApi\DAQ.cs" />
     <Compile Include="Converters\DeviceInfoConverter.cs" />
     <Compile Include="ConnectingViaIp\Family.cs" />
@@ -137,6 +140,10 @@
     <Compile Include="Commands\UserCommandAsync.cs" />
     <Compile Include="Commands\UserCommandAsyncVoid.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Page Include="ExitWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -230,6 +237,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\StopDaqImage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\OK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

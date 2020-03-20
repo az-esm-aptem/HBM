@@ -6,6 +6,7 @@ namespace HMB_Utility
     public class IpAddress : IDataErrorInfo
     {
         private string ip;
+        private string error;
         public string IP
         {
             get
@@ -27,13 +28,13 @@ namespace HMB_Utility
         {
             get
             {
-                string error = String.Empty;
+                error = String.Empty;
                 switch (columnName)
                 {
                     case "IP":
                         if (!(IsValidIp = IsValid(ip)))
                         {
-                            error = ProtocolMessage.invalidIp;
+                            error = AppSettings.invalidIp;
                         }
                         break;
                 }
@@ -50,6 +51,16 @@ namespace HMB_Utility
             return IpMatch.IsMatch(address);
         }
 
-        public string Error => throw new NotImplementedException();
+        public string Error
+        {
+            get
+            {
+                return error;
+            }
+            set
+            {
+                error = value;
+            }
+        }
     }
 }

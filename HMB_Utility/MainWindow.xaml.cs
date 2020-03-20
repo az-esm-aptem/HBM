@@ -16,13 +16,20 @@ namespace HMB_Utility
     public partial class MainWindow : Window
     {
         MainWindowViewModel mainWindowViewModel;
+        ExitWindow exitWindow;
+
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             mainWindowViewModel = new MainWindowViewModel();
             DataContext = mainWindowViewModel;
             ((INotifyCollectionChanged)Protocol.Items).CollectionChanged += ListView_CollectionChanged;
+            exitWindow = new ExitWindow();
+            exitWindow.ExitButton.PreviewMouseUp += MenuExitClick;
         }
+
+
 
         //autoscroll the protocol list
         private void ListView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -162,6 +169,7 @@ namespace HMB_Utility
         // переопределяем обработчик запроса выхода из приложения
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
+            ShowExitWindow();
             base.OnClosing(e); // встроенная обработка
             if (!CanClose)
             {    // если нельзя закрывать
@@ -183,9 +191,22 @@ namespace HMB_Utility
         private void MenuExitClick(object sender, RoutedEventArgs e)
         {
             CanClose = true;
+            mainWindowViewModel.CloseAppCommand.Execute(null);
             Close();
         }
 
+
+        private void ShowExitWindow()
+        {
+            exitWindow.Owner = this;
+            exitWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            exitWindow.Show();
+        }
+
+        private void TextBox_Error(object sender, ValidationErrorEventArgs e)
+        {
+
+        }
     }
 
 
