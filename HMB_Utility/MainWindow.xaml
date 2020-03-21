@@ -69,8 +69,10 @@
             </Button>
 
             <!--Device List-->
-            <DataGrid x:Name="DeviceList" Grid.Column="0" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DGridCentAl}" HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="200" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
-    RowBackground="LightGray" AlternatingRowBackground="White" ItemsSource="{Binding AllDevices}" SelectionMode="Single" SelectedItem="{Binding SelectedDevice}" Canvas.Top="73" GridLinesVisibility="All"  Background="LightGray">
+            <DataGrid x:Name="DeviceList" Grid.Column="0" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DGridCentAl}" HorizontalAlignment="Left" Height="357"
+                      VerticalAlignment="Top" Width="200" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray" RowBackground="LightGray" AlternatingRowBackground="White"
+                      ItemsSource="{Binding AllDevices}" SelectionMode="Single" SelectedItem="{Binding SelectedDevice}" Canvas.Top="73" GridLinesVisibility="All"  Background="LightGray"
+                      CellStyle="{StaticResource DGCellStyle}">
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Delete" Command="{Binding DeleteFromDeviceListCommand}">
@@ -80,16 +82,6 @@
                         </MenuItem>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
-                <DataGrid.CellStyle>
-                    <Style TargetType="DataGridCell" >
-                        <Style.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="SeaGreen"/>
-                            </Trigger>
-                        </Style.Triggers>
-                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-                    </Style>
-                </DataGrid.CellStyle>
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="*" Width="30">
                         <DataGridTemplateColumn.CellTemplate>
@@ -162,8 +154,8 @@
                 </Button.ToolTip>
             </Button>
             <!--Signal types filter-->
-            <ComboBox ItemsSource="{Binding SigFilter.SignalTypes}" SelectedItem="{Binding SigFilter.SelectedType, Mode=TwoWay}"  
-                      Grid.Column="1" Width="161" Canvas.Left="10" Canvas.Top="28" Height="28" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
+            <ComboBox x:Name="FilterComboBox" ItemsSource="{Binding SigFilter.SignalTypes}" SelectedItem="{Binding SigFilter.SelectedType, Mode=TwoWay}"  
+                      Grid.Column="1" Width="161" Canvas.Left="10" Canvas.Top="28" Height="28" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" SelectionChanged="FilterComboBox_SelectionChanged">
                 <ComboBox.ToolTip>
                     <StackPanel>
                         <TextBlock Text="Choose signal type"/>
@@ -186,31 +178,21 @@
             <!--Signal List-->
             <DataGrid x:Name="SignalList" Grid.Column="1" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DGridCentAl}" HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="692" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
     RowBackground="LightGray" AlternatingRowBackground="White" DataContext="{Binding SelectedDevice, Mode=OneWay}" ItemsSource="{Binding Path=Signals}" SelectionMode="Extended" SelectionChanged="SignalList_SelectionChanged"
-                      Canvas.Top="73"  GridLinesVisibility="All" Background="LightGray">
-                <DataGrid.CellStyle>
-                    <Style TargetType="DataGridCell" >
-                        <Style.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="SeaGreen"/>
-                            </Trigger>
-                        </Style.Triggers>
-                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-                    </Style>
-                </DataGrid.CellStyle>
+                      Canvas.Top="73"  GridLinesVisibility="All" Background="LightGray" CellStyle="{StaticResource DGCellStyle}" CanUserResizeRows="False">
+                <DataGrid.RowHeaderTemplate>
+                    <DataTemplate>
+                        <Grid Width="30">
+                            <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </DataGrid.RowHeaderTemplate>
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Select">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridCell}}, Path=IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Connector" Binding="{Binding Path=HbmConnector.LocationHint}" Width="120" />
                     <DataGridTextColumn Header="Channel" Binding="{Binding Path=HbmChannel.Name}" Width="120" />
                     <DataGridTextColumn Header="Signal" Binding="{Binding Path=Name}" Width="120" />
                     <DataGridTextColumn Header="Value" Binding="{Binding Path=SingleValue}" Width="120" />
                     <DataGridTextColumn Header="Time Stamp" Binding="{Binding Path=SingleTimeStamp}" Width="120" />
-                    <DataGridTextColumn Header="State" Binding="{Binding Path=SingleState}" Width="*" />
+                    <DataGridTextColumn Header="State" Binding="{Binding Path=SingleState, Converter={StaticResource StateToStringConverter}}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </Canvas>

@@ -117,6 +117,7 @@
     </ApplicationDefinition>
     <Compile Include="AppSettings\AppSettings.cs" />
     <Compile Include="Converters\CenterCoordConverter.cs" />
+    <Compile Include="Converters\StateToStringConverter.cs" />
     <Compile Include="ExitWindow.xaml.cs">
       <DependentUpon>ExitWindow.xaml</DependentUpon>
     </Compile>

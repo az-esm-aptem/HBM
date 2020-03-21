@@ -4,11 +4,14 @@
              xmlns:local="clr-namespace:HMB_Utility"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+<!--Converters-->
         <local:DeviceInfoConverter x:Key="DeviceInfoConverter" />
         <local:IsConnectedToFontSizeConverter x:Key="IsConnectedToFontSizeConverter" />
         <local:isConnectedToFontWeightConverter x:Key="isConnectedToFontWeightConverter" />
         <local:CenterCoordConverter x:Key="CenterCoordConverter"/>
+        <local:StateToStringConverter x:Key="StateToStringConverter"/>
+
+        <!--Data Grid Header style-->
         <Style x:Key="DGridCentAl" TargetType="DataGridColumnHeader">
             <Setter Property="Thumb.HorizontalContentAlignment" Value="Center" />
             <Setter Property="TextBlock.FontWeight" Value="Bold"/>
@@ -111,6 +114,17 @@
                     <Setter Property="Foreground" Value="Red" />
                 </Trigger>
             </Style.Triggers>
+        </Style>
+
+<!--DataGridCellStyle-->
+        <Style TargetType="DataGridCell" x:Key="DGCellStyle">
+            
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="SeaGreen"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
 
     </Application.Resources>

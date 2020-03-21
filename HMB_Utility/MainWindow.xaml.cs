@@ -38,7 +38,7 @@ namespace HMB_Utility
                 Protocol.ScrollIntoView(e.NewItems[0]);
             }
         }
-
+        //forming signal to measure list (multiselection)
         private void SignalList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (FoundSignal s in e.AddedItems)
@@ -57,14 +57,21 @@ namespace HMB_Utility
             }
         }
 
+        //clearing signal to measure list when the filter changes
+        private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SignalList.SelectedItems.Clear();
+        }
+
+
+
+
         // переопределяем обработку первичной инициализации приложения
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e); // базовый функционал приложения в момент запуска
             createTrayIcon(); // создание нашей иконки
         }
-
-
 
 
         private System.Windows.Forms.NotifyIcon TrayIcon = null;
@@ -201,6 +208,7 @@ namespace HMB_Utility
             exitWindow.Show();
         }
 
+        
     }
 
 
