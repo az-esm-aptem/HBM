@@ -146,6 +146,7 @@ namespace HMB_Utility
 
         private async Task<bool> connect (object obj)
         {
+            eventToProtocol?.Invoke(this, new ProtocolEventArg(ProtocolMessage.connecting));
             bool result = await session.ConnectAsync(new List<FoundDevice> { SelectedDevice });
             SelectedDevice.OnPropertyChanged("Name");
             SelectedDevice.OnPropertyChanged("IsConnected");
@@ -310,6 +311,7 @@ namespace HMB_Utility
         private void DeleteFromDeviceList(object obj)
         {
             Disconnect(null);
+            session.deviceList.Remove(SelectedDevice.HbmDevice);
             AllDevices.Remove(SelectedDevice);
         }
 

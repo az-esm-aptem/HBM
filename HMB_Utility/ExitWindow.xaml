@@ -9,53 +9,14 @@
         Background="LightGray" WindowStyle="None" AllowsTransparency="False" ResizeMode="NoResize">
 
     <Window.Resources>
-        <Storyboard x:Key="collapseStoryboard">
-            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" 
-        To="0.5" Duration="0:0:0.1" />
-            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" 
-        To="0.5" Duration="0:0:0.1" />
-        </Storyboard>
-
-        <Storyboard x:Key="expandStoryboard">
-            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" 
-        To="1" Duration="0:0:0.1" />
-            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" 
-        To="1" Duration="0:0:0.1" />
-        </Storyboard>
-        <Style TargetType="Button" x:Key="ButtonWithImageBackground">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid Background="{TemplateBinding Background}">
-                            <ContentPresenter x:Name="ButtonWithImageBackgroundContentPresenter" 
-                                          Content="{TemplateBinding Content}"
-                                          HorizontalAlignment="Center" 
-                                          VerticalAlignment="Center" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.3"/>
-                </Trigger>
-                <EventTrigger RoutedEvent="PreviewMouseDown">
-                    <BeginStoryboard Storyboard="{StaticResource collapseStoryboard}"/>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="PreviewMouseUp">
-                    <BeginStoryboard Storyboard="{StaticResource expandStoryboard}"/>
-                </EventTrigger>
-            </Style.Triggers>
-        </Style>
+        
     </Window.Resources>
+    
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Allow application to work in background?" TextAlignment="Center"
                    VerticalAlignment="Top" Width="222" FontSize="14" FontWeight="Bold" />
         <Button x:Name="OkButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Height="50" Canvas.Left="74" Canvas.Top="74"
                     Style="{StaticResource ButtonWithImageBackground}" ToolTipService.ShowOnDisabled="True" Margin="40,0,152,0" Click="OkButton_Click">
-            <Button.RenderTransform>
-                <ScaleTransform CenterX="25" CenterY="25" ScaleX="1" ScaleY="1" />
-            </Button.RenderTransform>
             <Button.Background>
                 <ImageBrush ImageSource="Icons/OK.png" Stretch="Uniform"/>
             </Button.Background>
@@ -69,9 +30,6 @@
         </Button>
         <Button x:Name="ExitButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Height="50" Canvas.Left="74" Canvas.Top="74"
                     Style="{StaticResource ButtonWithImageBackground}" ToolTipService.ShowOnDisabled="True" Margin="149,0,43,0" Command="{Binding CloseAppCommand}">
-            <Button.RenderTransform>
-                <ScaleTransform CenterX="25" CenterY="25" ScaleX="1" ScaleY="1" />
-            </Button.RenderTransform>
             <Button.Background>
                 <ImageBrush ImageSource="Icons/Close.png" Stretch="Uniform"/>
             </Button.Background>

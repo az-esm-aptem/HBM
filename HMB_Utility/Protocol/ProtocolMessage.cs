@@ -3,8 +3,8 @@ namespace HMB_Utility
 {
     public static class ProtocolMessage
     {
-        public static string searchStart = "Search started";
-        public static string searchEnd = "Search ended";
+        public static string searchStart = "Searching...";
+        public static string searchEnd = "Searching complete";
         public static string invalidSearchPeriod = "Invalid search period";
         public static string invalidSearchTime = "Invalid search time";
         public static string wrongFamily = "Wrong family";
@@ -27,6 +27,7 @@ namespace HMB_Utility
         public static string invalidPortNumber = "Invalid port number";
         public static string selectedSignals = "{0} signals selected to DAQ";
         public static string signalAddedToDaq = "Signal {0} added to DAQ";
+        public static string connecting = "Connecting...";
 
 
 

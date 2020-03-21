@@ -9,8 +9,7 @@ using Hbm.Api.Common.Entities.ConnectionInfos;
 using Hbm.Api.Pmx;
 using Hbm.Api.QuantumX;
 using Hbm.Api.Mgc;
-
-
+using System.Threading;
 
 namespace HMB_Utility
 {
@@ -22,7 +21,6 @@ namespace HMB_Utility
         public static DaqEnvironment daqEnvironment = null; //main object to work 
         public List<Device> deviceList { get; private set; } // devices found by the scan
         public event EventHandler<ProtocolEventArg> eventToProtocol;
-        private System.Timers.Timer searchTimer = null; 
         private HbmSession() 
         {
             daqEnvironment = DaqEnvironment.GetInstance();
@@ -46,8 +44,10 @@ namespace HMB_Utility
 
         //period - The time interval between invocations the scan method to waiting devices gathering
         //searchTime - The time interval for searching. If this time is up and no one device found - the method returns False, and device list is empty
-        private bool SearchDevices(object obj)  
+   
+        private bool SearchDevices(object obj)
         {
+            bool result = false;
             eventToProtocol?.Invoke(this, new ProtocolEventArg(ProtocolMessage.searchStart));
 
             int time = 0;
@@ -55,21 +55,13 @@ namespace HMB_Utility
             int searchTime = AppSettings.SearchTime;
             try
             {
-                searchTimer = new System.Timers.Timer(period);
-                searchTimer.AutoReset = true;
-                searchTimer.Elapsed += (s, o) =>
+                do
                 {
                     time += period;
-                    searchTimer.Stop();
                     deviceList = daqEnvironment.Scan();
-                    searchTimer.Start();
-                };
-                searchTimer.Start();
-
-                while (time < searchTime) { };
-
-                searchTimer.Stop();
-                searchTimer.Dispose();
+                    Thread.Sleep(period / 2);
+                }
+                while (time < searchTime);
             }
             catch (Hbm.Api.Scan.Entities.ScanFailedException ex)
             {
@@ -81,10 +73,12 @@ namespace HMB_Utility
             if (deviceList.Count > 0)
             {
                 deviceList.OrderBy(d => (d.ConnectionInfo as EthernetConnectionInfo).IpAddress);
-                return true;
+                result = true;
             }
-            else return false;
+            return result;
         }
+
+
 
         public async Task<bool> SearchAsync(object obj)
         {

@@ -29,12 +29,6 @@ namespace HMB_Utility
             exitWindow.ExitButton.PreviewMouseUp += MenuExitClick;
         }
 
-        
-
-        
-
-
-
         //autoscroll the protocol list
         private void ListView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -207,10 +201,6 @@ namespace HMB_Utility
             exitWindow.Show();
         }
 
-        private void TextBox_Error(object sender, ValidationErrorEventArgs e)
-        {
-
-        }
     }
 
 

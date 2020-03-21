@@ -116,6 +116,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppSettings\AppSettings.cs" />
+    <Compile Include="Converters\CenterCoordConverter.cs" />
     <Compile Include="ExitWindow.xaml.cs">
       <DependentUpon>ExitWindow.xaml</DependentUpon>
     </Compile>
